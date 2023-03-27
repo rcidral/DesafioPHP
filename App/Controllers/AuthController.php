@@ -20,10 +20,11 @@
     $usuario->__set('senha', $_POST['password']);
 
     if($usuario->validarLogin()) {
-        session_start();
+        $_SESSION['authenticated'] = true;
         $_SESSION['nome'] = $usuario->__get('nome');
         echo json_encode(['success' => true]);
     } else {
+        unset($_SESSION['authenticated']);
         echo json_encode(['success' => false]);
     }
 ?>

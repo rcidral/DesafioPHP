@@ -24,8 +24,8 @@
 
       <div class="nav-bar">
         <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">
-          <a href="#" style="position: relative; top: 8px;" class="nav-link nav-link-nike-logo"></a>
-          <a id="produtos-id" href="" style="font-size: 20px; position: absolute; top: 35px; left: 130px;" class="nav-link">Produtos</a>
+          <a href="#"><img style="position: relative; top: 12px; width: 110px; height: 50px" src="https://raw.githubusercontent.com/bystack/.github/main/banner.png" alt=""></a>
+          <a id="produtos-id" href="" style="font-size: 20px; position: absolute; top: 35px; left: 140px;" class="nav-link">Produtos</a>
         </div>
 
         <ul class="nav-list">
@@ -40,20 +40,30 @@
 
         <div class="nav-item nav-item-right">
           <ul class="nav-list">
-            <li class="nav-item ">
-              <div class="square-bag-icon">
-                <a style="position: relative; top: 2px;" href="#" class="nav-link nav-link-bag"><svg width="24px" height="24px" fill="#111" viewBox="0 0 24 24">
-                    <path d="M16 7a1 1 0 0 1-1-1V3H9v3a1 1 0 0 1-2 0V3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3a1 1 0 0 1-1 1z"></path>
-                    <path d="M20 5H4a2 2 0 0 0-2 2v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a2 2 0 0 0-2-2zm0 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7h16z"></path>
-                  </svg></a>
+            <?php if (isset($_SESSION['authenticated'])) { ?>
+              <li class="nav-item ">
+                <div class="square-bag-icon">
+                  <a style="position: relative; top: 2px; right: 20px;" href="#" class="nav-link nav-link-bag"><svg width="24px" height="24px" fill="#111" viewBox="0 0 24 24">
+                      <path d="M16 7a1 1 0 0 1-1-1V3H9v3a1 1 0 0 1-2 0V3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3a1 1 0 0 1-1 1z"></path>
+                      <path d="M20 5H4a2 2 0 0 0-2 2v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a2 2 0 0 0-2-2zm0 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7h16z"></path>
+                    </svg></a>
+                </div>
+              </li>
+            <?php } ?>
+            <?php if (!isset($_SESSION['authenticated'])) { ?>
+              <li class="nav-item ">
+                <div class="square-bag-icon">
+                  <button id="btn-entrar" style="cursor: pointer; border: none; background-color: black; color: white; position: relative; top: 2px; height: 30px; border-radius: 15px;" href="#" class="nav-link">Entrar</button>
+              </li>
+            <?php } ?>
+            <?php if (isset($_SESSION['authenticated'])) { ?>
+              <div class="dropdown">
+                <span style="font-size: 15px; font-weight: 100;"><?= $_SESSION['nome'] ?></span>
+                <div class="dropdown-content">
+                  <button id="sair">Sair</button>
+                </div>
               </div>
-            </li>
-
-            <li class="nav-item ">
-              <div class="square-bag-icon">
-                <button id="btn-entrar" style="cursor: pointer; border: none; background-color: black; color: white; position: relative; top: 2px; height: 30px; border-radius: 15px;" href="#" class="nav-link">Entrar</button>
-            </li>
-
+            <?php } ?>
           </ul>
         </div>
         <!--  nav-list left items    -->
@@ -64,23 +74,27 @@
 </header>
 
 <body>
-  <section class="shoes-examples">
-    <div class="container container-intro-img">
-      <div class="shoe-img-left"></div>
-      <div class="shoe-img-right"></div>
-    </div>
-    <div class="container">
-      <div class="title">
-        <h4 class="title-heading">Blazer Jumbo '77</h4>
-        <h1 class="title-sub-heading">Don't Miss Out</h1>
-        <h3 class="title-heading-description">Blazer is a force for self-expression. How will you wear yours?</h3>
-        <div class="shop">
-          <a href="#" class="cta-link">Shop</a>
-        </div>
+  <?php foreach ($_SESSION['produtos'] as $produto) { ?>
+  <section class="section-product">
+    <div class="general">
+      <div>
+        <img class="img-product" src="<?= $produto->img?>" alt="">
+      </div>
+      <div class="conteudo">
+        <h1 class="product"><?= $produto->nome?></h1>
+        <h1 class="price">R$<?= $produto->preco?>.00</h1>
+        <hr>
+        <p><?= $produto->descricao?></p>
+        <?php if (isset($_SESSION['authenticated'])) { ?>
+          <button class="add">Adicionar</button>
+          <div class="qtd">
+            <input type="number" name="qtd" id="qtd" min="1" value="1">
+          </div>
+        <?php } ?>
       </div>
     </div>
-    <!--     close title div   -->
   </section>
+  <?php } ?>
 </body>
 
 
@@ -96,12 +110,13 @@
       </div>
       <div class="footer-info-box">
         <ul class="footer-tags">
-          <li><a href="# " style="filter: invert(100%);" class="nav-link nav-link-nike-logo"></a></li>
+          <li><a href="#"><img style="position: relative; top:-8px; width: 110px; height: 50px" src="https://raw.githubusercontent.com/bystack/.github/main/banner.png" alt=""></a>
+          </li>
         </ul>
       </div>
       <div class="footer-info-box">
         <ul class="footer-tags">
-          <li><a href="#">Link do Site</a></li>
+          <li><a style="font-size: 30px; position: relative;" href="/">bystack</a></li>
         </ul>
       </div>
     </div>
@@ -115,37 +130,156 @@
   $(document).ready(function() {
     $('#btn-entrar').click(function() {
       setTimeout(function() {
-        window.location.href = 'login.php';
+        window.location.href = 'login';
       }, 250);
     });
   });
-  $.ajax({
-      url: 'http://localhost:3000/check-login.php',
-      type: 'GET',
-      dataType: 'json'
-    })
-    .done(function(response) {
-      if (response.logged_in) {
-        // Se o usuário estiver logado, substituir o botão de login pelo nome do usuário
-        $('#btn-entrar').hide();
-        $('#dropdown').show();
-      } else {
-        // Se o usuário não estiver logado, exibir o botão de login padrão
-        $('#dropdown').hide();
-        $('#btn-entrar').show();
+  $('#sair').click(function(e) {
+    e.preventDefault();
+    $.ajax({
+      url: 'http://localhost:3000/logout',
+      type: 'POST',
+      dataType: 'json',
+      success: function(data) {
+        if (data.success) {
+          window.location.href = 'http://localhost:3000/';
+        }
       }
     });
+  });
 </script>
 
 </html>
 
 
 <style>
+  .section-product {
+    display: inline-block;
+    font-family: "robotobold", sans-serif;
+    margin-right: 30px;
+    margin-bottom: 25px;
+    position: relative;
+    left: 160px;
+  }
+
+  .general {
+    display: flex;
+  }
+
+  .img-product {
+    width: 160px;
+  }
+
+  .conteudo {
+    margin-left: 20px;
+    position: relative;
+    top: -10px;
+  }
+
+  .conteudo .product {
+    font-size: 20px;
+    font-family: Verdana;
+    font-weight: 100;
+
+  }
+
+  .conteudo .price {
+    position: relative;
+    top: -20px;
+    font-size: 30px;
+    font-family: Verdana;
+    font-weight: 100;
+    color: rgb(47, 108, 222);
+  }
+
+  .conteudo hr {
+    position: relative;
+    top: -30px;
+    width: 200px;
+  }
+
+  .conteudo p {
+    position: relative;
+    top: -30px;
+    font-size: 15px;
+    font-family: Verdana;
+    font-weight: 100;
+  }
+
+  .conteudo .add {
+    position: absolute;
+    top: 160px;
+    font-family: "montserratbold", sans-serif;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border-radius: 25px;
+    font-size: 15px;
+    line-height: 10%;
+    background: #086fcf;
+    border: 0 none;
+    color: #fff;
+    float: right;
+    height: 50px;
+    width: 120px;
+    padding: 14px 26px 14px 30px
+  }
+
+  .conteudo .add:hover {
+    background: #0a5db0;
+  }
+
+  .conteudo .qtd {
+    position: absolute;
+    top: 160px;
+    left: 140px;
+  }
+
+  .conteudo .qtd input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 20px;
+    font-family: "montserratbold", sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    top: -2px;
+    right: 10px;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    min-height: 15px;
+    box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+
+  }
+
+  .dropdown-content button {
+    color: black;
+    padding-left: 20px;
+    padding-top: 5px;
+    text-decoration: none;
+    display: block;
+    border: none;
+    background-color: #f9f9f9;
+    cursor: pointer;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
   .hidden {
     display: none;
   }
-
-  * {}
 
   *::before,
   *::after {
@@ -1032,9 +1166,12 @@
     margin-top: 40px;
     border: 1px solid;
     background: #111111;
-    height: 300px;
+    height: 150px;
     color: white;
     font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
   .footer-start {
@@ -1151,7 +1288,7 @@
     align-items: center;
     justify-content: center;
     position: relative;
-    right: 50%;
+    right: 70%;
     margin-top: 15px;
     background-color: #f5f5f5;
     border-radius: 15px 0 0 15px;

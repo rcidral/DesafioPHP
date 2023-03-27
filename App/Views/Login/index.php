@@ -30,27 +30,20 @@
     var email = $('#email').val();
     var password = $('#password').val();
     $.ajax({
-        url: 'http://localhost:3000/auth.php',
+        url: 'http://localhost:3000/auth',
         type: 'POST',
         data: {
             email: email,
             password: password
         },
-        dataType: 'json'
-    })
-    .done(function(response) {
-        if (response.success) {
-            // Se a consulta foi bem sucedida, redirecionar o usuário para outra página
-            window.location.href = 'index.php';
-        } else {
-            // Se a consulta falhou, exibir uma mensagem de erro ao usuário
-            alert('Usuário ou senha inválidos');
-        }
-    })
-    .fail(function() {
-        // Se a requisição AJAX falhou, exibir uma mensagem de erro ao usuário
-        alert('Ocorreu um erro ao processar sua solicitação');
-    });
+        dataType: 'json',
+        success: function(data) {
+            if (data.success) {
+                window.location.href = 'http://localhost:3000/';
+            } else {
+                alert('Usuário ou senha inválidos');
+            }
+        }});
 });
 </script>
 
