@@ -18,7 +18,7 @@
 
     $usuario->__set('email', $_POST['email']);
     $usuario->__set('senha', $_POST['password']);
-
+    
     if($usuario->validarLogin()) {
         $_SESSION['authenticated'] = true;
         $_SESSION['nome'] = $usuario->__get('nome');

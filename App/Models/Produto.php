@@ -6,7 +6,6 @@ class Produto extends Model {
     private $nome;
     private $descricao;
     private $preco;
-    private $quantidade;
     private $img;
 
     public function __get($atributo) {
@@ -22,14 +21,39 @@ class Produto extends Model {
     }
 
     public function listar() {
-        $query = "SELECT id, nome, descricao, preco, quantidade, img FROM produtos";
+        $query = "SELECT id, nome, descricao, preco, img FROM produtos";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
+    public function deletar() {
+        $query = "DELETE FROM produtos WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $this->__get('id'));
+        $stmt->execute();
+    }
 
+    public function alterar() {
+        $query = "UPDATE produtos SET nome = :nome, descricao = :descricao, preco = :preco, img = :img WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $this->__get('id'));
+        $stmt->bindValue(':nome', $this->__get('nome'));
+        $stmt->bindValue(':descricao', $this->__get('descricao'));
+        $stmt->bindValue(':preco', $this->__get('preco'));
+        $stmt->bindValue(':img', $this->__get('img'));
+        $stmt->execute();
+    }
 
+    public function createProduto() {
+        $query = "INSERT INTO produtos (nome, descricao, preco, img) VALUES (:nome, :descricao, :preco, :img)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':nome', $this->__get('nome'));
+        $stmt->bindValue(':descricao', $this->__get('descricao'));
+        $stmt->bindValue(':preco', $this->__get('preco'));
+        $stmt->bindValue(':img', $this->__get('img'));
+        $stmt->execute();
+    }
     
 }
 
