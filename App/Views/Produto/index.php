@@ -51,29 +51,7 @@
   </header>
 
   <main>
-    <?php foreach ($_SESSION['produtos'] as $produto) { ?>
-      <section class="section-product">
-        <div class="general">
-          <div>
-            <img class="img-product" src="<?= $produto->img ?>" alt="">
-          </div>
-          <div class="conteudo">
-            <a class="product"><?= $produto->nome ?></a>
-            <h1 class="price">R$<?= $produto->preco ?>.00</h1>
-            <hr>
-            <p><?= $produto->descricao ?></p>
-            <?php if (isset($_SESSION['authenticated'])) { ?>
-              <input type="hidden" name="idProduto" value="<?= $produto->id?>">
-              <input type="hidden" name="idUsuario" value="<?= $_SESSION['id']?>">
-              <button class="add">Adicionar</button>
-              <div class="qtd">
-                <input type="number" name="qtd" id="qtd" min="1" value="1">
-              </div>
-            <?php } ?>
-          </div>
-        </div>
-      </section>
-    <?php } ?>
+    
   </main>
     
   <footer class="footer">
@@ -272,89 +250,6 @@ main{
     font-size: 10px;
     border-radius: 100%;
   }
-  .general {
-    display: flex;
-  }
-
-  .img-product {
-    width: 160px;
-  }
-
-  .conteudo {
-    margin-left: 20px;
-    position: relative;
-    top: -10px;
-  }
-
-  .conteudo .product {
-    font-size: 20px;
-    font-family: Verdana;
-    font-weight: 100;
-    cursor: pointer;
-
-  }
-
-  .conteudo .price {
-    position: relative;
-    top: -20px;
-    font-size: 30px;
-    font-family: Verdana;
-    font-weight: 100;
-    color: rgb(47, 108, 222);
-  }
-
-  .conteudo hr {
-    position: relative;
-    top: -30px;
-    width: 200px;
-  }
-
-  .conteudo p {
-    position: relative;
-    top: -30px;
-    font-size: 15px;
-    font-family: Verdana;
-    font-weight: 100;
-  }
-
-  .conteudo .add {
-    position: absolute;
-    top: 160px;
-    font-family: "montserratbold", sans-serif;
-    -moz-border-radius: 25px;
-    -webkit-border-radius: 25px;
-    border-radius: 25px;
-    font-size: 15px;
-    line-height: 10%;
-    background: #086fcf;
-    border: 0 none;
-    color: #fff;
-    float: right;
-    height: 50px;
-    width: 120px;
-    padding: 14px 26px 14px 30px
-  }
-
-  .conteudo .add:hover {
-    background: #0a5db0;
-  }
-
-  .conteudo .qtd {
-    position: absolute;
-    top: 160px;
-    left: 140px;
-  }
-
-  .conteudo .qtd input {
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    font-size: 20px;
-    font-family: "montserratbold", sans-serif;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-
   .dropdown {
     position: relative;
     display: inline-block;

@@ -1,5 +1,6 @@
 <?php
 
+include_once '../App/Models/Model.php';
 
 class Usuario extends Model {
     private $id;

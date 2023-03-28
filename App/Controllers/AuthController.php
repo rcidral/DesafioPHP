@@ -1,18 +1,6 @@
 <?php
 
     header('Content-Type: application/json');
-
-    $user = include "../App/Models/Usuario.php";
-
-    class Container {
-
-        public static function getModel($user) {
-            $class = $user;
-            $pdo = new PDO('mysql:host=localhost;dbname=shop;charset=utf8', 'root', '');
-    
-            return new $class($pdo);
-        }
-    }
     
     $usuario = Container::getModel('Usuario');
 
@@ -22,6 +10,7 @@
     if($usuario->validarLogin()) {
         $_SESSION['authenticated'] = true;
         $_SESSION['nome'] = $usuario->__get('nome');
+        $_SESSION['id'] = $usuario->__get('id');
         echo json_encode(['success' => true]);
     } else {
         unset($_SESSION['authenticated']);

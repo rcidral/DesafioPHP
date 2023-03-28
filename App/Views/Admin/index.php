@@ -47,19 +47,17 @@
 </header>
 
 <body>
-  <div class="ui container">
-    <!-- Segmento de Filtro -->
+  <div style="margin-top: 15px;" class="ui container">
 
-    <!-- FIM Segmento de Filtro -->
 
     <h1>Produtos</h1>
 
-    <!-- Tabela de Produtos cadastrados -->
     <table class="ui table">
       <thead>
         <tr>
           <th>Nome</th>
           <th>Descrição</th>
+          <th>Preco</th>
           <th>Ações</th>
         </tr>
       </thead>
@@ -67,9 +65,10 @@
         <?php foreach ($_SESSION['produtos'] as $produto) { ?>
           <tr>
             <td><?= $produto->nome ?></td>
-            <td style="width: 500px;"><?= $produto->descricao ?></td>
+            <td><?= $produto->descricao ?></td>
+            <td>R$ <?= $produto->preco ?></td>
             <td>
-              <button class="ui button basic teal btnCadastro">
+              <button class="ui button basic teal btnEditar">
                 <i class="pencil alternative icon"></i> Editar
               </button>
               <button id="id-button-modal-<?= $produto->id ?>" style="color: white;" class="ui button basic red btnExcluir">
@@ -95,7 +94,7 @@
           <div class="equal width fields">
             <div class="field">
               <label>Nome</label>
-              <input type="text" id="nome">
+              <input type="text" id="nomeProduto">
             </div>
             <div class="field">
               <label>Descrição</label>
@@ -121,6 +120,7 @@
     </div>
     <!-- FIM Modal de CRUD de Produtos -->
 
+
     <!-- Modal de Confirmação de Exclusão -->
     <div id="modalConfirmacaoExclusao" class="ui basic modal">
       <div class="ui icon header">
@@ -141,9 +141,96 @@
         </div>
       </div>
     </div>
+    <h1>Usuarios</h1>
+
+    <!-- Tabela de usuarios cadastrados -->
+    <table class="ui table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Senha</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php foreach ($_SESSION['usuarios'] as $usuario) { ?>
+          <tr>
+            <td><?= $usuario->nome ?></td>
+            <td><?= $usuario->email ?></td>
+            <td><?= $usuario->senha ?></td>
+            <td>
+              <button class="ui button basic teal btnCadastro">
+                <i class="pencil alternative icon"></i> Editar
+              </button>
+              <button id="id-button-modal-<?= $usuario->id ?>" style="color: white;" class="ui button basic red btnExcluirUsuario">
+                Remover
+              </button>
+            </td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+    <!-- FIM Tabela de usuarios cadastrados -->
+
+    <button class="ui button right floated teal btnCadastroUsuario">Novo usuario</button>
+
+    <!-- Modal de CRUD de usuarios -->
+    <div id="modalCadastroUsuario" class="ui modal">
+      <i class="close icon"></i>
+      <div class="header">
+        Cadastro de usuario
+      </div>
+      <div class="content">
+        <div class="ui form">
+          <div class="equal width fields">
+            <div class="field">
+              <label>Nome</label>
+              <input type="text" id="nome">
+            </div>
+            <div class="field">
+              <label>Email</label>
+              <input type="text" id="email">
+            </div>
+            <div class="field">
+              <label>senha</label>
+              <input type="number" id="senha">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="button-salvar-usuario" class="ui teal right labeled icon button">
+          Salvar
+          <i class="checkmark icon"></i>
+        </button>
+      </div>
+    </div>
+    <!-- FIM Modal de CRUD de usuarios -->
+
+    <!-- Modal de Confirmação de Exclusão -->
+    <div id="modalConfirmacaoExclusaoUsuario" class="ui basic modal">
+      <div class="ui icon header">
+        <i class="archive icon"></i>
+        Exclusão de usuario
+      </div>
+      <div class="content">
+        <p>Tem certeza que deseja excluir o usuario? Esta ação não pode ser revertida.</p>
+      </div>
+      <div class="actions">
+        <div class="ui red basic cancel inverted button">
+          <i class="remove icon"></i>
+          Não
+        </div>
+        <div class="ui green ok inverted button">
+          <i class="checkmark icon"></i>
+          <button style="border: none; background-color:transparent; color: white" id="delete-yes-usuario" onclick>Sim</button>
+        </div>
+      </div>
+    </div>
     <!-- FIM Modal de Confirmação de Exclusão -->
 
-    
+
 
   </div>
 </body>
@@ -182,15 +269,34 @@
       },
     })
   }
+
+  function removerUsuario(id) {
+    $.ajax({
+      url: 'http://localhost:3000/deleteUsuario',
+      type: 'POST',
+      data: {
+        id: id
+      },
+      success: function(response) {
+        window.location.href = "http://localhost:3000/admin"
+      },
+    })
+  }
   $('.btnExcluir').click(function(e) {
     let text = e.target.id;
     let idText = text.split("-");
     let id = idText[3];
     $('#delete-yes').attr("onclick", `remover(${id})`)
   })
+  $('.btnExcluirUsuario').click(function(e) {
+    let text = e.target.id;
+    let idText = text.split("-");
+    let id = idText[3];
+    $('#delete-yes-usuario').attr("onclick", `removerUsuario(${id})`)
+  })
   $('#button-salvar').click(function(e) {
     e.preventDefault();
-    let nome = $('#nome').val();
+    let nome = $('#nomeProduto').val();
     let descricao = $('#descricao').val();
     let preco = $('#preco').val();
     let img = $('#img').val();
@@ -208,6 +314,24 @@
       },
     })
   })
+  $('#button-salvar-usuario').click(function(e) {
+    e.preventDefault();
+    let nome = $('#nome').val();
+    let email = $('#email').val();
+    let senha = $('#senha').val();
+    $.ajax({
+      url: 'http://localhost:3000/createUsuario',
+      type: 'POST',
+      data: {
+        nome: nome,
+        email: email,
+        senha: senha
+      },
+      success: function(response) {
+        window.location.href = "http://localhost:3000/admin"
+      },
+    })
+  })
   $(function() {
     /* Modais */
     $(".btnExcluir")
@@ -215,10 +339,25 @@
         $("#modalConfirmacaoExclusao")
           .modal('show');
       });
+    $(".btnExcluirUsuario")
+      .click(function() {
+        $("#modalConfirmacaoExclusaoUsuario")
+          .modal('show');
+      });
 
     $(".btnCadastro")
       .click(function() {
         $("#modalCadastro")
+          .modal('show');
+      });
+    $(".btnEditar")
+      .click(function() {
+        $("#modalEditar")
+          .modal('show');
+      });
+    $(".btnCadastroUsuario")
+      .click(function() {
+        $("#modalCadastroUsuario")
           .modal('show');
       });
 
@@ -309,6 +448,23 @@
   }
 
   .delete-yes {
+    background-color: #1c1c1e;
+    color: #ffffff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    position: relative;
+    right: 50px;
+  }
+
+  .delete-yes-usuario {
     background-color: #1c1c1e;
     color: #ffffff;
     padding: 10px 20px;
@@ -450,7 +606,7 @@
   /*////////////////////////////// medias query */
 
   @media screen and (max-width: 1000px) {
-    .nav-bar #produtos-id {
+    .nav-bar #usuarios-id {
       display: none;
     }
   }

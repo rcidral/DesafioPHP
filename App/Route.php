@@ -6,11 +6,15 @@
     require_once "../App/Controllers/AppController.php";
     $ProdutoController = new ProdutoController();
     $UsuarioController = new UsuarioController();
+    $CarrinhoController = new CarrinhoController();
 
     
     switch($urlPath) {
         case '/':
             $ProdutoController->listarProdutos();
+            if(isset($_SESSION['id'])) {
+                $CarrinhoController->listarQuantidadeDeProdutos();
+            }
             include "../App/Views/Home/index.php";
             break;
         case '/login':     
@@ -40,6 +44,27 @@
             $ProdutoController->deletarProduto();
             include "../App/Views/Admin/index.php";
             break;
+        case '/updateUsuario':
+            $UsuarioController->alterarUsuario();
+            include "../App/Views/Admin/index.php";
+            break;
+        case '/createUsuario':
+            $UsuarioController->createUsuario();
+            include "../App/Views/Admin/index.php";
+            break;
+        case '/deleteUsuario':
+            $UsuarioController->deletarUsuario();
+            include "../App/Views/Admin/index.php";
+            break;
+        case '/adicionarCarrinho':
+            $CarrinhoController->adicionarCarrinho();
+            break;
+            break;
+        case '/produto':
+            $ProdutoController->listarProduto();
+            include "../App/Views/Produto/index.php";
+            break;
+
     }
 
     

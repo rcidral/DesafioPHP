@@ -1,5 +1,6 @@
 <?php
 
+include_once '../App/Models/Model.php';
 
 class Produto extends Model {
     private $id;
@@ -54,15 +55,15 @@ class Produto extends Model {
         $stmt->bindValue(':img', $this->__get('img'));
         $stmt->execute();
     }
+
+    public function listarProduto() {
+        $query = "SELECT id, nome, descricao, preco, img FROM produtos WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $this->__get('id'));
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_OBJ);
+    }
     
 }
 
 
-abstract class Model {
-
-	protected $db;
-
-	public function __construct(\PDO $db) {
-		$this->db = $db;
-	}
-}

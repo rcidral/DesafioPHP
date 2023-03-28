@@ -2,16 +2,9 @@
 
     $product = include "../App/Models/Produto.php";
     $user = include "../App/Models/Usuario.php";
-
-    class Container {
-
-        public static function getModel($product) {
-            $class = $product;
-            $pdo = new PDO('mysql:host=localhost;dbname=shop;charset=utf8', 'root', '');
+    $cart = include "../App/Models/Carrinho.php";
+    $container = include "../App/Controllers/Container.php";
     
-            return new $class($pdo);
-        }
-    }
 
     class UsuarioController {
         public function createUsuario() {
@@ -67,6 +60,29 @@
             $produto->__set('preco', $_REQUEST['preco']);
             $produto->__set('img', $_REQUEST['img']);
             $produto->createProduto();
+        }
+        public function listarProduto() {
+            $produto = Container::getModel('Produto');
+            $produto->__set('id', $_REQUEST['id_produto']);
+            $_SESSION['produto'] = $produto->listarProduto();
+        }
+    }
+
+    class CarrinhoController {
+        public function listarCarrinho() {
+            $carrinho = Container::getModel('Carrinho');
+            $_SESSION['carrinho'] = $carrinho->listar();
+        }
+        public function listarQuantidadeDeProdutos() {
+            $carrinho = Container::getModel('Carrinho');
+            $_SESSION['quantidade'] = $carrinho->listarQuantidadeDeProdutos($_SESSION['id']);
+        }
+        public function adicionarCarrinho() {
+            $carrinho = Container::getModel('Carrinho');
+            $carrinho->__set('id_usuario', $_REQUEST['id_usuario']);
+            $carrinho->__set('id_produto', $_REQUEST['id_produto']);
+            $carrinho->adicionarCarrinho();
+            echo json_encode(['success' => true]);
         }
     }
 
