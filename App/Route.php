@@ -11,9 +11,24 @@
     
     switch($urlPath) {
         case '/':
-            $ProdutoController->listarProdutos();
+            if(!isset($_SESSION['id'])) {
+                $ProdutoController->listarProdutos();
+                if(isset($_SESSION['pesquisar']) && $_SESSION['pesquisar'] != null) {
+                    $_SESSION['produtos'] = $_SESSION['pesquisar'];
+                } else {
+                    $ProdutoController->listarProdutos();
+                }
+            } else {
             if(isset($_SESSION['id'])) {
+                if(isset($_SESSION['pesquisar']) && $_SESSION['pesquisar'] != null) {
+                    $_SESSION['produtos'] = $_SESSION['pesquisar'];
+                } else {
+                    $ProdutoController->listarProdutos();
+                }
                 $CarrinhoController->listarQuantidadeDeProdutos();
+                $CarrinhoController->listarCarrinho();
+                $CarrinhoController->getPrecoCarrinho();
+            }
             }
             include "../App/Views/Home/index.php";
             break;
@@ -59,12 +74,26 @@
         case '/adicionarCarrinho':
             $CarrinhoController->adicionarCarrinho();
             break;
+        case '/produtoRed':
+            $_SESSION['idProdutoSolo'] = $_REQUEST['idProdutoSolo'];
+            echo json_encode(['success' => true]);
             break;
         case '/produto':
-            $ProdutoController->listarProduto();
+            $id = $_SESSION['idProdutoSolo'];
+            $ProdutoController->listarProduto($id);
+            $CarrinhoController->listarQuantidadeDeProdutos();
+                $CarrinhoController->listarCarrinho();
+                $CarrinhoController->getPrecoCarrinho();
             include "../App/Views/Produto/index.php";
             break;
-
+        case '/limparCarrinho':
+            $CarrinhoController->limparCarrinho();
+            break;
+        case '/pesquisar':
+            $ProdutoController->pesquisarProduto($_REQUEST['pesquisar']);
+            /* $_SESSION['pesquisar'] = $_REQUEST['pesquisar']; */
+            echo json_encode(['success' => true]);
+            break;
     }
 
     

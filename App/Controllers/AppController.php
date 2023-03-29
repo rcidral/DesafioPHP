@@ -61,17 +61,22 @@
             $produto->__set('img', $_REQUEST['img']);
             $produto->createProduto();
         }
-        public function listarProduto() {
+        public function listarProduto($id) {
             $produto = Container::getModel('Produto');
-            $produto->__set('id', $_REQUEST['id_produto']);
+            $produto->__set('id', $id);
             $_SESSION['produto'] = $produto->listarProduto();
+        }
+        public function pesquisarProduto($pesquisa) {
+            $produto = Container::getModel('Produto');
+            $produto->__set('nome', $pesquisa);
+            $_SESSION['pesquisar'] = $produto->pesquisarProduto();
         }
     }
 
     class CarrinhoController {
         public function listarCarrinho() {
             $carrinho = Container::getModel('Carrinho');
-            $_SESSION['carrinho'] = $carrinho->listar();
+            $_SESSION['carrinho'] = $carrinho->listarCarrinhoUsuarioProdutos($_SESSION['id']);
         }
         public function listarQuantidadeDeProdutos() {
             $carrinho = Container::getModel('Carrinho');
@@ -83,6 +88,16 @@
             $carrinho->__set('id_produto', $_REQUEST['id_produto']);
             $carrinho->adicionarCarrinho();
             echo json_encode(['success' => true]);
+        }
+        public function limparCarrinho() {
+            $carrinho = Container::getModel('Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['id']);
+            $carrinho->limparCarrinho();
+            echo json_encode(['success' => true]);
+        }
+        public function getPrecoCarrinho() {
+            $carrinho = Container::getModel('Carrinho');
+            $_SESSION['total'] = $carrinho->getPrecoCarrinho($_SESSION['id']);
         }
     }
 

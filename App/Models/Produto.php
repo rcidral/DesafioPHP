@@ -29,6 +29,10 @@ class Produto extends Model {
     }
 
     public function deletar() {
+        $query = "DELETE FROM carrinho WHERE id_produto = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id', $this->__get('id'));
+        $stmt->execute();
         $query = "DELETE FROM produtos WHERE id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id', $this->__get('id'));
@@ -62,6 +66,14 @@ class Produto extends Model {
         $stmt->bindValue(':id', $this->__get('id'));
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function pesquisarProduto() {
+        $query = "SELECT id, nome, descricao, preco, img FROM produtos WHERE nome LIKE :nome";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':nome', '%'.$this->__get('nome').'%');
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
     
 }
