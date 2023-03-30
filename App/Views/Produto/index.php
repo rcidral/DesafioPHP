@@ -7,7 +7,7 @@
       <div class="nav-bar">
         <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">
           <a href="#">
-            <img src="https://raw.githubusercontent.com/bystack/.github/main/banner.png" alt="">
+            <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
           </a>
           <a id="produtos-id" href="/" class="nav-link">
             Produtos
@@ -17,7 +17,7 @@
           <button id="pesquisar" type="submit">
             <img src="https://img.icons8.com/ios-glyphs/256/search--v1.png" name="Search">
           </button>
-          <input name="pesquisa" type="search" placeholder="Pesquisar" >
+          <input name="pesquisa" type="search" placeholder="Pesquisar">
         </div>
         <div class="nav-item nav-item-right">
           <?php if (isset($_SESSION['authenticated'])) { ?>
@@ -53,6 +53,47 @@
   </header>
 
   <main>
+
+    <div class="container-home">
+      <section class="section-div">
+        <?php if ($_SESSION['produto'] != "") { ?>
+          <?php foreach ($_SESSION['produto'] as $produto) { ?>
+            <div class="container-div">
+
+              <div class="card-div">
+                <div class="header-div">
+                  <div class="bg-div"></div>
+                  <img class="img-div" src="<?= $produto->img ?>" alt="shoe">
+                </div>
+                <div class="bottom-div">
+                  <h1 onclick="produtoRed(<?= $produto->id ?>)" class="name-div"><?= $produto->nome ?></h1>
+                  <h3 class="price-div">R$<?= $produto->preco ?>.00</h3>
+                  <div class="description-div"><?= $produto->descricao ?></div>
+                  <?php if (isset($_SESSION['authenticated'])) {
+                    $_SESSION['id_produto'] = $produto->id; ?>
+                    <input type="hidden" name="idProduto" value="<?= $produto->id ?>">
+                    <input type="hidden" name="idUsuario" value="<?= $_SESSION['id'] ?>">
+                    <div class="quantity-div">
+                      <p>Quantidade:</p>
+                      <div class="input-div">
+                        <button onclick="degreeInput(<?= $produto->id ?>)" class="minus-btn" type="button" name="button">
+                          -
+                        </button>
+                        <input id="qtd-<?= $produto->id ?>" type="text" name="qtd" value="1">
+                        <button onclick="plusInput(<?= $produto->id ?>)" class="plus-btn" type="button" name="button">
+                          +
+                        </button>
+                      </div>
+                    </div>
+                    <button class="buy-div">Adicionar</button>
+                  <?php } ?>
+                </div>
+              </div>
+            </div>
+          <?php } ?>
+        <?php } ?>
+      </section>
+    </div>
 
   </main>
 
@@ -117,7 +158,7 @@
       </div>
     </aside>
   <?php } ?>
-    
+
   <footer>
     <div class="container">
       <div class="footer-start">
@@ -128,7 +169,7 @@
         </div>
         <div class="footer-info-box_center">
           <a href="#">
-            <img src="https://raw.githubusercontent.com/bystack/.github/main/banner.png" alt="">
+            <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
           </a>
         </div>
         <div class="footer-info-box_right">

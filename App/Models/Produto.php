@@ -8,6 +8,8 @@ class Produto extends Model {
     private $descricao;
     private $preco;
     private $img;
+    private $data_criacao;
+    private $data_alteração;
 
     public function __get($atributo) {
         return $this->$atributo;
@@ -22,7 +24,7 @@ class Produto extends Model {
     }
 
     public function listar() {
-        $query = "SELECT id, nome, descricao, preco, img FROM produtos";
+        $query = "SELECT id, nome, descricao, preco, img, data_criacao, data_alteracao FROM produtos";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -40,7 +42,7 @@ class Produto extends Model {
     }
 
     public function alterar() {
-        $query = "UPDATE produtos SET nome = :nome, descricao = :descricao, preco = :preco, img = :img WHERE id = :id";
+        $query = "UPDATE produtos SET nome = :nome, descricao = :descricao, preco = :preco, img = :img, data_alteracao = NOW() WHERE id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id', $this->__get('id'));
         $stmt->bindValue(':nome', $this->__get('nome'));
@@ -51,7 +53,7 @@ class Produto extends Model {
     }
 
     public function createProduto() {
-        $query = "INSERT INTO produtos (nome, descricao, preco, img) VALUES (:nome, :descricao, :preco, :img)";
+        $query = "INSERT INTO produtos (nome, descricao, preco, img, data_criacao, data_alteracao) VALUES (:nome, :descricao, :preco, :img, NOW(), null)";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':nome', $this->__get('nome'));
         $stmt->bindValue(':descricao', $this->__get('descricao'));
@@ -65,7 +67,7 @@ class Produto extends Model {
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id', $this->__get('id'));
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_OBJ);
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function pesquisarProduto() {

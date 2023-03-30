@@ -10,8 +10,11 @@
         public function createUsuario() {
             $usuario = Container::getModel('Usuario');
             $usuario->__set('nome', $_REQUEST['nome']);
+            $usuario->__set('nascimento', $_REQUEST['nascimento']);
+            $usuario->__set('telefone', $_REQUEST['telefone']);
             $usuario->__set('email', $_REQUEST['email']);
             $usuario->__set('senha', $_REQUEST['senha']);
+            $usuario->__set('foto', $_REQUEST['foto']);
             $usuario->createUsuario();
         }
         public function listarUsuarios() {
@@ -44,7 +47,7 @@
             $produto->__set('nome', $_POST['nome']);
             $produto->__set('descricao', $_POST['descricao']);
             $produto->__set('preco', $_POST['preco']);
-            $produto->__set('imagem', $_POST['imagem']);
+            $produto->__set('img', $_POST['img']);
             $produto->alterar();
         }
         public function deletarProduto() {
@@ -69,7 +72,12 @@
         public function pesquisarProduto($pesquisa) {
             $produto = Container::getModel('Produto');
             $produto->__set('nome', $pesquisa);
-            $_SESSION['pesquisar'] = $produto->pesquisarProduto();
+            if($produto->pesquisarProduto() == null) {
+                echo json_encode(['success' => false]);
+            } else {
+                $_SESSION['pesquisar'] = $produto->pesquisarProduto();
+                echo json_encode(['success' => true]);
+            }
         }
     }
 

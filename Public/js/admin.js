@@ -100,20 +100,17 @@ $('#sair').click(function(e) {
           .modal('show');
       });
 
-    $(".btnCadastro")
+    $(".btnCadastroProduto")
       .click(function() {
-        $("#modalCadastro")
-          .modal('show');
-      });
-    $(".btnEditar")
-      .click(function() {
-        $("#modalEditar")
-          .modal('show');
+        window.location.href = "http://localhost:3000/cadastroProduto";
       });
     $(".btnCadastroUsuario")
+    .click(function() {
+      window.location.href = "http://localhost:3000/cadastroUsuario";
+    });
+    $(".btnEditarUsuario")
       .click(function() {
-        $("#modalCadastroUsuario")
-          .modal('show');
+        window.location.href = "http://localhost:3000/editarUsuario";
       });
 
     $('#dropdownCategorias')
@@ -129,3 +126,35 @@ $('#sair').click(function(e) {
     $('#dropdownMedida')
       .dropdown();
   });
+
+  function produtoRed(id) {
+    $.ajax({
+      url: 'http://localhost:3000/produtoRedEdit',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        idProdutoEdit: id
+      },
+      success: function(data) {
+        if (data.success) {
+          window.location.href = 'http://localhost:3000/editarProduto';
+        }
+      }
+    });
+  }
+
+  function usuarioRed(id) {
+    $.ajax({
+      url: 'http://localhost:3000/usuarioRedEdit',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        idUsuarioEdit: id
+      },
+      success: function(data) {
+        if (data.success) {
+          window.location.href = 'http://localhost:3000/editarUsuario';
+        }
+      }
+    });
+  }

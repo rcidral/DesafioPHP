@@ -18,12 +18,13 @@ $(document).ready(function() {
       }
     });
   });
-  $('.add').click(function(e) {
+  $('.buy-div').click(function(e) {
     var idUsuario = $(this).parent().find('input[name="idUsuario"]').val();
     var idProduto = $(this).parent().find('input[name="idProduto"]').val();
     var qtd = $(this).parent().find('input[name="qtd"]').val();
     console.log(idUsuario);
     console.log(idProduto);
+    console.log(qtd);
     e.preventDefault();
     $.ajax({
       url: 'http://localhost:3000/adicionarCarrinho',
@@ -92,4 +93,15 @@ $(document).ready(function() {
         }
       }
     });
+  }
+  function degreeInput(id) {
+    var input = document.getElementById("qtd-" + id + "");
+    if (input.value > 1) {
+      input.value--;
+    }
+  }
+
+  function plusInput(id) {
+    var input = document.getElementById("qtd-" + id + "");
+    input.value++;
   }

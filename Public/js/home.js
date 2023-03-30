@@ -18,7 +18,7 @@ $(document).ready(function() {
       }
     });
   });
-  $('.add').click(function(e) {
+  $('.buy-div').click(function(e) {
     var idUsuario = $(this).parent().find('input[name="idUsuario"]').val();
     var idProduto = $(this).parent().find('input[name="idProduto"]').val();
     var qtd = $(this).parent().find('input[name="qtd"]').val();
@@ -39,7 +39,7 @@ $(document).ready(function() {
           window.location.href = 'http://localhost:3000/';
         }
       }
-    });
+    }); 
   });
   
   $('#sair').click(function(e) {
@@ -78,7 +78,6 @@ $(document).ready(function() {
     });
   });
   function produtoRed(id) {
-    console.log(id);
     $.ajax({
       url: 'http://localhost:3000/produtoRed',
       type: 'POST',
@@ -106,7 +105,21 @@ $(document).ready(function() {
       success: function(data) {
         if (data.success) {
           window.location.href = 'http://localhost:3000/';
+        } else {
+          alert("Produto não encontrado");
         }
       }
     });
   });
+  
+  function degreeInput(id) {
+    var input = document.getElementById("qtd-" + id + "");
+    if (input.value > 1) {
+      input.value--;
+    }
+  }
+
+  function plusInput(id) {
+    var input = document.getElementById("qtd-" + id + "");
+    input.value++;
+  }

@@ -47,13 +47,26 @@
             $UsuarioController->listarUsuarios();
             include "../App/Views/Admin/index.php";
             break;
+        
+        case '/cadastroProduto':
+            include "../App/Views/Produto/cadastro.php";
+            break;
         case '/updateProduto':
             $ProdutoController->alterarProduto();
             include "../App/Views/Admin/index.php";
             break;
-        case '/createProduto':
-            $ProdutoController->createProduto();
+        case '/cadastroUsuario':
+            include "../App/Views/Admin/cadastro.php";
+            break;
+        case '/editarUsuario':
+            include "../App/Views/Admin/editar.php";
+            break;
+        case '/updateProduto':
+            $ProdutoController->alterarProduto();
             include "../App/Views/Admin/index.php";
+            break;
+        case '/editarProduto':
+            include "../App/Views/Produto/editar.php";
             break;
         case '/deleteProduto':
             $ProdutoController->deletarProduto();
@@ -67,6 +80,11 @@
             $UsuarioController->createUsuario();
             include "../App/Views/Admin/index.php";
             break;
+        case '/createProduto':
+            $ProdutoController->createProduto();
+            echo json_encode(['success' => true]);
+            include "../App/Views/Admin/index.php";
+            break;
         case '/deleteUsuario':
             $UsuarioController->deletarUsuario();
             include "../App/Views/Admin/index.php";
@@ -76,6 +94,14 @@
             break;
         case '/produtoRed':
             $_SESSION['idProdutoSolo'] = $_REQUEST['idProdutoSolo'];
+            echo json_encode(['success' => true]);
+            break;
+        case '/produtoRedEdit':
+            $_SESSION['idProdutoEdit'] = $_REQUEST['idProdutoEdit'];
+            echo json_encode(['success' => true]);
+            break;
+        case '/usuarioRedEdit':
+            $_SESSION['idUsuarioEdit'] = $_REQUEST['idUsuarioEdit'];
             echo json_encode(['success' => true]);
             break;
         case '/produto':
@@ -91,8 +117,6 @@
             break;
         case '/pesquisar':
             $ProdutoController->pesquisarProduto($_REQUEST['pesquisar']);
-            /* $_SESSION['pesquisar'] = $_REQUEST['pesquisar']; */
-            echo json_encode(['success' => true]);
             break;
     }
 
