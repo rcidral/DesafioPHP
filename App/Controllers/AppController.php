@@ -1,6 +1,7 @@
 <?php
 
     $product = include "../App/Models/Produto.php";
+    $pedido = include "../App/Models/Pedido.php";
     $user = include "../App/Models/Usuario.php";
     $cart = include "../App/Models/Carrinho.php";
     $container = include "../App/Controllers/Container.php";
@@ -34,6 +35,11 @@
             $usuario->__set('id', $_REQUEST['id']);
             $usuario->deletar();
         }
+
+        public function listarUsuariosAdmin($qtd) {
+            $usuario = Container::getModel('Usuario');
+            return $usuario->listarUsuariosAdmin($qtd);
+        }
     }
 
     class ProdutoController {
@@ -62,6 +68,9 @@
             $produto->__set('descricao', $_REQUEST['descricao']);
             $produto->__set('preco', $_REQUEST['preco']);
             $produto->__set('img', $_REQUEST['img']);
+            $produto->__set('img1', $_REQUEST['img1']);
+            $produto->__set('img2', $_REQUEST['img2']);
+            $produto->__set('img3', $_REQUEST['img3']);
             $produto->createProduto();
         }
         public function listarProduto($id) {
@@ -110,6 +119,27 @@
         public function getPrecoCarrinho() {
             $carrinho = Container::getModel('Carrinho');
             $_SESSION['total'] = $carrinho->getPrecoCarrinho($_SESSION['id']);
+        }
+        public function removerItemCarrinho($id_produto, $id_usuario) {
+            $carrinho = Container::getModel('Carrinho');
+            $carrinho->__set('id_usuario', $id_usuario);
+            $carrinho->__set('id_produto', $id_produto);
+            $carrinho->removerItemCarrinho();
+            echo json_encode(['success' => true]);
+        }
+        public function finalizarCompra($id_usuario) {
+            $carrinho = Container::getModel('Carrinho');
+            $carrinho->__set('id_usuario', $id_usuario);
+            $carrinho->finalizarCompra();
+            echo json_encode(['success' => true]);
+        }
+    }
+
+    class PedidoController {
+        public function listarPedido($id) {
+            $pedido = Container::getModel('Pedido');
+            $pedido->__set('id_usuario', $id);
+            $_SESSION['pedidos'] = $pedido->listarPedido();
         }
     }
 

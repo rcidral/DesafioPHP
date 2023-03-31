@@ -52,48 +52,13 @@
   </header>
 
   <main>
-    <div class="container-home">
-    <div class="product-incorret">
-          <p>“Desculpe não encontramos o item procurado</p>
-        </div>
-      <section class="section-div">
-        
-        <?php if ($_SESSION['produtos'] != "") { ?>
-          <?php foreach ($_SESSION['produtos'] as $produto) { ?>
-            <div class="container-div">
-              <div class="card-div">
-                <div class="header-div">
-                  <div class="bg-div"></div>
-                  <img onclick="produtoRed(<?= $produto->id ?>)" class="img-div" src="data:image/png;base64,<?=$produto->img?>" alt="shoe">
-                </div>
-                <div class="bottom-div">
-                  <h1 onclick="produtoRed(<?= $produto->id ?>)" class="name-div"><?= $produto->nome ?></h1>
-                  <h3 class="price-div">R$<?= $produto->preco ?>.00</h3>
-                  <div onclick="produtoRed(<?= $produto->id ?>)" class="description-div"><?= $produto->descricao ?></div>
-                  <?php if (isset($_SESSION['authenticated'])) {
-                    $_SESSION['id_produto'] = $produto->id; ?>
-                    <input type="hidden" name="idProduto" value="<?= $produto->id ?>">
-                    <input type="hidden" name="idUsuario" value="<?= $_SESSION['id'] ?>">
-                    <div class="quantity-div">
-                      <p>Quantidade:</p>
-                      <div class="input-div">
-                        <button onclick="degreeInput(<?=$produto->id?>)" class="minus-btn" type="button" name="button">
-                          -
-                        </button>
-                        <input id="qtd-<?=$produto->id?>" type="text" name="qtd" value="1">
-                        <button onclick="plusInput(<?=$produto->id?>)" class="plus-btn" type="button" name="button">
-                          +
-                        </button>
-                      </div>
-                    </div>
-                    <button class="buy-div">Adicionar</button>
-                  <?php } ?>
-                </div>
-              </div>
-            </div>
-          <?php } ?>
-        <?php } ?>
-      </section>
+    
+  <div class="pedidoFinalizado">
+    <?php foreach($_SESSION['pedidos'] as $compraFinalizada) { ?>
+    <p>Compra finalizada com sucesso!</p>
+    <p>Id do Pedido: <?= $compraFinalizada->id ?></p>
+    
+    <?php } ?>
     </div>
 
   </main>
@@ -191,10 +156,3 @@
 <link rel="stylesheet" href="./style/home.css">
 
 </html>
-
-
-<style>
- 
-
-
-</style>

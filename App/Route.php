@@ -7,7 +7,7 @@
     $ProdutoController = new ProdutoController();
     $UsuarioController = new UsuarioController();
     $CarrinhoController = new CarrinhoController();
-
+    $PedidoController = new PedidoController();
     
     switch($urlPath) {
         case '/':
@@ -43,14 +43,16 @@
             echo json_encode(['success' => true]);
             break;
         case '/admin':
-            $UsuarioController->listarUsuarios();
+            $_SESSION['produtos'] = $ProdutoController->listarProdutosAdmin($_SESSION['pageNumber']);
+            $_SESSION['usuarios'] = $UsuarioController->listarUsuariosAdmin($_SESSION['pageNumber']);
             include "../App/Views/Admin/index.php";
             break;
         case '/refreshTable':
             if(!isset($_REQUEST['qtd']) || $_REQUEST['qtd'] == null) {
-                $_REQUEST['qtd'] = 15;
+                $_SESSION['pageNumber'] = 15;
+            } else {
+                $_SESSION['pageNumber'] = $_REQUEST['qtd'];
             }
-            $_SESSION['produtos'] = $ProdutoController->listarProdutosAdmin($_REQUEST['qtd']);
             break;
         case '/cadastroProduto':
             include "../App/Views/Produto/cadastro.php";
@@ -109,10 +111,9 @@
             echo json_encode(['success' => true]);
             break;
         case '/produto':
-            $_SESSION['id'] = "";
-            if($_SESSION['id'] != null) {
-                $id = $_SESSION['idProdutoSolo'];
-                $ProdutoController->listarProduto($id);
+            $id = $_SESSION['idProdutoSolo'];
+            $ProdutoController->listarProduto($id);
+            if(isset($_SESSION['id']) && $_SESSION['id'] != null ) {        
                 $CarrinhoController->listarQuantidadeDeProdutos();
                 $CarrinhoController->listarCarrinho();
                 $CarrinhoController->getPrecoCarrinho();
@@ -124,5 +125,15 @@
             break;
         case '/pesquisar':
             $ProdutoController->pesquisarProduto($_REQUEST['pesquisar']);
+            break;
+        case '/removerItemCarrinho':
+            $CarrinhoController->removerItemCarrinho($_REQUEST['idProdutoRemover'], $_REQUEST['idUsuarioRemover']);
+            break;
+        case '/finalizarCompra':
+            $CarrinhoController->finalizarCompra($_REQUEST['idUsuarioFinal']);
+            break;
+        case '/compraFinalizada': 
+            $PedidoController->listarPedido($_SESSION['id']);
+            include "../App/Views/Home/compraFinalizada.php";
             break;
     }

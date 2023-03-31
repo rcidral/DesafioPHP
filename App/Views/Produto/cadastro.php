@@ -34,6 +34,9 @@
                     <input id="descricao" type="text" name="descricao" placeholder="Descrição" required="required" />
                     <input id="preco" type="number" name="preco" placeholder="Preço" required="required" />
                     <input id="img" type="file" name="foto" placeholder="Foto" required="required" />
+                    <input id="img1" type="file" name="foto" placeholder="Foto" required="required" />
+                    <input id="img2" type="file" name="foto" placeholder="Foto" required="required" />
+                    <input id="img3" type="file" name="foto" placeholder="Foto" required="required" />
                     <button id="btn-salvar-produto" class="salvar">Salvar</button>
                     <div class="nothing">
                         <p id="msg">Preencha todos os campos</p>

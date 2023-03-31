@@ -27,7 +27,7 @@ class Carrinho extends Model {
     }
 
     public function listarCarrinhoUsuarioProdutos($id) {
-        $query = "SELECT COUNT(id_produto) AS quantidade, id_produto, nome, descricao, preco, img FROM carrinho INNER JOIN produtos ON carrinho.id_produto = produtos.id WHERE id_usuario = :id_usuario GROUP BY id_produto";
+        $query = "SELECT COUNT(id_produto) AS quantidade, carrinho.id, carrinho.id_usuario, carrinho.id_produto, produtos.nome, produtos.descricao, produtos.preco, produtos.img FROM carrinho INNER JOIN produtos ON carrinho.id_produto = produtos.id WHERE id_usuario = :id_usuario GROUP BY id_produto";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id_usuario', $id);
         $stmt->execute();
@@ -64,6 +64,45 @@ class Carrinho extends Model {
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
         $stmt->execute();
+    }
+    public function removerItemCarrinho() {
+        $query = "DELETE FROM carrinho WHERE id_usuario = :id_usuario AND id_produto = :id_produto";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+        $stmt->bindValue(':id_produto', $this->__get('id_produto'));
+        $stmt->execute();
+    }
+    public function finalizarCompra() {
+        $query = "SELECT id_produto FROM carrinho WHERE id_usuario = :id_usuario";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+        $stmt->execute();
+        $produto = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        $query = "INSERT INTO pedido (id_usuario) VALUES (:id_usuario)";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+        $stmt->execute();
+
+        $query = "SELECT id FROM pedido WHERE id_usuario = :id_usuario ORDER BY id DESC LIMIT 1";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+        $stmt->execute();
+        $id_pedido = $stmt->fetch(PDO::FETCH_OBJ);
+    
+
+        foreach($produto as $item) {
+            $query = "INSERT INTO pedido_item (id_pedido, id_produto) VALUES (:id_pedido, :id_produto)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_pedido', $id_pedido->id);
+            $stmt->bindValue(':id_produto', $item->id_produto);
+            $stmt->execute();
+        }
+
+
+
+     
+    
     }
     
 }

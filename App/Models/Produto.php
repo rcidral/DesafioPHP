@@ -8,6 +8,9 @@ class Produto extends Model {
     private $descricao;
     private $preco;
     private $img;
+    private $img1;
+    private $img2;
+    private $img3;
     private $data_criacao;
     private $data_alteração;
 
@@ -24,7 +27,7 @@ class Produto extends Model {
     }
 
     public function listar() {
-        $query = "SELECT id, nome, descricao, preco, img, data_criacao, data_alteracao FROM produtos";
+        $query = "SELECT id, nome, descricao, preco, img, img1, img2, img3 FROM produtos";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -53,17 +56,20 @@ class Produto extends Model {
     }
 
     public function createProduto() {
-        $query = "INSERT INTO produtos (nome, descricao, preco, img, data_criacao, data_alteracao) VALUES (:nome, :descricao, :preco, :img, NOW(), null)";
+        $query = "INSERT INTO produtos (nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao) VALUES (:nome, :descricao, :preco, :img, :img1, :img2, :img3, NOW(), null)";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':nome', $this->__get('nome'));
         $stmt->bindValue(':descricao', $this->__get('descricao'));
         $stmt->bindValue(':preco', $this->__get('preco'));
         $stmt->bindValue(':img', $this->__get('img'));
+        $stmt->bindValue(':img1', $this->__get('img1'));
+        $stmt->bindValue(':img2', $this->__get('img2'));
+        $stmt->bindValue(':img3', $this->__get('img3'));
         $stmt->execute();
     }
 
     public function listarProduto() {
-        $query = "SELECT id, nome, descricao, preco, img FROM produtos WHERE id = :id";
+        $query = "SELECT id, nome, descricao, preco, img, img1, img2, img3 FROM produtos WHERE id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id', $this->__get('id'));
         $stmt->execute();
@@ -71,7 +77,7 @@ class Produto extends Model {
     }
 
     public function pesquisarProduto() {
-        $query = "SELECT id, nome, descricao, preco, img FROM produtos WHERE nome LIKE :nome";
+        $query = "SELECT id, nome, descricao, preco, img, img1, img2, img3 FROM produtos WHERE nome LIKE :nome";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':nome', '%'.$this->__get('nome').'%');
         $stmt->execute();
@@ -79,7 +85,7 @@ class Produto extends Model {
     }
 
     public function listarProdutosAdmin($qtd) {
-        $query = "SELECT id, nome, descricao, preco, img, data_criacao, data_alteracao FROM produtos LIMIT " . $qtd;
+        $query = "SELECT id, nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao FROM produtos LIMIT $qtd";
         $stmt = $this->db->prepare($query);
         
         $stmt->execute();

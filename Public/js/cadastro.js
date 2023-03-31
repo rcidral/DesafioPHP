@@ -50,8 +50,11 @@ $('#btn-salvar-produto').click(function (e) {
     let descricao = $('#descricao').val();
     let preco = $('#preco').val();
     let img = $('#img').val();
+    let img1 = $('#img1').val();
+    let img2 = $('#img2').val();
+    let img3 = $('#img3').val();
 
-    if(nome == "" || descricao == "" || preco == "" || img == ""){
+    if(nome == "" || descricao == "" || preco == "" || img == "" || img1 == "" || img2 == "" || img3 == ""){
         document.getElementsByClassName("nothing")[0].style.display = "flex";
     } else {
 
@@ -59,7 +62,24 @@ $('#btn-salvar-produto').click(function (e) {
     const reader = new FileReader();
     reader.readAsDataURL(fileInput.files[0]);
     reader.onload = function () {
-        img = reader.result.split(',')[1];
+    img = reader.result.split(',')[1];
+
+    const fileInput1 = document.querySelector('#img1');
+    const reader1 = new FileReader();
+    reader1.readAsDataURL(fileInput1.files[0]);
+    reader1.onload = function () {
+    img1 = reader1.result.split(',')[1];
+
+    const fileInput2 = document.querySelector('#img2');
+    const reader2 = new FileReader();
+    reader2.readAsDataURL(fileInput2.files[0]);
+    reader2.onload = function () {
+    img2 = reader2.result.split(',')[1];
+
+    const fileInput3 = document.querySelector('#img3');
+    const reader3 = new FileReader();
+    reader3.readAsDataURL(fileInput3.files[0]);
+    reader3.onload = function () {
 
         $.ajax({
             url: 'http://localhost:3000/createProduto',
@@ -68,12 +88,18 @@ $('#btn-salvar-produto').click(function (e) {
                 nome: nome,
                 descricao: descricao,
                 preco: preco,
-                img
+                img,
+                img1,
+                img2,
+                img3
             },
             success: function (response) {
                 window.location.href = "http://localhost:3000/admin"
             },
         })
-    };
+    }
+    }
+    }
+    }
     }
 });

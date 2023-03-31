@@ -80,6 +80,13 @@ class Usuario extends Model {
         $stmt->bindValue(':foto', $this->__get('foto'));
         $stmt->execute();
     }
+
+    public function listarUsuariosAdmin($qtd) {
+        $query = "SELECT id, nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao FROM usuarios LIMIT $qtd";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
 }
 
 

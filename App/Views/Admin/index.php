@@ -30,7 +30,7 @@
 
 
   <main>
-    <div style="margin-top: 15px;" class="ui container">
+    <div id="tableProUser" style="margin-top: 15px;" class="ui container">
       <h1>Produtos</h1>
       <button class="ui button right floated teal btnCadastroProduto">Novo Produto</button>
       <table id="tableProdutos" class="ui table">
@@ -76,9 +76,9 @@
             <i class="remove icon"></i>
             Não
           </div>
-          <div class="ui green ok inverted button">
+          <div id="delete-yes" class="ui green ok inverted button">
             <i class="checkmark icon"></i>
-            <button style="border: none; background-color:transparent; color: white" id="delete-yes" onclick>Sim</button>
+            <button style="border: none; background-color:transparent; color: white" onclick>Sim</button>
           </div>
         </div>
       </div>
@@ -129,9 +129,9 @@
             <i class="remove icon"></i>
             Não
           </div>
-          <div class="ui green ok inverted button">
+          <div id="delete-yes-usuario" class="ui green ok inverted button">
             <i class="checkmark icon"></i>
-            <button style="border: none; background-color:transparent; color: white" id="delete-yes-usuario" onclick>Sim</button>
+            <button style="border: none; background-color:transparent; color: white" onclick>Sim</button>
           </div>
         </div>
       </div>

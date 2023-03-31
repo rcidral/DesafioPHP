@@ -53,47 +53,52 @@
   </header>
 
   <main>
-
-    <div class="container-home">
-      <section class="section-div">
-        <?php if ($_SESSION['produto'] != "") { ?>
-          <?php foreach ($_SESSION['produto'] as $produto) { ?>
-            <div class="container-div">
-
-              <div class="card-div">
-                <div class="header-div">
-                  <div class="bg-div"></div>
-                  <img class="img-div" src="<?= $produto->img ?>" alt="shoe">
-                </div>
-                <div class="bottom-div">
-                  <h1 onclick="produtoRed(<?= $produto->id ?>)" class="name-div"><?= $produto->nome ?></h1>
-                  <h3 class="price-div">R$<?= $produto->preco ?>.00</h3>
-                  <div class="description-div"><?= $produto->descricao ?></div>
-                  <?php if (isset($_SESSION['authenticated'])) {
-                    $_SESSION['id_produto'] = $produto->id; ?>
-                    <input type="hidden" name="idProduto" value="<?= $produto->id ?>">
-                    <input type="hidden" name="idUsuario" value="<?= $_SESSION['id'] ?>">
-                    <div class="quantity-div">
-                      <p>Quantidade:</p>
-                      <div class="input-div">
-                        <button onclick="degreeInput(<?= $produto->id ?>)" class="minus-btn" type="button" name="button">
-                          -
-                        </button>
-                        <input id="qtd-<?= $produto->id ?>" type="text" name="qtd" value="1">
-                        <button onclick="plusInput(<?= $produto->id ?>)" class="plus-btn" type="button" name="button">
-                          +
-                        </button>
-                      </div>
-                    </div>
-                    <button class="buy-div">Adicionar</button>
-                  <?php } ?>
-                </div>
+    <?php if ($_SESSION['produto'] != "") { ?>
+      <?php foreach ($_SESSION['produto'] as $produto) { ?>
+        <div class="container-home">
+          <div class="article-home">
+            <div class="carousel-home">
+              <div class="img">
+                <img src="data:image/png;base64,<?=$produto->img?>">
+                <img src="data:image/png;base64,<?=$produto->img1?>">
+                <img src="data:image/png;base64,<?=$produto->img2?>">
+                <img src="data:image/png;base64,<?=$produto->img3?>">
               </div>
+              <div class="span-cont"></div>
             </div>
-          <?php } ?>
-        <?php } ?>
-      </section>
-    </div>
+            <div class="description-home">
+              <h2><?= $produto->nome ?></h2>
+              <p>
+                <?= $produto->descricao ?>
+              </p>
+            </div>
+            <div class="achats">
+
+              <p>
+                R$<?= $produto->preco ?>.00
+              </p>
+              <?php if (isset($_SESSION['authenticated'])) {
+                $_SESSION['id_produto'] = $produto->id; ?>
+                <input type="hidden" name="idProduto" value="<?= $produto->id ?>">
+                <input type="hidden" name="idUsuario" value="<?= $_SESSION['id'] ?>">
+                <div class="quantity-div-home">
+                  <div class="input-div">
+                    <button onclick="degreeInput(<?= $produto->id ?>)" class="minus-btn" type="button" name="button">
+                      -
+                    </button>
+                    <input id="qtd-<?= $produto->id ?>" type="text" name="qtd" value="1">
+                    <button onclick="plusInput(<?= $produto->id ?>)" class="plus-btn" type="button" name="button">
+                      +
+                    </button>
+                  </div>
+                </div>
+                <button class="buy-div-home">Adicionar</button>
+              <?php } ?>
+            </div>
+          </div>
+        </div>
+      <?php } ?>
+    <?php } ?>
 
   </main>
 
@@ -114,13 +119,12 @@
             Carrinho
           </p>
         </div>
-
         <div class="cart-body">
           <div class="cart-body_content">
             <div class="cart-body_content-item">
               <?php foreach ($_SESSION['carrinho'] as $carrinho) { ?>
                 <div class="cart-body_content-item-info">
-                  <img style="width: 160px; position: relative; right: 70px" src="<?= $carrinho->img ?>" alt="">
+                  <img style="width: 160px; position: relative; right: 70px" src="data:image/png;base64,<?=$carrinho->img?>" alt="">
                   <p style="font-size: 15px; position: relative; right: 70px">
                     Nome: <?= $carrinho->nome ?>
                   </p>
@@ -130,6 +134,8 @@
                   <p style="font-size: 15px; position: relative; right: 70px; top:-15px;">
                     Quantidade: <?= $carrinho->quantidade ?>
                   </p>
+                  <button onclick="removerDoCarrinhoItem(<?=$carrinho->id_produto?>, <?=$carrinho->id_usuario?>)" class="remover-div">Remover</button>
+
                 </div>
                 <hr style="width: 200px; position: relative; right: 70px">
               <?php } ?>
@@ -146,13 +152,15 @@
         </div>
 
         <div class="cart-options">
-          <button>
+        <?php foreach ($_SESSION['carrinho'] as $carrinho) { ?>
+          <button onclick="buyCart(<?= $carrinho->id_usuario?>)" id="comprar">
             Comprar
           </button>
           <button id="limpar">
             Limpar
           </button>
         </div>
+        <?php } ?>
 
       </div>
       </div>

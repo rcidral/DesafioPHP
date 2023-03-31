@@ -77,6 +77,25 @@ $(document).ready(function() {
       }
     });
   });
+
+  function removerDoCarrinhoItem($idProduto, $idUsuario) {
+    console.log($idProduto);
+    console.log($idUsuario);
+    $.ajax({
+      url: 'http://localhost:3000/removerItemCarrinho',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        idProdutoRemover: $idProduto,
+        idUsuarioRemover: $idUsuario
+      },
+      success: function(data) {
+        if (data.success) {
+          window.location.href = 'http://localhost:3000/';
+        }
+      }
+    });
+  }
   function produtoRed(id) {
     $.ajax({
       url: 'http://localhost:3000/produtoRed',
@@ -124,3 +143,19 @@ $(document).ready(function() {
     var input = document.getElementById("qtd-" + id + "");
     input.value++;
   }
+
+function buyCart($id) {
+  $.ajax({
+    url: 'http://localhost:3000/finalizarCompra',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      idUsuarioFinal: $id
+    },
+    success: function(data) {
+      if (data.success) {
+        window.location.href = 'http://localhost:3000/compraFinalizada';
+      }
+    }
+  });
+}

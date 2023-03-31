@@ -3,7 +3,7 @@
 <body>
   <div class="container">
     <div class="header">
-      <img alt="Logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerS.png" class="logo" />
+      <img alt="Logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" class="logo" />
       <h1>your account for <br>everything ByStack</h1>
     </div>
 
