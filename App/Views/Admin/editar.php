@@ -42,7 +42,10 @@
                     <input id="senha" type="password" name="senha" placeholder="Senha" required="required" />
                     <input id="c_senha" type="password" name="c_senha" placeholder="Confirme sua senha" required="required" />
                     <input id="foto" type="file" name="foto" placeholder="Foto" required="required" />
-                    <button id="btn-editar" class="salvar">Salvar</button>
+                    <button id="btn-editar-usuario" class="salvar">Salvar</button>
+                    <div class="nothing">
+                        <p id="msg">Preencha todos os campos</p>
+                    </div>
                 </fieldset>
             </form>
 
@@ -52,7 +55,7 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-<script src="./js/editarUsuario.js"></script>
+<script src="./js/editar.js"></script>
 <link rel="stylesheet" href="./style/cadastroUsuario.css">
 
 </html>

@@ -43,11 +43,15 @@
             echo json_encode(['success' => true]);
             break;
         case '/admin':
-            $ProdutoController->listarProdutos();
             $UsuarioController->listarUsuarios();
             include "../App/Views/Admin/index.php";
             break;
-        
+        case '/refreshTable':
+            if(!isset($_REQUEST['qtd']) || $_REQUEST['qtd'] == null) {
+                $_REQUEST['qtd'] = 15;
+            }
+            $_SESSION['produtos'] = $ProdutoController->listarProdutosAdmin($_REQUEST['qtd']);
+            break;
         case '/cadastroProduto':
             include "../App/Views/Produto/cadastro.php";
             break;
@@ -105,11 +109,14 @@
             echo json_encode(['success' => true]);
             break;
         case '/produto':
-            $id = $_SESSION['idProdutoSolo'];
-            $ProdutoController->listarProduto($id);
-            $CarrinhoController->listarQuantidadeDeProdutos();
+            $_SESSION['id'] = "";
+            if($_SESSION['id'] != null) {
+                $id = $_SESSION['idProdutoSolo'];
+                $ProdutoController->listarProduto($id);
+                $CarrinhoController->listarQuantidadeDeProdutos();
                 $CarrinhoController->listarCarrinho();
                 $CarrinhoController->getPrecoCarrinho();
+            }
             include "../App/Views/Produto/index.php";
             break;
         case '/limparCarrinho':
@@ -119,7 +126,3 @@
             $ProdutoController->pesquisarProduto($_REQUEST['pesquisar']);
             break;
     }
-
-    
-
-?>

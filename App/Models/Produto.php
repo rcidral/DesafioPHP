@@ -77,6 +77,14 @@ class Produto extends Model {
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
+
+    public function listarProdutosAdmin($qtd) {
+        $query = "SELECT id, nome, descricao, preco, img, data_criacao, data_alteracao FROM produtos LIMIT " . $qtd;
+        $stmt = $this->db->prepare($query);
+        
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
     
 }
 

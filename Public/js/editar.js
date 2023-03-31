@@ -12,7 +12,37 @@ $('#sair').click(function (e) {
     });
 });
 
-$('#btn-editar').click(function (e) {
+$('#btn-editar-produto').click(function (e) {
+    e.preventDefault();
+    let id = $('#id').val();
+    let nome = $('#nome').val();
+    let descricao = $('#descricao').val();
+    let preco = $('#preco').val();
+    let img = $('#img').val();
+
+    if(nome == "" || descricao == "" || preco == "" || img == ""){
+        document.getElementsByClassName("nothing")[0].style.display = "flex";
+    } else {
+
+    $.ajax({
+        url: 'http://localhost:3000/updateProduto',
+        type: 'POST',
+        data: {
+            id: id,
+            nome: nome,
+            descricao: descricao,
+            preco: preco,
+            img: img
+        },
+        success: function (response) {
+            window.location.href = "http://localhost:3000/admin"
+        },
+    })
+    }
+});
+
+
+$('#btn-editar-usuario').click(function (e) {
     e.preventDefault();
     let id = $('#id').val();
     let nome = $('#nome').val();
@@ -24,10 +54,8 @@ $('#btn-editar').click(function (e) {
     let c_senha = $('#c_senha').val();
     let foto = $('#foto').val();
 
-    if (email != c_email) {
-        alert("Os emails não coincidem");
-    } else if (senha != c_senha) {
-        alert("As senhas não coincidem");
+    if(nome == "" || nascimento == "" || telefone == "" || email == "" || c_email == "" || senha == "" || c_senha == "" || foto == ""){
+        document.getElementsByClassName("nothing")[0].style.display = "flex";
     } else {
         $.ajax({
             url: 'http://localhost:3000/updateUsuario',

@@ -158,3 +158,45 @@ $('#sair').click(function(e) {
       }
     });
   }
+
+function change15() {
+  let qtd = 15;
+  $.ajax({
+    url: 'http://localhost:3000/refreshTable',
+    type: 'POST',
+    data: {
+      qtd: qtd
+    },
+    success: function(response) {
+      window.location.href = "http://localhost:3000/admin"
+    },
+  })
+}
+
+function change50() {
+  let qtd = 50;
+  $.ajax({
+    url: 'http://localhost:3000/refreshTable',
+    type: 'POST',
+    data: {
+      qtd: qtd
+    },
+    success: function(response) {
+      window.location.href = "http://localhost:3000/admin"
+    },
+  })
+}
+
+function change100() {
+  let qtd = 100;
+  $.ajax({
+    url: 'http://localhost:3000/refreshTable',
+    type: 'POST',
+    data: {
+      qtd: qtd
+    },
+    success: function(response) {
+      window.location.href = "http://localhost:3000/admin"
+    },
+  })
+}

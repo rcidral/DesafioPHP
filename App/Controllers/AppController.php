@@ -79,6 +79,10 @@
                 echo json_encode(['success' => true]);
             }
         }
+        public function listarProdutosAdmin($qtd) {
+            $produto = Container::getModel('Produto');
+            return $produto->listarProdutosAdmin($qtd);
+        }
     }
 
     class CarrinhoController {

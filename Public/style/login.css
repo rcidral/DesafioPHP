@@ -135,3 +135,18 @@
   input[type="checkbox"]:checked::before {
     transform: scale(1);
   }
+
+  .login-incorret {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+
+  .login-incorret p {
+    color: #ff0000;
+    font-size: 20px;
+    font-weight: 600;
+  }

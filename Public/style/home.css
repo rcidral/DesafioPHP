@@ -688,3 +688,16 @@ body {
       left: -35px;
     }
   }
+
+  .product-incorret {
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+  }
+
+  .product-incorret p {
+    font-size: 30px;
+    font-weight: 600;
+    color: #000;
+  }

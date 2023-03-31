@@ -53,14 +53,18 @@
 
   <main>
     <div class="container-home">
+    <div class="product-incorret">
+          <p>Produto não encontrado</p>
+        </div>
       <section class="section-div">
+        
         <?php if ($_SESSION['produtos'] != "") { ?>
           <?php foreach ($_SESSION['produtos'] as $produto) { ?>
             <div class="container-div">
               <div class="card-div">
                 <div class="header-div">
                   <div class="bg-div"></div>
-                  <img class="img-div" src="<?= $produto->img ?>" alt="shoe">
+                  <img class="img-div" src="data:image/png;base64,<?=$produto->img?>" alt="shoe">
                 </div>
                 <div class="bottom-div">
                   <h1 onclick="produtoRed(<?= $produto->id ?>)" class="name-div"><?= $produto->nome ?></h1>
@@ -116,7 +120,7 @@
             <div class="cart-body_content-item">
               <?php foreach ($_SESSION['carrinho'] as $carrinho) { ?>
                 <div class="cart-body_content-item-info">
-                  <img style="width: 160px; position: relative; right: 70px" src="<?= $carrinho->img ?>" alt="">
+                  <img style="width: 160px; position: relative; right: 70px" src="data:image/png;base64,<?=$carrinho->img?>" alt="">
                   <p style="font-size: 15px; position: relative; right: 70px">
                     Nome: <?= $carrinho->nome ?>
                   </p>
@@ -184,3 +188,11 @@
 <link rel="stylesheet" href="./style/home.css">
 
 </html>
+
+
+<style>
+ 
+
+
+
+</style>

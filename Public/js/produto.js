@@ -43,20 +43,6 @@ $(document).ready(function() {
     });
   });
   
-  $('#sair').click(function(e) {
-    e.preventDefault();
-    $.ajax({
-      url: 'http://localhost:3000/logout',
-      type: 'POST',
-      dataType: 'json',
-      success: function(data) {
-        if (data.success) {
-          window.location.href = 'http://localhost:3000/';
-        }
-      }
-    });
-  });
-
   function openCart() {
     document.getElementById("openCart").style.display = "block";
   }

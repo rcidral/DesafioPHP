@@ -106,7 +106,8 @@ $(document).ready(function() {
         if (data.success) {
           window.location.href = 'http://localhost:3000/';
         } else {
-          alert("Produto não encontrado");
+          document.getElementsByClassName("product-incorret")[0].style.display = "flex";
+          document.getElementsByClassName("section-div")[0].style.display = "none";
         }
       }
     });

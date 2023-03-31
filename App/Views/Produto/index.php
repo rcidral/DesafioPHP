@@ -2,7 +2,7 @@
 
 <body>
 
-<header>
+  <header>
     <div class="container">
       <div class="nav-bar">
         <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">

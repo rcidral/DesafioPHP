@@ -15,7 +15,7 @@ $('form').submit(function(e) {
                 if (data.success) {
                     window.location.href = 'http://localhost:3000/admin';
                 } else {
-                    alert('Usuário ou senha inválidos');
+                    document.getElementsByClassName("login-incorret")[0].style.display = "flex";
                 }
             }});
     } else {
@@ -31,7 +31,7 @@ $('form').submit(function(e) {
             if (data.success) {
                 window.location.href = 'http://localhost:3000/';
             } else {
-                alert('Usuário ou senha inválidos');
+                document.getElementsByClassName("login-incorret")[0].style.display = "flex";
             }
         }});
     }

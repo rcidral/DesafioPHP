@@ -38,7 +38,10 @@
                     <input id="descricao" type="text" name="descricao" placeholder="Descrição" required="required" />
                     <input id="preco" type="number" name="preco" placeholder="Preço" required="required" />
                     <input id="img" type="text" name="foto" placeholder="Foto" required="required" />
-                    <button id="btn-editar" class="salvar">Salvar</button>
+                    <button id="btn-editar-produto" class="salvar">Salvar</button>
+                    <div class="nothing">
+                        <p id="msg">Preencha todos os campos</p>
+                    </div>
                 </fieldset>
             </form>
 
@@ -47,7 +50,7 @@
 </body>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-<script src="./js/editarProduto.js"></script>
+<script src="./js/editar.js"></script>
 <link rel="stylesheet" href="./style/cadastroProduto.css">
 
 </html>
