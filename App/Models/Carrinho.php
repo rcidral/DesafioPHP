@@ -97,6 +97,11 @@ class Carrinho extends Model {
             $stmt->bindValue(':id_pedido', $id_pedido->id);
             $stmt->bindValue(':id_produto', $item->id_produto);
             $stmt->execute();
+
+            $query = "DELETE FROM carrinho WHERE id_usuario = :id_usuario";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+            $stmt->execute();
         }
 
 
