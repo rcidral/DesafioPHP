@@ -8,7 +8,7 @@ nascimento date not null,
 telefone varchar(140) not null,
 email varchar(140) not null,
 senha varchar(140) not null,
-foto blob,
+foto longblob,
 data_criacao DateTime not null,
 data_alteracao DateTime);
 
@@ -17,10 +17,10 @@ id int not null auto_increment primary key,
 nome varchar(140) not null,
 descricao varchar(140) not null,
 preco float not null ,
-img blob not null,
-img1 blob not null,
-img2 blob not null,
-img3 blob not null,
+img longblob not null,
+img1 longblob not null,
+img2 longblob not null,
+img3 longblob not null,
 data_criacao DateTime not null,
 data_alteracao DateTime);
 
