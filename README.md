@@ -6,3 +6,6 @@
 2. Execute o comando `cd DesafioPHP/Public`
 3. Execute o comando `php -S localhost:3000`
 4. Acesse o endereço `http://localhost:3000`
+5. Para acessar a área administrativa, acesse a área de login e utilize as seguintes credenciais:
+   - Email: admin@admin.com
+   - Senha: admin
