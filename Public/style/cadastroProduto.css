@@ -403,6 +403,13 @@ body {
   margin-top: 10px;
 }
 
+.png {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
 #msg {
   color: red;
   font-size: 14px;

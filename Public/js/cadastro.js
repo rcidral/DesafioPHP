@@ -23,8 +23,13 @@ $('#btn-salvar-usuario').click(function (e) {
     let c_senha = $('#c_senha').val();
     let foto = $('#foto').val();
 
+    
+
     if(nome == "" || nascimento == "" || telefone == "" || email == "" || c_email == "" || senha == "" || c_senha == "" || foto == ""){
         document.getElementsByClassName("nothing")[0].style.display = "flex";
+    } else { if(foto.endsWith(".png") == false){
+        document.getElementsByClassName("nothing")[0].style.display = "none";
+        document.getElementsByClassName("png")[0].style.display = "flex";
     } else {
         $.ajax({
             url: 'http://localhost:3000/createUsuario',
@@ -42,6 +47,7 @@ $('#btn-salvar-usuario').click(function (e) {
             },
         })
     }
+}
 });
 
 $('#btn-salvar-produto').click(function (e) {
@@ -53,9 +59,13 @@ $('#btn-salvar-produto').click(function (e) {
     let img1 = $('#img1').val();
     let img2 = $('#img2').val();
     let img3 = $('#img3').val();
-
+    
+    
     if(nome == "" || descricao == "" || preco == "" || img == "" || img1 == "" || img2 == "" || img3 == ""){
         document.getElementsByClassName("nothing")[0].style.display = "flex";
+    } else { if((img.endsWith(".png") == false) || (img1.endsWith(".png") == false) || (img2.endsWith(".png") == false) || (img3.endsWith(".png") == false)){
+        document.getElementsByClassName("nothing")[0].style.display = "none";
+        document.getElementsByClassName("png")[0].style.display = "flex";
     } else {
 
     const fileInput = document.querySelector('#img');
@@ -103,4 +113,5 @@ $('#btn-salvar-produto').click(function (e) {
     }
     }
     }
+}
 });

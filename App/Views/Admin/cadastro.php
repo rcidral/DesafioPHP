@@ -45,6 +45,9 @@
                     <div class="nothing">
                         <p id="msg">Preencha todos os campos</p>
                     </div>
+                    <div class="png">
+                        <p id="msg">Preencha todos os campos com imagens png</p>
+                    </div>
                 </fieldset>
             </form>
 
