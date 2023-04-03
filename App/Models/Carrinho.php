@@ -27,7 +27,7 @@ class Carrinho extends Model {
     }
 
     public function listarCarrinhoUsuarioProdutos($id) {
-        $query = "SELECT COUNT(id_produto) AS quantidade, carrinho.id, carrinho.id_usuario, carrinho.id_produto, produtos.nome, produtos.descricao, produtos.preco, produtos.img FROM carrinho INNER JOIN produtos ON carrinho.id_produto = produtos.id WHERE id_usuario = :id_usuario GROUP BY id_produto";
+        $query = "SELECT COUNT(id_produto) AS quantidade, carrinho.id, carrinho.id_usuario, carrinho.id_produto, produtos.nome, produtos.descricao, produtos.preco, produtos.img FROM carrinho INNER JOIN produtos ON carrinho.id_produto = produtos.id WHERE id_usuario = :id_usuario GROUP BY carrinho.id, carrinho.id_usuario, carrinho.id_produto, produtos.nome, produtos.descricao, produtos.preco, produtos.img";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id_usuario', $id);
         $stmt->execute();
