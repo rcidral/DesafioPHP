@@ -107,6 +107,7 @@
             $carrinho = Container::getModel('Carrinho');
             $carrinho->__set('id_usuario', $_REQUEST['id_usuario']);
             $carrinho->__set('id_produto', $_REQUEST['id_produto']);
+            $carrinho->__set('quantidade', $_REQUEST['qtd']);
             $carrinho->adicionarCarrinho();
             echo json_encode(['success' => true]);
         }

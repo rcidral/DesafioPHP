@@ -6,6 +6,7 @@ class Carrinho extends Model {
     private $id;
     private $id_usuario;
     private $id_produto;
+    private $quantidade;
 
     public function __get($atributo) {
         return $this->$atributo;
@@ -20,18 +21,19 @@ class Carrinho extends Model {
     }
 
     public function listar() {
-        $query = "SELECT id, id_usuario, id_produto FROM carrinho";
+        $query = "SELECT id, id_usuario, id_produto, quantidade FROM carrinho";
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function listarCarrinhoUsuarioProdutos($id) {
-        $query = "SELECT COUNT(id_produto) AS quantidade, carrinho.id, carrinho.id_usuario, carrinho.id_produto, produtos.nome, produtos.descricao, produtos.preco, produtos.img FROM carrinho INNER JOIN produtos ON carrinho.id_produto = produtos.id WHERE id_usuario = :id_usuario GROUP BY carrinho.id, carrinho.id_usuario, carrinho.id_produto, produtos.nome, produtos.descricao, produtos.preco, produtos.img";
+        $query = "SELECT * FROM carrinho INNER JOIN produtos ON carrinho.id_produto = produtos.id WHERE id_usuario = :id_usuario";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id_usuario', $id);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_OBJ);
+    
     }
 
     public function getPrecoCarrinho($id) {
@@ -51,13 +53,12 @@ class Carrinho extends Model {
     }
 
     public function adicionarCarrinho() {
-        for($i = 0; $i <= ($_REQUEST['quantidade'] -1 ); $i++) {
-        $query = "INSERT INTO carrinho (id_usuario, id_produto) VALUES (:id_usuario, :id_produto)";
+        $query = "INSERT INTO carrinho (id_usuario, id_produto, quantidade) VALUES (:id_usuario, :id_produto, :quantidade)";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
         $stmt->bindValue(':id_produto', $this->__get('id_produto'));
+        $stmt->bindValue(':quantidade', $this->__get('quantidade'));
         $stmt->execute();
-        }
     }
     public function limparCarrinho() {
         $query = "DELETE FROM carrinho WHERE id_usuario = :id_usuario";

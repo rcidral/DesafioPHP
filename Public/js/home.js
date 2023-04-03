@@ -22,8 +22,6 @@ $(document).ready(function() {
     var idUsuario = $(this).parent().find('input[name="idUsuario"]').val();
     var idProduto = $(this).parent().find('input[name="idProduto"]').val();
     var qtd = $(this).parent().find('input[name="qtd"]').val();
-    console.log(idUsuario);
-    console.log(idProduto);
     e.preventDefault();
     $.ajax({
       url: 'http://localhost:3000/adicionarCarrinho',
@@ -32,7 +30,7 @@ $(document).ready(function() {
       data: {
         id_usuario: idUsuario,
         id_produto: idProduto,
-        quantidade: qtd
+        qtd: qtd
       },
       success: function(data) {
         if (data.success) {

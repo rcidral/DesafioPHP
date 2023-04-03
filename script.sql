@@ -28,6 +28,7 @@ create table carrinho(
 id int not null auto_increment primary key,
 id_usuario int not null,
 id_produto int,
+quantidade int,
 foreign key (id_usuario) references usuarios(id),
 foreign key (id_produto) references produtos(id));
 
