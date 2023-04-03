@@ -80,6 +80,7 @@ $('#btn-salvar-produto').click(function (e) {
     const reader3 = new FileReader();
     reader3.readAsDataURL(fileInput3.files[0]);
     reader3.onload = function () {
+    img3 = reader3.result.split(',')[1];
 
         $.ajax({
             url: 'http://localhost:3000/createProduto',
