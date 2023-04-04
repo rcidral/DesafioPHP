@@ -5,8 +5,11 @@
         <div class="container">
             <div class="nav-bar">
                 <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">
-                    <a href="#">
+                    <a href="/admin">
                         <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
+                    </a>
+                    <a style="margin-right: 100%;" id="produtos-id" href="/admin" class="nav-link">
+                        Voltar
                     </a>
                 </div>
                 <div class="nav-item nav-item-right">
@@ -33,10 +36,13 @@
                     <input id="nome" type="text" name="nome" placeholder="Nome" required="required" />
                     <input id="descricao" type="text" name="descricao" placeholder="Descrição" required="required" />
                     <input id="preco" type="number" name="preco" placeholder="Preço" required="required" />
-                    <input id="img" type="file" name="foto" placeholder="Foto" required="required" />
-                    <input id="img1" type="file" name="foto" placeholder="Foto" required="required" />
-                    <input id="img2" type="file" name="foto" placeholder="Foto" required="required" />
-                    <input id="img3" type="file" name="foto" placeholder="Foto" required="required" />
+                    <h4>Fotos</h4>
+                    <h5>Principal: </h5>
+                    <input id="img" type="file" accept=".png" name="foto" placeholder="Foto" required="required" />
+                    <h5>Secundárias: </h5>
+                    <input id="img1" type="file" accept=".png" name="foto" placeholder="Foto" required="required" />
+                    <input id="img2" type="file" accept=".png" name="foto" placeholder="Foto" required="required" />
+                    <input id="img3" type="file" accept=".png" name="foto" placeholder="Foto" required="required" />
                     <button id="btn-salvar-produto" class="salvar">Salvar</button>
                     <div class="nothing">
                         <p id="msg">Preencha todos os campos</p>
@@ -44,6 +50,7 @@
                     <div class="png">
                         <p id="msg">Preencha todos os campos com imagens png</p>
                     </div>
+        
                 </fieldset>
             </form>
         </section>
@@ -55,3 +62,7 @@
 <link rel="stylesheet" href="./style/cadastroProduto.css">
 
 </html>
+
+<style>
+ 
+</style>

@@ -45,15 +45,46 @@ class Produto extends Model {
     }
 
     public function alterar() {
-        $query = "UPDATE produtos SET nome = :nome, descricao = :descricao, preco = :preco, img = :img, data_alteracao = NOW() WHERE id = :id";
+        $img = "";
+        if($this->__get('img') != "") {
+            $img = "img = :img,";
+        }
+        $img1 = "";
+        if($this->__get('img1') != "") {
+            $img1 = "img1 = :img1,";
+        }
+        $img2 = "";
+        if($this->__get('img2') != "") {
+            $img2 = "img2 = :img2,";
+        }
+        $img3 = "";
+        if($this->__get('img3') != "") {
+            $img3 = "img3 = :img3,";
+        }
+        $query = "UPDATE produtos SET nome = :nome, descricao = :descricao, preco = :preco, $img $img1 $img2 $img3 data_alteracao = NOW() WHERE id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id', $this->__get('id'));
+        $id = $this->__get('id');
         $stmt->bindValue(':nome', $this->__get('nome'));
         $stmt->bindValue(':descricao', $this->__get('descricao'));
         $stmt->bindValue(':preco', $this->__get('preco'));
-        $stmt->bindValue(':img', $this->__get('img'));
+        if($img != "") {
+            $stmt->bindValue(':img', $this->__get('img'));
+        }
+        if($img1 != "") {
+            $stmt->bindValue(':img1', $this->__get('img1'));
+        }
+        if($img2 != "") {
+            $stmt->bindValue(':img2', $this->__get('img2'));
+        }
+        if($img3 != "") {
+            $stmt->bindValue(':img3', $this->__get('img3'));
+        }
+        
         $stmt->execute();
     }
+
+ 
 
     public function createProduto() {
         $query = "INSERT INTO produtos (nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao) VALUES (:nome, :descricao, :preco, :img, :img1, :img2, :img3, NOW(), null)";

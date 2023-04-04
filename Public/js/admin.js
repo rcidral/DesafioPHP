@@ -159,13 +159,13 @@ $('#sair').click(function(e) {
     });
   }
 
-function change15() {
+function change15User() {
   let qtd = 15;
   $.ajax({
-    url: 'http://localhost:3000/refreshTable',
+    url: 'http://localhost:3000/refreshTableUser',
     type: 'POST',
     data: {
-      qtd: qtd
+      qtdUser: qtd
     },
     success: function(response) {
       window.location.href = "http://localhost:3000/admin"
@@ -173,13 +173,13 @@ function change15() {
   })
 }
 
-function change50() {
+function change50User() {
   let qtd = 50;
   $.ajax({
-    url: 'http://localhost:3000/refreshTable',
+    url: 'http://localhost:3000/refreshTableUser',
     type: 'POST',
     data: {
-      qtd: qtd
+      qtdUser: qtd
     },
     success: function(response) {
       window.location.href = "http://localhost:3000/admin"
@@ -187,13 +187,55 @@ function change50() {
   })
 }
 
-function change100() {
+function change100User() {
   let qtd = 100;
   $.ajax({
-    url: 'http://localhost:3000/refreshTable',
+    url: 'http://localhost:3000/refreshTableUser',
     type: 'POST',
     data: {
-      qtd: qtd
+      qtdUser: qtd
+    },
+    success: function(response) {
+      window.location.href = "http://localhost:3000/admin"
+    },
+  })
+}
+
+function change15Product() {
+  let qtd = 15;
+  $.ajax({
+    url: 'http://localhost:3000/refreshTableProduct',
+    type: 'POST',
+    data: {
+      qtdProduct: qtd
+    },
+    success: function(response) {
+      window.location.href = "http://localhost:3000/admin"
+    },
+  })
+}
+
+function change50Product() {
+  let qtd = 50;
+  $.ajax({
+    url: 'http://localhost:3000/refreshTableProduct',
+    type: 'POST',
+    data: {
+      qtdProduct: qtd
+    },
+    success: function(response) {
+      window.location.href = "http://localhost:3000/admin"
+    },
+  })
+}
+
+function change100Product() {
+  let qtd = 100;
+  $.ajax({
+    url: 'http://localhost:3000/refreshTableProduct',
+    type: 'POST',
+    data: {
+      qtdProduct: qtd
     },
     success: function(response) {
       window.location.href = "http://localhost:3000/admin"

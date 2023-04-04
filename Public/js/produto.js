@@ -20,36 +20,35 @@ $('#sair').click(function (e) {
 });
 $('.buy-div-home').click(function (e) {
   var idUsuario = $(this).parent().find('input[name="idUsuario"]').val();
-  var idProduto = $(this).parent().find('input[name="idProduto"]').val();
-  var qtd = $(this).parent().find('input[name="qtd"]').val();
-  console.log(idUsuario);
-  console.log(idProduto);
-  console.log(qtd);
-  e.preventDefault();
-  $.ajax({
-    url: 'http://localhost:3000/adicionarCarrinho',
-    type: 'POST',
-    dataType: 'json',
-    data: {
-      id_usuario: idUsuario,
-      id_produto: idProduto,
-      quantidade: qtd
-    },
-    success: function (data) {
-      if (data.success) {
-        window.location.href = 'http://localhost:3000/';
+    var idProduto = $(this).parent().find('input[name="idProduto"]').val();
+    var qtd = $(this).parent().find('input[name="qtd"]').val();
+    e.preventDefault();
+    $.ajax({
+      url: 'http://localhost:3000/adicionarCarrinho',
+      type: 'POST',
+      dataType: 'json',
+      data: {
+        id_usuario: idUsuario,
+        id_produto: idProduto,
+        qtd: qtd
+      },
+      success: function(data) {
+        if (data.success) {
+          window.location.href = 'http://localhost:3000/produto';
+        }
       }
-    }
+    }); 
   });
-});
 
-function openCart() {
-  document.getElementById("openCart").style.display = "block";
-}
+  function openCart() {
+    document.getElementById("openCart").classList.remove("closeCart")
+    document.getElementById("openCart").classList.add("showCart")
+  }
 
-function closeCart() {
-  document.getElementById("openCart").style.display = "none";
-}
+  function closeCart() {
+    document.getElementById("openCart").classList.remove("showCart")
+    document.getElementById("openCart").classList.add("closeCart")
+  }
 
 $('#limpar').click(function (e) {
   e.preventDefault();
@@ -143,8 +142,45 @@ function removerDoCarrinhoItem($idProduto, $idUsuario) {
     },
     success: function(data) {
       if (data.success) {
-        window.location.href = 'http://localhost:3000/';
+        window.location.href = 'http://localhost:3000/produto';
       }
     }
+  });
+}
+
+function degreeInputCart(id) {
+  var input = document.getElementById("qtdCart-" + id + "");
+  if (input.value > 1) {
+    input.value--;
+  }
+
+  var value = input.value;
+  var idProduto = id;
+
+  $.ajax({
+    url: 'http://localhost:3000/degreeCarrinho',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      idProdutoDegree: idProduto,
+      value: value
+    },
+  });
+}
+
+function plusInputCart(id) {
+  var input = document.getElementById("qtdCart-" + id + "");
+  input.value++;
+
+  var value = input.value;
+  var idProduto = id;
+  $.ajax({
+    url: 'http://localhost:3000/plusCarrinho',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      idProdutoPlus: idProduto,
+      value: value
+    },
   });
 }

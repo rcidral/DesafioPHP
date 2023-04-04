@@ -17,6 +17,9 @@ header {
   background-color: #fff;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+  position: fixed;
+    top: 0;
+    z-index: 1;
 }
 
 nav {
@@ -35,7 +38,7 @@ main {
   min-height: 900px
 }
 
-aside {
+#openCart {
   width: 400px;
   height: 100%;
   min-height: auto;
@@ -46,18 +49,22 @@ aside {
   background-color: #ffffff;
   border: 0.5px solid #c7c7c7;
   position: fixed;
-  right: 0;
+  right: -405px;
   top: 0;
   bottom: 0;
   z-index: 999;
-  /* transform: translateX(100%); */
-  transform: translateX(0%);
-  transition: all 0.5s ease;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
 }
 
 .showCart {
-  transform: translateX(100%);
+  transform: translateX(-405px);
+  transition-duration: 0.6s;
+  
+}
+
+.closeCart {
+  transform: translateX(0%);
+  transition-duration: 0.6s;
 }
 
 .container-cart {
@@ -707,4 +714,57 @@ footer {
   height: 30px;
   font-size: 15px;
   cursor: pointer;
+}
+
+.quantity-div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5em;
+  border-radius: 50px;
+}
+
+.quantity-div .input {
+  border: 1px solid #c7c7c7;
+  border-radius: 50px;
+}
+.quantity-div p {
+  margin-right: 0.5em;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.quantity-div input {
+  width: 2em;
+  text-align: center;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.quantity-div .minus-btn, .quantity-div .plus-btn {
+  width: 2em;
+  height: 2em;
+  border: none;
+  outline: none;
+  background-color: #ff9800;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.quantity-div .minus-btn {
+  border-radius: 50px 0 0 50px;
+}
+
+.quantity-div .plus-btn {
+  border-radius: 0 50px 50px 0;
+}
+
+.quantity-div button:hover {
+  background-color: #ff6f00;
 }

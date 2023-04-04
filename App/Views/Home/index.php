@@ -5,7 +5,7 @@
     <div class="container">
       <div class="nav-bar">
         <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">
-          <a href="#">
+          <a href="/">
             <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
           </a>
           <a id="produtos-id" href="/" class="nav-link">
@@ -16,7 +16,7 @@
           <button id="pesquisar" type="submit">
             <img src="https://img.icons8.com/ios-glyphs/256/search--v1.png" name="Search">
           </button>
-          <input name="pesquisa" type="search" placeholder="Pesquisar">
+          <input id="pesquisa" name="pesquisa" type="search" placeholder="Pesquisar">
         </div>
         <div class="nav-item nav-item-right">
           <?php if (isset($_SESSION['authenticated'])) { ?>
@@ -54,7 +54,7 @@
   <main>
     <div class="container-home">
     <div class="product-incorret">
-          <p>“Desculpe não encontramos o item procurado</p>
+          <p>Desculpe não encontramos o item procurado</p>
         </div>
       <section class="section-div">
         
@@ -67,7 +67,7 @@
                   <img onclick="produtoRed(<?= $produto->id ?>)" class="img-div" src="data:image/png;base64,<?=$produto->img?>" alt="shoe">
                 </div>
                 <div class="bottom-div">
-                  <h1 onclick="produtoRed(<?= $produto->id ?>)" class="name-div"><?= $produto->nome ?></h1>
+                  <h1 style="" onclick="produtoRed(<?= $produto->id ?>)" class="name-div"><?= $produto->nome ?></h1>
                   <h3 class="price-div">R$<?= $produto->preco ?>.00</h3>
                   <div onclick="produtoRed(<?= $produto->id ?>)" class="description-div"><?= $produto->descricao ?></div>
                   <?php if (isset($_SESSION['authenticated'])) {
@@ -98,7 +98,7 @@
 
   </main>
   <?php if (isset($_SESSION['authenticated'])) { ?>
-    <aside style="display: none;" id="openCart">
+    <aside class="closeCart" id="openCart">
       <div class="container-cart">
         <div class="cart-button_toggle">
           <button onclick="closeCart()">
@@ -127,9 +127,18 @@
                   <p style="font-size: 15px; position: relative; right: 70px; top:-10px;">
                     Preço: R$ <?= $carrinho->preco ?>
                   </p>
-                  <p style="font-size: 15px; position: relative; right: 70px; top:-15px;">
-                    Quantidade: <?= $carrinho->quantidade ?>
-                  </p>
+                  <div style="position: relative; top: -25px; right: 70px;" class="quantity-div">
+                      <p>Quantidade:</p>
+                      <div class="input-div">
+                        <button onclick="degreeInputCart(<?=$carrinho->id_produto?>)" class="minus-btn" type="button" name="button">
+                          -
+                        </button>
+                        <input id="qtdCart-<?=$carrinho->id_produto?>" type="text" name="qtd" value="<?= $carrinho->quantidade ?>">
+                        <button onclick="plusInputCart(<?=$carrinho->id_produto?>)" class="plus-btn" type="button" name="button">
+                          +
+                        </button>
+                      </div>
+                    </div>
                   <button onclick="removerDoCarrinhoItem(<?=$carrinho->id_produto?>, <?=$carrinho->id_usuario?>)" class="remover-div">Remover</button>
                 </div>
                 <hr style="width: 200px; position: relative; right: 70px">
@@ -141,21 +150,19 @@
               Total
             </div>
             <div class="cart-footer-price">
-              R$ <?= $_SESSION['total']->preco ?>.00
+              R$ <?= $_SESSION['total']->preco ?>
             </div>
           </div>
         </div>
 
         <div class="cart-options">
-        <?php foreach ($_SESSION['carrinho'] as $carrinho) { ?>
-          <button onclick="buyCart(<?= $carrinho->id_usuario?>)" id="comprar">
+          <button onclick="buyCart(<?=$_SESSION['id']?>)" id="comprar">
             Comprar
           </button>
           <button id="limpar">
             Limpar
           </button>
-        </div>
-        <?php } ?>
+              </div>
 
       </div>
       </div>
@@ -171,7 +178,7 @@
           </p>
         </div>
         <div class="footer-info-box_center">
-          <a href="#">
+          <a href="/">
             <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
           </a>
         </div>

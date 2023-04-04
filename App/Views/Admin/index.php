@@ -8,7 +8,7 @@
       <div class="container">
         <div class="nav-bar">
           <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">
-            <a href="#">
+            <a href="/admin">
               <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
             </a>
           </div>
@@ -62,6 +62,11 @@
           <?php } ?>
         </tbody>
       </table>
+      <div class="options">
+      <button onclick="change15Product()">15</button>
+      <button onclick="change50Product()">50</button>
+      <button onclick="change100Product()">100</button>
+    </div>
       <!-- Modal de Confirmação de Exclusão -->
       <div id="modalConfirmacaoExclusao" class="ui basic modal">
         <div class="ui icon header">
@@ -115,7 +120,11 @@
         </tbody>
         
       </table>
-    
+      <div class="options">
+      <button onclick="change15User()">15</button>
+      <button onclick="change50User()">50</button>
+      <button onclick="change100User()">100</button>
+      </div>
       <div id="modalConfirmacaoExclusaoUsuario" class="ui basic modal">
         <div class="ui icon header">
           <i class="archive icon"></i>
@@ -135,15 +144,34 @@
           </div>
         </div>
       </div>
-      <div class="options">
-      <button onclick="change15()">15</button>
-      <button onclick="change50()">50</button>
-      <button onclick="change100()">100</button>
-    </div>
+      
       <!-- FIM Modal de Confirmação de Exclusão -->
     </div>
     
   </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-start">
+        <div class="footer-info-box_left">
+          <p>
+            &copy; 2023 ByStack. Todos os direitos reservados.
+          </p>
+        </div>
+        <div class="footer-info-box_center">
+          <a href="/">
+            <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
+          </a>
+        </div>
+        <div class="footer-info-box_right">
+          <a href="/">
+            bystack
+          </a>
+        </div>
+      </div>
+    </div>
+    </div>
+  </footer>
 </body>
 
 

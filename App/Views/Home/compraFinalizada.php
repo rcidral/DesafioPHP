@@ -5,7 +5,7 @@
     <div class="container">
       <div class="nav-bar">
         <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">
-          <a href="#">
+          <a href="/">
             <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
           </a>
           <a id="produtos-id" href="/" class="nav-link">
@@ -27,7 +27,7 @@
                   <path d="M20 5H4a2 2 0 0 0-2 2v13a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V7a2 2 0 0 0-2-2zm0 15a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7h16z"></path>
                 </svg>
               </button>
-              <span id="badge"><?php echo $_SESSION['quantidade']->quantidade ?></span>
+              <span id="badge">0</span>
             </div>
           <?php } ?>
           <?php if (!isset($_SESSION['authenticated'])) { ?>
@@ -85,19 +85,17 @@
             <div class="cart-body_content-item">
               <?php foreach ($_SESSION['carrinho'] as $carrinho) { ?>
                 <div class="cart-body_content-item-info">
-                  <img style="width: 160px; position: relative; right: 70px" src="data:image/png;base64,<?=$carrinho->img?>" alt="">
                   <p style="font-size: 15px; position: relative; right: 70px">
-                    Nome: <?= $carrinho->nome ?>
+                
                   </p>
                   <p style="font-size: 15px; position: relative; right: 70px; top:-10px;">
-                    Preço: R$ <?= $carrinho->preco ?>
+           
                   </p>
                   <p style="font-size: 15px; position: relative; right: 70px; top:-15px;">
-                    Quantidade: <?= $carrinho->quantidade ?>
+                 
                   </p>
-                  <button onclick="removerDoCarrinhoItem(<?=$carrinho->id_produto?>, <?=$carrinho->id_usuario?>)" class="remover-div">Remover</button>
                 </div>
-                <hr style="width: 200px; position: relative; right: 70px">
+
               <?php } ?>
             </div>
           </div>
@@ -106,7 +104,7 @@
               Total
             </div>
             <div class="cart-footer-price">
-              R$ <?= $_SESSION['total']->preco ?>.00
+   
             </div>
           </div>
         </div>
@@ -136,7 +134,7 @@
           </p>
         </div>
         <div class="footer-info-box_center">
-          <a href="#">
+          <a href="/">
             <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
           </a>
         </div>

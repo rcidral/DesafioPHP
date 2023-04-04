@@ -13,7 +13,8 @@
             $_SESSION['authenticated'] = true;
             $_SESSION['nome'] = $usuario->__get('nome');
             $_SESSION['id'] = $usuario->__get('id'); 
-            $_SESSION['pageNumber'] = 15;
+            $_SESSION['pageNumberUser'] = 15;
+            $_SESSION['pageNumberProduct'] = 15;
             $_SESSION['idProdutosCarrinhoBy'] = [];
             $_SESSION['compraFinalizada'] = "";
             echo json_encode(['success' => true]);

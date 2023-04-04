@@ -55,11 +55,13 @@ $(document).ready(function() {
   });
 
   function openCart() {
-    document.getElementById("openCart").style.display = "block";
+    document.getElementById("openCart").classList.remove("closeCart")
+    document.getElementById("openCart").classList.add("showCart")
   }
 
   function closeCart() {
-    document.getElementById("openCart").style.display = "none";
+    document.getElementById("openCart").classList.remove("showCart")
+    document.getElementById("openCart").classList.add("closeCart")
   }
 
   $('#limpar').click(function(e) {
@@ -75,6 +77,8 @@ $(document).ready(function() {
       }
     });
   });
+
+
 
   function removerDoCarrinhoItem($idProduto, $idUsuario) {
     console.log($idProduto);
@@ -109,6 +113,13 @@ $(document).ready(function() {
       }
     });
   }
+
+  $("#pesquisa").keyup(function(event) {
+    if (event.keyCode === 13) {
+      $("#pesquisar").click();
+    }
+  });
+
   $("#pesquisar").click(function(e) {
     e.preventDefault();
     var pesquisa = $(this).parent().find('input[name="pesquisa"]').val();
@@ -157,3 +168,41 @@ function buyCart($id) {
     }
   });
 }
+
+function degreeInputCart(id) {
+  var input = document.getElementById("qtdCart-" + id + "");
+  if (input.value > 1) {
+    input.value--;
+  }
+
+  var value = input.value;
+  var idProduto = id;
+
+  $.ajax({
+    url: 'http://localhost:3000/degreeCarrinho',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      idProdutoDegree: idProduto,
+      value: value
+    },
+  });
+}
+
+function plusInputCart(id) {
+  var input = document.getElementById("qtdCart-" + id + "");
+  input.value++;
+
+  var value = input.value;
+  var idProduto = id;
+  $.ajax({
+    url: 'http://localhost:3000/plusCarrinho',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+      idProdutoPlus: idProduto,
+      value: value
+    },
+  });
+}
+

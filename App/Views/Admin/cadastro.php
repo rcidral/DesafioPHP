@@ -6,8 +6,11 @@
         <div class="container">
             <div class="nav-bar">
                 <div id="logo-id" class="nav-item nav-item-hidden nav-item-left">
-                    <a href="#">
+                    <a href="/admin">
                         <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="">
+                    </a>
+                    <a style="margin-right: 100%;" id="produtos-id" href="/admin" class="nav-link">
+                        Voltar
                     </a>
                 </div>
                 <div class="nav-item nav-item-right">

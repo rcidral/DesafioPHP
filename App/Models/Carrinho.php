@@ -53,12 +53,29 @@ class Carrinho extends Model {
     }
 
     public function adicionarCarrinho() {
-        $query = "INSERT INTO carrinho (id_usuario, id_produto, quantidade) VALUES (:id_usuario, :id_produto, :quantidade)";
+        $query = "SELECT id_produto FROM carrinho WHERE id_usuario = :id_usuario AND id_produto = :id_produto";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
         $stmt->bindValue(':id_produto', $this->__get('id_produto'));
-        $stmt->bindValue(':quantidade', $this->__get('quantidade'));
         $stmt->execute();
+        $produtos = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+        if(!empty($produtos)) {
+            $query = "UPDATE carrinho SET quantidade = quantidade + :quantidade WHERE id_usuario = :id_usuario AND id_produto = :id_produto";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+            $stmt->bindValue(':id_produto', $this->__get('id_produto'));
+            $stmt->bindValue(':quantidade', $this->__get('quantidade'));
+            $stmt->execute();
+        } else {
+            $query = "INSERT INTO carrinho (id_usuario, id_produto, quantidade) VALUES (:id_usuario, :id_produto, :quantidade)";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+            $stmt->bindValue(':id_produto', $this->__get('id_produto'));
+            $stmt->bindValue(':quantidade', $this->__get('quantidade'));
+            $stmt->execute();
+        }
+        
     }
     public function limparCarrinho() {
         $query = "DELETE FROM carrinho WHERE id_usuario = :id_usuario";
@@ -98,17 +115,30 @@ class Carrinho extends Model {
             $stmt->bindValue(':id_pedido', $id_pedido->id);
             $stmt->bindValue(':id_produto', $item->id_produto);
             $stmt->execute();
-
-            $query = "DELETE FROM carrinho WHERE id_usuario = :id_usuario";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
-            $stmt->execute();
         }
 
+        $query = "DELETE FROM carrinho WHERE id_usuario = :id_usuario";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+        $stmt->execute();
+        
+    }
+    public function plusCarrinho() {
+        $query = "UPDATE carrinho SET quantidade = :quantidade WHERE id_usuario = :id_usuario AND id_produto = :id_produto";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+        $stmt->bindValue(':id_produto', $this->__get('id_produto'));
+        $stmt->bindValue(':quantidade', $this->__get('quantidade'));
+        $stmt->execute();
+    }
 
-
-     
-    
+    public function degreeCarrinho() {
+        $query = "UPDATE carrinho SET quantidade = :quantidade WHERE id_usuario = :id_usuario AND id_produto = :id_produto";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+        $stmt->bindValue(':id_produto', $this->__get('id_produto'));
+        $stmt->bindValue(':quantidade', $this->__get('quantidade'));
+        $stmt->execute();
     }
     
 }

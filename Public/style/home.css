@@ -17,6 +17,9 @@ body {
     background-color: #fff;
     padding: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, .2);
+    position: fixed;
+    top: 0;
+    z-index: 1;
   }
 
   nav {
@@ -35,7 +38,7 @@ body {
     min-height: 900px
   }
 
-  aside {
+  #openCart {
     width: 400px;
     height: 100%;
     min-height: auto;
@@ -46,19 +49,24 @@ body {
     background-color: #ffffff;
     border: 0.5px solid #c7c7c7;
     position: fixed;
-    right: 0;
+    right: -405px;
     top: 0;
     bottom: 0;
     z-index: 999;
-    /* transform: translateX(100%); */
-    transform: translateX(0%);
-    transition: all 0.5s ease;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   }
 
   .showCart {
-    transform: translateX(100%);
+    transform: translateX(-405px);
+    transition-duration: 0.6s;
+    
   }
+
+  .closeCart {
+    transform: translateX(0%);
+    transition-duration: 0.6s;
+  }
+
 
   .container-cart {
     width: 100%;
@@ -178,6 +186,7 @@ body {
     display: flex;
     justify-content: center;
     max-width: 1550px;
+    
   }
 
   #btn-entrar {
@@ -531,6 +540,8 @@ body {
   width: 100%;
   height: 100%;
   max-width: 1550px;
+  padding-top: 6em;
+  padding-bottom: 6em;
 }
   .section-div {
     width: 100%;
@@ -545,6 +556,7 @@ body {
   .container-div {
     padding: 4em;
     margin-right: 1em;
+    word-wrap: break-word;
   }
   
   .card-div {
@@ -554,6 +566,9 @@ body {
     padding: 3em 2em;
     perspective: 1000px;
     transform-style: preserve-3d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   .header-div {

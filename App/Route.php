@@ -43,15 +43,22 @@
             echo json_encode(['success' => true]);
             break;
         case '/admin':
-            $_SESSION['produtos'] = $ProdutoController->listarProdutosAdmin($_SESSION['pageNumber']);
-            $_SESSION['usuarios'] = $UsuarioController->listarUsuariosAdmin($_SESSION['pageNumber']);
+            $_SESSION['produtos'] = $ProdutoController->listarProdutosAdmin($_SESSION['pageNumberProduct']);
+            $_SESSION['usuarios'] = $UsuarioController->listarUsuariosAdmin($_SESSION['pageNumberUser']);
             include "../App/Views/Admin/index.php";
             break;
-        case '/refreshTable':
-            if(!isset($_REQUEST['qtd']) || $_REQUEST['qtd'] == null) {
-                $_SESSION['pageNumber'] = 15;
+        case '/refreshTableUser':
+            if(!isset($_REQUEST['qtdUser']) || $_REQUEST['qtdUser'] == null) {
+                $_SESSION['pageNumberUser'] = 15;
             } else {
-                $_SESSION['pageNumber'] = $_REQUEST['qtd'];
+                $_SESSION['pageNumberUser'] = $_REQUEST['qtdUser'];
+            }
+            break;
+        case '/refreshTableProduct': 
+            if(!isset($_REQUEST['qtdProduct']) || $_REQUEST['qtdProduct'] == null) {
+                $_SESSION['pageNumberProduct'] = 15;
+            } else {
+                $_SESSION['pageNumberProduct'] = $_REQUEST['qtdProduct'];
             }
             break;
         case '/cadastroProduto':
@@ -65,6 +72,7 @@
             include "../App/Views/Admin/cadastro.php";
             break;
         case '/editarUsuario':
+            $_SESSION['usuarioListado'] = $UsuarioController->listarUsuario($_SESSION['idUsuarioEdit']);
             include "../App/Views/Admin/editar.php";
             break;
         case '/updateProduto':
@@ -72,6 +80,7 @@
             include "../App/Views/Admin/index.php";
             break;
         case '/editarProduto':
+            $_SESSION['produtoListado'] = $ProdutoController->listarProdutoEdit($_SESSION['idProdutoEdit']);
             include "../App/Views/Produto/editar.php";
             break;
         case '/deleteProduto':
@@ -88,7 +97,6 @@
             break;
         case '/createProduto':
             $ProdutoController->createProduto();
-            echo json_encode(['success' => true]);
             include "../App/Views/Admin/index.php";
             break;
         case '/deleteUsuario':
@@ -136,4 +144,11 @@
             $PedidoController->listarPedido($_SESSION['id']);
             include "../App/Views/Home/compraFinalizada.php";
             break;
+        case '/plusCarrinho':
+            $CarrinhoController->plusCarrinho($_REQUEST['idProdutoPlus'], $_REQUEST['value']);
+            break;
+        case '/degreeCarrinho':
+            $CarrinhoController->degreeCarrinho($_REQUEST['idProdutoDegree'], $_REQUEST['value']);
+            break;
+    
     }
