@@ -35,7 +35,7 @@ nav {
 main {
   width: 100%;
   height: auto;
-  min-height: 900px
+  min-height: 100%;
 }
 
 #openCart {
