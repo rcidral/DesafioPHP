@@ -93,7 +93,7 @@
                         <tr>
                             <td><?= $produto['id'] ?></td>
                             <td><?= $produto['nome'] ?></td>
-                            <td><?= $produto['preco'] ?></td>
+                            <td><?= (number_format($produto['preco'], 2, ',', '')) ?></td>
                             <td><?= $produto['data_criacao'] ?></td>
                             <td><?= $produto['data_alteracao'] ?></td>
                             <td>

@@ -62,7 +62,7 @@
                         <p onclick="openProduct(<?= $produto['id']?>)"><?= $produto['descricao'] ?></p>
                     </div>
                     <div class="product-price">
-                        <h3>R$ <?= $produto['preco'] ?></h3>
+                        <h3>R$ <?= (number_format($produto['preco'], 2, ',', '')) ?></h3>
                     </div>
                     <?php if (isset($_SESSION['authenticated'])) { ?>
                         <div class="product-quantity">
@@ -114,7 +114,7 @@
                                             <p><?= $carrinho['descricao'] ?></p>
                                         </div>
                                         <div class="product-price">
-                                            <h3>R$ <?= $carrinho['preco'] ?></h3>
+                                            <h3>R$ <?= (number_format($carrinho['preco'], 2, ',', '')) ?></h3>
                                         </div>
                                             <div class="product-quantity">
                                                 <div class="product-quantity change">
