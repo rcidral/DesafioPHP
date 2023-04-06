@@ -97,6 +97,24 @@ footer {
     cursor: pointer;
 }
 
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 80px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 80px;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown p {
+    cursor: pointer;
+}
+
 #openCart {
     width: 400px;
     height: 100%;

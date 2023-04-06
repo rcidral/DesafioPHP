@@ -358,6 +358,8 @@ footer {
     height: auto;
     color: #000;
     font-size: 18px;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
 }
 
 .product-description {
