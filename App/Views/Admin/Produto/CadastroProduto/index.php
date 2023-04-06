@@ -14,7 +14,7 @@
     <header>
         <div class="container-header">
             <div class="logo">
-                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+                <img id="img-logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
                 <a href="/admin">Voltar</a>
             </div>
             <div class="user">
@@ -37,7 +37,9 @@
                     <input type="text" name="nome" id="nome" placeholder="Nome">
                     <input type="text" name="descricao" id="descricao" placeholder="Descrição">
                     <input type="number" name="preco" id="preco" placeholder="Preço">
+                    <h1>Foto Principal</h1>
                     <input type="file" name="img" id="img" placeholder="Foto" accept="png">
+                    <h1>Foto Opcional</h1>
                     <input type="file" name="img1" id="img1" placeholder="Foto" accept="png">
                     <input type="file" name="img2" id="img2" placeholder="Foto" accept="png">
                     <input type="file" name="img3" id="img3" placeholder="Foto" accept="png">

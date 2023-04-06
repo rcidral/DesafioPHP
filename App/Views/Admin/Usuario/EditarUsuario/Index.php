@@ -14,7 +14,7 @@
     <header>
         <div class="container-header">
             <div class="logo">
-                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+                <img id="img-logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
                 <a href="/admin">Voltar</a>
             </div>
             <div class="user">
@@ -30,10 +30,10 @@
     <main>
         <div class="container-main-usuario">
             <div class="container-cadastro-usuario">
-                <div class="container-cadastro-header-usuario">
-                    <h1>Edição de Usuário</h1>
-                </div>
                 <?php foreach($_SESSION['usuarioEditar'] as $usuario) { ?>
+                <div class="container-cadastro-header-usuario">
+                    <h1>Edição do Usuário <?= $usuario['nome'] ?></h1> 
+                </div>
                 <div class="container-cadastro-body-usuario">
                     <input type="hidden" name="id" id="id" value="<?= $usuario['id'] ?>">
                     <input type="text" name="nome" id="nome" placeholder="Nome" value="<?= $usuario['nome'] ?>">
@@ -42,6 +42,7 @@
                     <input type="text" name="email" id="email" placeholder="Email" value="<?= $usuario['email'] ?>">
                     <input type="password" name="senha" id="senha" placeholder="Senha" value="<?= $usuario['senha'] ?>">
                     <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha" value="<?= $usuario['senha'] ?>">
+                    <h1>Foto</h1>
                     <input type="file" name="foto" id="foto" placeholder="Foto" accept="png">
                     <button id="editar-usuario-btn">Salvar</button>
                 <?php } ?>

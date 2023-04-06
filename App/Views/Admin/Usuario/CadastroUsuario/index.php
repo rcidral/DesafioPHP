@@ -14,7 +14,7 @@
     <header>
         <div class="container-header">
             <div class="logo">
-                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+                <img id="img-logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
                 <a href="/admin">Voltar</a>
             </div>
             <div class="user">
@@ -40,6 +40,7 @@
                     <input type="text" name="email" id="email" placeholder="Email">
                     <input type="password" name="senha" id="senha" placeholder="Senha">
                     <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha">
+                    <h1>Foto</h1>
                     <input type="file" name="foto" id="foto" placeholder="Foto" accept="png">
                     <button id="salvar-usuario-btn">Salvar</button>
                     <div class="campos">

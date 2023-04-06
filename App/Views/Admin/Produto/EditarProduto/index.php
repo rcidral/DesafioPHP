@@ -14,7 +14,7 @@
     <header>
         <div class="container-header">
             <div class="logo">
-                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+                <img id="img-logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
                 <a href="/admin">Voltar</a>
             </div>
             <div class="user">
@@ -30,19 +30,21 @@
     <main>
         <div class="container-main-produto">
             <div class="container-cadastro-produto">
-                <div class="container-cadastro-header-produto">
-                    <h1>Edição de Produto</h1>
-                </div>
                 <?php foreach($_SESSION['produtoEditar'] as $produto) { ?>
+                <div class="container-cadastro-header-produto">
+                    <h1>Edição do Produto <?= $produto['nome'] ?></h1>
+                </div>
                 <div class="container-cadastro-body-produto">
                     <input type="hidden" name="id" id="id" value="<?= $produto['id'] ?>">
                     <input type="text" name="nome" id="nome" placeholder="Nome" value="<?= $produto['nome'] ?>">
                     <input type="text" name="descricao" id="descricao" placeholder="Descrição" value="<?= $produto['descricao'] ?>">
                     <input type="number" name="preco" id="preco" placeholder="Preço" value="<?= $produto['preco'] ?>">
-                    <input type="file" name="img" id="img" placeholder="Foto" accept="png">
-                    <input type="file" name="img1" id="img1" placeholder="Foto" accept="png">
-                    <input type="file" name="img2" id="img2" placeholder="Foto" accept="png">
-                    <input type="file" name="img3" id="img3" placeholder="Foto" accept="png">
+                    <h1>Foto Principal</h1>
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img']?>" alt="product"><input type="file" name="img" id="img" placeholder="Foto" accept="png">
+                    <h1>Foto Opcional</h1>
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img1']?>" alt="product"><input type="file" name="img1" id="img1" placeholder="Foto" accept="png">
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img2']?>" alt="product"><input type="file" name="img2" id="img2" placeholder="Foto" accept="png">
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img3']?>" alt="product"><input type="file" name="img3" id="img3" placeholder="Foto" accept="png">
                     <button id="editar-produto-btn">Salvar</button>
                 <?php } ?>
                 </div>

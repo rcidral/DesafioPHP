@@ -53,6 +53,10 @@ function addMaxCart(id) {
     });
 }
 
+$("#img-logo").click(function () {
+    window.location.href = "http://localhost:3000/";
+});
+
 $("#drop").click(function() {
     document.querySelector(".dropdown").style.display = "flex";
 });
@@ -408,6 +412,12 @@ $("#editar-produto-btn").click(async function (e) {
         }
     });
 });
+
+$("#search").keyup(function(event) {
+    if (event.keyCode === 13) {
+      $("#search-btn").click();
+    }
+  });
                 
 $("#search-btn").click(function (e) {
     console.log($("#search").val());

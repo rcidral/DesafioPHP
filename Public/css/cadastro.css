@@ -111,7 +111,11 @@ footer {
     font-size: 20px;
     font-weight: 500;
 }
-
+.container-cadastro-body-usuario h1 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
 .container-cadastro-body-usuario {
     display: flex;
     flex-direction: column;
@@ -174,6 +178,12 @@ footer {
 .container-cadastro-header-produto h1 {
     font-size: 20px;
     font-weight: 500;
+}
+
+.container-cadastro-body-produto h1 {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
 
 .container-cadastro-body-produto {

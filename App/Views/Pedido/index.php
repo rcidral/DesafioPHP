@@ -14,7 +14,7 @@
     <header>
         <div class="container-header">
             <div class="logo">
-                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+                <img id="img-logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
                 <a href="/">Produtos</a>
             </div>
             <div class="search">
