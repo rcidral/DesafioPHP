@@ -1,190 +1,180 @@
 <?php
 
-    $product = include "../App/Models/Produto.php";
-    $pedido = include "../App/Models/Pedido.php";
-    $user = include "../App/Models/Usuario.php";
-    $cart = include "../App/Models/Carrinho.php";
-    $container = include "../App/Controllers/Container.php";
-    
+    namespace App\Controllers;
+    use App\Models\Container;
+    require_once "../App/Models/Container.php";
+    require_once "../App/Models/Usuario.php";
+    require_once "../App/Models/Produto.php";
+    require_once "../App/Models/Carrinho.php";
+    require_once "../App/Models/Pedido.php";
 
-    class UsuarioController {
-        public function createUsuario() {
-            $usuario = Container::getModel('Usuario');
-            $usuario->__set('nome', $_REQUEST['nome']);
-            $usuario->__set('nascimento', $_REQUEST['nascimento']);
-            $usuario->__set('telefone', $_REQUEST['telefone']);
-            $usuario->__set('email', $_REQUEST['email']);
-            $usuario->__set('senha', $_REQUEST['senha']);
-            $usuario->__set('foto', $_REQUEST['foto']);
-            $usuario->createUsuario();
-        }
-        public function listarUsuarios() {
-            $usuario = Container::getModel('Usuario');
-            $_SESSION['usuarios'] = $usuario->listar();
-        }
-        public function alterarUsuario() {
-            $usuario = Container::getModel('Usuario');
-            $usuario->__set('id', $_POST['idUsuarioEditFinal']);
+    class AppController {
+
+        // User methods
+
+        public function cadastrarUsuario() {
+            $usuario = Container::getModel('App\Models\Usuario');
             $usuario->__set('nome', $_POST['nome']);
             $usuario->__set('nascimento', $_POST['nascimento']);
             $usuario->__set('telefone', $_POST['telefone']);
             $usuario->__set('email', $_POST['email']);
             $usuario->__set('senha', $_POST['senha']);
+            $usuario->__set('foto', $_POST['foto']);
 
-            $usuario->alterar();
+            $usuario->createUsuario();
         }
-        public function deletarUsuario() {
-            $usuario = Container::getModel('Usuario');
-            $usuario->__set('id', $_REQUEST['id']);
-            $usuario->deletar();
+
+        public function listarUsuarios() {
+            $usuario = Container::getModel('App\Models\Usuario');
+            return $usuario->getUsuarios();
+        }
+
+        public function listarUsuario() {
+            $usuario = Container::getModel('App\Models\Usuario');
+            $usuario->__set('id', $_POST['id']);
+            return $usuario->getUsuarioById();
         }
 
         public function listarUsuariosAdmin($qtd) {
-            $usuario = Container::getModel('Usuario');
+            $usuario = Container::getModel('App\Models\Usuario');
             return $usuario->listarUsuariosAdmin($qtd);
         }
 
-        public function listarUsuario($id) {
-            $usuario = Container::getModel('Usuario');
-            $usuario->__set('id', $id);
-            return $usuario->listarUsuario();
-        }
-    }
+        public function editarUsuario() {
+            $usuario = Container::getModel('App\Models\Usuario');
+            $usuario->__set('id', $_POST['id']);
+            $usuario->__set('nome', $_POST['nome']);
+            $usuario->__set('nascimento', $_POST['nascimento']);
+            $usuario->__set('telefone', $_POST['telefone']);
+            $usuario->__set('email', $_POST['email']);
+            $usuario->__set('senha', $_POST['senha']);
+            $usuario->__set('foto', $_POST['foto']);
 
-    class ProdutoController {
-        public function listarProdutos() {
-            $produto = Container::getModel('Produto');
-            $_SESSION['produtos'] = $produto->listar();
+            $usuario->updateUsuario();
         }
-        public function alterarProduto() {
-            $produto = Container::getModel('Produto');
-            $produto->__set('id', $_POST['idProdutoEditFinal']);
+
+        public function deletarUsuario() {
+            $usuario = Container::getModel('App\Models\Usuario');
+            $usuario->__set('id', $_POST['id']);
+            $usuario->deleteUsuario();
+        }
+
+        // Product methods
+
+        public function cadastrarProduto() {
+            $produto = Container::getModel('App\Models\Produto');
             $produto->__set('nome', $_POST['nome']);
             $produto->__set('descricao', $_POST['descricao']);
             $produto->__set('preco', $_POST['preco']);
-            if($_POST['img'] != "") {
-                $produto->__set('img', $_POST['img']);
-            }
-            if($_POST['img1'] != "") {
-                $produto->__set('img1', $_POST['img1']);
-            }
-            if($_POST['img2'] != "") {
-                $produto->__set('img2', $_POST['img2']);
-            }
-            if($_POST['img3'] != "") {
-                $produto->__set('img3', $_POST['img3']);
-            }
-            $produto->alterar();
-        }
-        public function deletarProduto() {
-            $produto = Container::getModel('Produto');
-            $produto->__set('id', $_REQUEST['id']);
-            $produto->deletar();
-        }
+            $produto->__set('img', $_POST['img']);
+            $produto->__set('img1', $_POST['img1']);
+            $produto->__set('img2', $_POST['img2']);
+            $produto->__set('img3', $_POST['img3']);
 
-        public function createProduto() {
-            $produto = Container::getModel('Produto');
-            $produto->__set('nome', $_REQUEST['nome']);
-            $produto->__set('descricao', $_REQUEST['descricao']);
-            $produto->__set('preco', $_REQUEST['preco']);
-            $produto->__set('img', $_REQUEST['img']);
-            $produto->__set('img1', $_REQUEST['img1']);
-            $produto->__set('img2', $_REQUEST['img2']);
-            $produto->__set('img3', $_REQUEST['img3']);
             $produto->createProduto();
         }
-        public function listarProduto($id) {
-            $produto = Container::getModel('Produto');
-            $produto->__set('id', $id);
-            $_SESSION['produto'] = $produto->listarProduto();
+
+        public function listarProdutos() {
+            $produto = Container::getModel('App\Models\Produto');
+            return $produto->getProdutos();
         }
 
-        public function listarProdutoEdit($id) {
-            $produto = Container::getModel('Produto');
-            $produto->__set('id', $id);
-            return $produto->listarProduto();
+        public function listarProduto() {
+            $produto = Container::getModel('App\Models\Produto');
+            $produto->__set('id', $_POST['id']);
+            return $produto->getProdutoById();
         }
-        public function pesquisarProduto($pesquisa) {
-            $produto = Container::getModel('Produto');
-            $produto->__set('nome', $pesquisa);
-            if($produto->pesquisarProduto() == null) {
-                echo json_encode(['success' => false]);
-            } else {
-                $_SESSION['pesquisar'] = $produto->pesquisarProduto();
-                echo json_encode(['success' => true]);
-            }
-        }
+
         public function listarProdutosAdmin($qtd) {
-            $produto = Container::getModel('Produto');
+            $produto = Container::getModel('App\Models\Produto');
             return $produto->listarProdutosAdmin($qtd);
         }
-    }
+        public function pesquisarProduto() {
+            $produto = Container::getModel('App\Models\Produto');
+            $produto->__set('nome', $_POST['textoPesquisa']);
+            $produto->__set('descricao', $_POST['textoPesquisa']);
+            return $produto->getProdutoByName();
+        }
 
-    class CarrinhoController {
-        public function listarCarrinho() {
-            $carrinho = Container::getModel('Carrinho');
-            $_SESSION['carrinho'] = $carrinho->listarCarrinhoUsuarioProdutos($_SESSION['id']);
+        public function editarProduto() {
+            $produto = Container::getModel('App\Models\Produto');
+            $produto->__set('id', $_POST['id']);
+            $produto->__set('nome', $_POST['nome']);
+            $produto->__set('descricao', $_POST['descricao']);
+            $produto->__set('preco', $_POST['preco']);
+            $produto->__set('img', $_POST['img']);
+            $produto->__set('img1', $_POST['img1']);
+            $produto->__set('img2', $_POST['img2']);
+            $produto->__set('img3', $_POST['img3']);
+
+            $produto->updateProduto();
         }
-        public function listarQuantidadeDeProdutos() {
-            $carrinho = Container::getModel('Carrinho');
-            $_SESSION['quantidade'] = $carrinho->listarQuantidadeDeProdutos($_SESSION['id']);
+
+        public function deletarProduto() {
+            $produto = Container::getModel('App\Models\Produto');
+            $produto->__set('id', $_POST['id']);
+            $produto->deleteProduto();
         }
+
+        // Carrinho methods
+
         public function adicionarCarrinho() {
-            $carrinho = Container::getModel('Carrinho');
-            $carrinho->__set('id_usuario', $_REQUEST['id_usuario']);
-            $carrinho->__set('id_produto', $_REQUEST['id_produto']);
-            $carrinho->__set('quantidade', $_REQUEST['qtd']);
-            $carrinho->adicionarCarrinho();
-            echo json_encode(['success' => true]);
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            $carrinho->__set('id_produto', $_POST['id_produto']);
+            $carrinho->__set('quantidade', $_POST['quantidade']);
+
+            $carrinho->createCarrinho();
         }
-        public function limparCarrinho() {
-            $carrinho = Container::getModel('Carrinho');
-            $carrinho->__set('id_usuario', $_SESSION['id']);
-            $carrinho->limparCarrinho();
-            echo json_encode(['success' => true]);
+        public function comprarCarrinho() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            $carrinho->comprarCarrinho();
         }
-        public function getPrecoCarrinho() {
-            $carrinho = Container::getModel('Carrinho');
-            $_SESSION['total'] = $carrinho->getPrecoCarrinho($_SESSION['id']);
+
+        public function listarCarrinho() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            return $carrinho->getCarrinho();
         }
-        public function removerItemCarrinho($id_produto, $id_usuario) {
-            $carrinho = Container::getModel('Carrinho');
-            $carrinho->__set('id_usuario', $id_usuario);
-            $carrinho->__set('id_produto', $id_produto);
+        public function listarQuantidade() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            $_SESSION['quantidade'] = $carrinho->getQuantidade();
+        }
+        public function alterarCarrinhoMax() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            $carrinho->__set('id_produto', $_POST['id_produto']);
+            $carrinho->__set('quantidade', $_POST['quantidade']);
+            $carrinho->updateCarrinhoMax();
+        }
+        public function alterarCarrinhoMin() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            $carrinho->__set('id_produto', $_POST['id_produto']);
+            $carrinho->__set('quantidade', $_POST['quantidade']);
+            $carrinho->updateCarrinhoMin();
+        }
+        public function removerItemCarrinho() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_POST['id_usuario']);
+            $carrinho->__set('id_produto', $_POST['id_produto']);
             $carrinho->removerItemCarrinho();
-            echo json_encode(['success' => true]);
         }
-        public function finalizarCompra($id_usuario) {
-            $carrinho = Container::getModel('Carrinho');
-            $carrinho->__set('id_usuario', $id_usuario);
-            $carrinho->finalizarCompra();
-            echo json_encode(['success' => true]);
+        public function deletarCarrinho() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            $carrinho->deleteCarrinho();
         }
 
-        public function plusCarrinho($id_produto, $value) {
-            $carrinho = Container::getModel('Carrinho');
-            $carrinho->__set('id_usuario', $_SESSION['id']);
-            $carrinho->__set('id_produto', $id_produto);
-            $carrinho->__set('quantidade', $value);
-            $carrinho->plusCarrinho();
+        // Pedido methods
+
+        public function compraFinalizada() {
+            $pedido = Container::getModel('App\Models\Pedido');
+            $pedido->__set('id_usuario', $_SESSION['usuario']['id']);
+            return $pedido->getPedido();
         }
 
-        public function degreeCarrinho($id_produto, $value) {
-            $carrinho = Container::getModel('Carrinho');
-            $carrinho->__set('id_usuario', $_SESSION['id']);
-            $carrinho->__set('id_produto', $id_produto);
-            $carrinho->__set('quantidade', $value);
-            $carrinho->degreeCarrinho();
-        }
         
     }
-
-    class PedidoController {
-        public function listarPedido($id) {
-            $pedido = Container::getModel('Pedido');
-            $pedido->__set('id_usuario', $id);
-            $_SESSION['pedidos'] = $pedido->listarPedido();
-        }
-    }
-
-?>

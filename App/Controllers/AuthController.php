@@ -1,25 +1,27 @@
 <?php
 
-    header('Content-Type: application/json');
+    namespace App\Controllers;
+    use App\Models\Container;
+    require_once "../App/Models/Container.php";
+    require_once "../App/Models/Usuario.php";
     
-    $usuario = Container::getModel('Usuario');
+    class AuthController {
+        public function autenticar() {
+            header('Content-Type: application/json');
 
-    $UsuarioController = new UsuarioController();
-
-
-    $usuario->__set('email', $_POST['email']);
-    $usuario->__set('senha', $_POST['password']);
-        if($usuario->validarLogin()) {
-            $_SESSION['authenticated'] = true;
-            $_SESSION['nome'] = $usuario->__get('nome');
-            $_SESSION['id'] = $usuario->__get('id'); 
-            $_SESSION['pageNumberUser'] = 15;
-            $_SESSION['pageNumberProduct'] = 15;
-            $_SESSION['idProdutosCarrinhoBy'] = [];
-            $_SESSION['compraFinalizada'] = "";
-            echo json_encode(['success' => true]);
-        } else {
-            unset($_SESSION['authenticated']);
-            echo json_encode(['success' => false]);
+            $usuario = Container::getModel('App\Models\Usuario');
+            $usuario->__set('email', $_POST['email']);
+            $usuario->__set('senha', $_POST['senha']);
+            if($usuario->validarLogin() != null) {
+                echo json_encode(['success' => true]);
+                $_SESSION['authenticated'] = true;
+                $_SESSION['pageNumberUser'] = 15;
+                $_SESSION['pageNumberProduct'] = 15;
+                $_SESSION['usuario'] = $usuario->getUsuario();
+            } else {
+                unset($_SESSION['authenticated']);
+                echo json_encode(['success' => false]);
+            }
         }
+    }
 ?>

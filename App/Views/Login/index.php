@@ -1,32 +1,55 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/login.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <title>Shop</title>
+</head>
 
 <body>
-  <div class="container">
-    <div class="header">
-      <img alt="Logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" class="logo" />
-      <h1>your account for <br>everything ByStack</h1>
-    </div>
+    <header>
+        <div class="container-header">
+            <div class="logo">
+                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+                <a href="/">Produtos</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container-main">
+            <div class="login">
+                <p>Sua conta para tudo </p>
+                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+                <input id="email" type="email" placeholder="Email" required>
+                <input id="senha" type="password" placeholder="Senha" required>
+                <button id="btn-login">Entrar</button>
+                <div class="wrong">
+                    <p>Usuário ou senha incorretos</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
 
-    <form>
-      <div class="form">
-        <input id="email" placeholder="Email address" type="email" />
-        <input id="password" placeholder="Password" type="password" />
-      </div>
+        <div class="container-footer">
+            <div class="footer-copy">
+                <p>© 2021 - ByStack</p>
+            </div>
+            <div class="footer-logo">
+                <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
+            </div>
+            <div class="footer-a">
+                <a href="/">ByStack</a>
+            </div>
+        </div>
 
-      <div class="form_options">
-        <button type="submit">Entrar</button>
-      </div>
-      <div class="login-incorret">
-    <p>Usuário ou senha incorretos</p>
-  </div>
-    </form>
-  </div>
-  
+    </footer>
 </body>
-
-<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-<script src="./js/login.js"></script>
-<link rel="stylesheet" href="./style/login.css">
 
 </html>
 
+<script src="./js/script.js"></script>

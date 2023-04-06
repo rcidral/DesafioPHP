@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    min-height: 800px;
+    background-color: #f5f5f5;
+}
+
+header {
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+}
+
+footer {
+    width: 100%;
+    background-color: #fff;
+}
+.container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 65px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.logo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 20%;
+}
+
+.logo img {
+    width: 45%;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #000;
+    margin-right: 25%;
+}
+
+.user {
+    width: 10%;
+}
+
+.user p {
+    margin-left: 10%;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 80px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    width: 80px;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown p {
+    cursor: pointer;
+}
+.container-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 8em;
+    width: 100%;
+    height: auto;
+}
+
+.container-user {
+    margin: 2em;
+    width: 95%;
+    height: auto;
+}
+
+.container-user .options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+.container-user .options button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-user .options button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.container-user h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.container-user .options .options-btn .cadastro-btn {
+    background-color: #576CBC;
+    color: #fff;
+}
+
+.container-user .options .options-btn .cadastro-btn:hover {
+    background-color: #5c74d3;
+    color: #fff;
+}
+
+.container-user table {
+    border: 1px solid #ddd;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.container-user .first {
+    border-radius: 10px 0 0 0;
+}
+
+.container-user .last {
+    border-radius: 0 10px 0 0;
+}
+
+.container-user table tr th {
+    padding: 1em;
+    text-align: center;
+    background-color: #0B2447;
+    color: #fff;
+}
+
+.container-user table tr td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.container-user table tr td button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-user table tr td button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.container-product {
+    margin: 2em;
+    width: 95%;
+    height: auto;
+}
+
+.container-product .options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+.container-product .options button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-product .options button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.container-product h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.container-product .options .options-btn .cadastro-btn {
+    background-color: #576CBC;
+    color: #fff;
+}
+
+.container-product .options .options-btn .cadastro-btn:hover {
+    background-color: #5c74d3;
+    color: #fff;
+}
+
+.container-product table {
+    border: 1px solid #ddd;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.container-product .first {
+    border-radius: 10px 0 0 0;
+}
+
+.container-product .last {
+    border-radius: 0 10px 0 0;
+}
+
+.container-product table tr th {
+    padding: 1em;
+    text-align: center;
+    background-color: #0B2447;
+    color: #fff;
+}
+
+.container-product table tr td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.container-product table tr td button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-product table tr td button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.modal-delete-usuario {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-delete-usuario-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-delete-usuario-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-delete-usuario-content p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-delete-usuario-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-delete-usuario-btn button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-delete-usuario-btn button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.modal-delete-produto {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-delete-produto-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-delete-produto-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-delete-produto-content p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-delete-produto-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-delete-produto-btn button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-delete-produto-btn button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+
+.container-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    height: 100px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.footer-copy {
+    margin-left: 5%;
+    width: 25%;
+}
+
+.footer-copy p {
+    color: #000;
+    font-size: 15px;
+}
+
+.footer-logo {
+    width: 20%;
+}
+
+.footer-logo img {
+    width: 100%;
+}
+
+.footer-a {
+    width: 30%;
+}
+
+.footer-a a {
+    color: #000;
+    font-size: 15px;
+    margin-left: 60%;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 800px) {
+    .container-main {
+        padding: 7em 2em 5em 7em;
+    }
+}

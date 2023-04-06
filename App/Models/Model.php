@@ -1,12 +1,14 @@
 <?php 
 
-abstract class Model {
+	namespace App\Models;
 
-	protected $db;
+	abstract class Model {
 
-	public function __construct(\PDO $db) {
-		$this->db = $db;
+		protected $db;
+
+		public function __construct(\PDO $db) {
+			$this->db = $db;
+		}
 	}
-}
 
 ?>
