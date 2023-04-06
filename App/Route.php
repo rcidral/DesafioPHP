@@ -83,6 +83,12 @@
         }
         case '/pesquisar': {
             $_SESSION['produtos'] = $appController->pesquisarProduto();
+            if($_SESSION['produtos'] != null) {
+                echo json_encode(['success' => true]);
+            }
+            if($_SESSION['produtos'] == null) {
+                echo json_encode(['success' => false]);
+            }
             break;
         }
         case '/editarProdutoView': {

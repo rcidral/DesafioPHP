@@ -44,10 +44,10 @@
         </div>
     </header>
     <main>
-        <div class="container-main">
             <div class="product-incorret">
                 <p>Desculpe não encontramos o item procurado</p>
             </div>
+        <div class="container-main">
             <?php foreach ($_SESSION['produtos'] as $produto) { ?>
                 <div style="height: 370px;" class="product">
                     <div class="product-img">

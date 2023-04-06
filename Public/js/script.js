@@ -425,15 +425,21 @@ $("#search-btn").click(function (e) {
     $.ajax({
         url: "http://localhost:3000/pesquisar",
         type: "POST",
+        dataType: 'json',
         data: {
             textoPesquisa: $("#search").val(),
         },
-        success: function () {
-            window.location.href = "http://localhost:3000/";
-        }
+        success: function (data) {
+            console.log(data, data.success);
+            if (data.success) {
+                window.location.href = 'http://localhost:3000/';
+              } else {
+                document.getElementsByClassName("product-incorret")[0].style.display = "flex";
+                document.getElementsByClassName("container-main")[0].style.display = "none";
+              }
+            }
     });
 });
-
 // Jquery Carrinho
 $(".addToCart").click(function (e) {
     e.preventDefault();
