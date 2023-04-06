@@ -40,11 +40,11 @@
                     <input type="text" name="descricao" id="descricao" placeholder="Descrição" value="<?= $produto['descricao'] ?>">
                     <input type="number" name="preco" id="preco" placeholder="Preço" value="<?= $produto['preco'] ?>">
                     <h1>Foto Principal</h1>
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img']?>" alt="product"><input type="file" name="img" id="img" placeholder="Foto" accept="png">
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img']?>" alt="product"><input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
                     <h1>Foto Opcional</h1>
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img1']?>" alt="product"><input type="file" name="img1" id="img1" placeholder="Foto" accept="png">
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img2']?>" alt="product"><input type="file" name="img2" id="img2" placeholder="Foto" accept="png">
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img3']?>" alt="product"><input type="file" name="img3" id="img3" placeholder="Foto" accept="png">
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img1']?>" alt="product"><input type="file" name="img1" id="img1" placeholder="Foto" accept="image/png">
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img2']?>" alt="product"><input type="file" name="img2" id="img2" placeholder="Foto" accept="image/png">
+                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img3']?>" alt="product"><input type="file" name="img3" id="img3" placeholder="Foto" accept="image/png">
                     <button id="editar-produto-btn">Salvar</button>
                 <?php } ?>
                 </div>

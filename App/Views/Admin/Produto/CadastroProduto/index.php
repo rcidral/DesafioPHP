@@ -38,11 +38,11 @@
                     <input type="text" name="descricao" id="descricao" placeholder="Descrição">
                     <input type="number" name="preco" id="preco" placeholder="Preço">
                     <h1>Foto Principal</h1>
-                    <input type="file" name="img" id="img" placeholder="Foto" accept="png">
+                    <input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
                     <h1>Foto Opcional</h1>
-                    <input type="file" name="img1" id="img1" placeholder="Foto" accept="png">
-                    <input type="file" name="img2" id="img2" placeholder="Foto" accept="png">
-                    <input type="file" name="img3" id="img3" placeholder="Foto" accept="png">
+                    <input type="file" name="img1" id="img1" placeholder="Foto" accept="image/png">
+                    <input type="file" name="img2" id="img2" placeholder="Foto" accept="image/png">
+                    <input type="file" name="img3" id="img3" placeholder="Foto" accept="image/png">
                     <button id="salvar-produto-btn">Salvar</button>
                     <div class="campos">
                         <p>Preencha todos os campos</p>

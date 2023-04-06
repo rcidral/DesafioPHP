@@ -43,7 +43,7 @@
                     <input type="password" name="senha" id="senha" placeholder="Senha" value="<?= $usuario['senha'] ?>">
                     <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha" value="<?= $usuario['senha'] ?>">
                     <h1>Foto</h1>
-                    <input type="file" name="foto" id="foto" placeholder="Foto" accept="png">
+                    <input type="file" name="foto" id="foto" placeholder="Foto" accept="image/png">
                     <button id="editar-usuario-btn">Salvar</button>
                 <?php } ?>
                     <div class="confirmar">
