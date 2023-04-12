@@ -5,8 +5,10 @@
     require_once "../App/Models/Container.php";
     require_once "../App/Models/Usuario.php";
     require_once "../App/Models/Produto.php";
+    require_once "../App/Models/ProdutoRecomendado.php";
     require_once "../App/Models/Carrinho.php";
     require_once "../App/Models/Pedido.php";
+    require_once "../App/Models/Favorito.php";
 
     class AppController {
 
@@ -66,12 +68,52 @@
             $produto->__set('nome', $_POST['nome']);
             $produto->__set('descricao', $_POST['descricao']);
             $produto->__set('preco', $_POST['preco']);
-            $produto->__set('img', $_POST['img']);
-            $produto->__set('img1', $_POST['img1']);
-            $produto->__set('img2', $_POST['img2']);
-            $produto->__set('img3', $_POST['img3']);
+            $produto->__set('img', $_FILES['img']['name']);
+            $produto->__set('img1', $_FILES['img1']['name']);
+            $produto->__set('img2', $_FILES['img2']['name']);
+            $produto->__set('img3', $_FILES['img3']['name']);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img']['name'];
+            move_uploaded_file($_FILES['img']['tmp_name'], $destino);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img1']['name'];
+            move_uploaded_file($_FILES['img1']['tmp_name'], $destino);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img2']['name'];
+            move_uploaded_file($_FILES['img2']['tmp_name'], $destino);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img3']['name'];
+            move_uploaded_file($_FILES['img3']['tmp_name'], $destino);
 
             $produto->createProduto();
+        }
+
+        public function cadastrarProdutoRecomendado() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            $produto->__set('nome', $_POST['nome']);
+            $produto->__set('sequencia', $_POST['sequencia']);
+            $produto->__set('img', $_FILES['img']['name']);
+
+            $destino = __DIR__.'\..\..\Public\assets\product-recommended/'.$_FILES['img']['name'];
+            move_uploaded_file($_FILES['img']['tmp_name'], $destino);
+
+            $produto->createProdutoRecomendado();
+        }
+
+        public function listarProdutosRecomendados() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            return $produto->getProdutosRecomendados();
+        }
+
+        public function listarProdutoRecomendado() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            $produto->__set('id', $_POST['id']);
+            return $produto->getProdutoRecomendadoById();
+        }
+
+        public function listarProdutosLogado() {
+            $produto = Container::getModel('App\Models\Produto');
+            return $produto->getProdutosLogado();
         }
 
         public function listarProdutos() {
@@ -102,18 +144,49 @@
             $produto->__set('nome', $_POST['nome']);
             $produto->__set('descricao', $_POST['descricao']);
             $produto->__set('preco', $_POST['preco']);
-            $produto->__set('img', $_POST['img']);
-            $produto->__set('img1', $_POST['img1']);
-            $produto->__set('img2', $_POST['img2']);
-            $produto->__set('img3', $_POST['img3']);
+            $produto->__set('img', $_FILES['img']['name']);
+            $produto->__set('img1', $_FILES['img1']['name']);
+            $produto->__set('img2', $_FILES['img2']['name']);
+            $produto->__set('img3', $_FILES['img3']['name']);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img']['name'];
+            move_uploaded_file($_FILES['img']['tmp_name'], $destino);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img1']['name'];
+            move_uploaded_file($_FILES['img1']['tmp_name'], $destino);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img2']['name'];
+            move_uploaded_file($_FILES['img2']['tmp_name'], $destino);
+
+            $destino = __DIR__.'\..\..\Public\assets\product/'.$_FILES['img3']['name'];
+            move_uploaded_file($_FILES['img3']['tmp_name'], $destino);
 
             $produto->updateProduto();
+        }
+
+        public function editarProdutoRecomendado() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            $produto->__set('id', $_POST['id']);
+            $produto->__set('nome', $_POST['nome']);
+            $produto->__set('sequencia', $_POST['sequencia']);
+            $produto->__set('img', $_FILES['img']['name']);
+
+            $destino = __DIR__.'\..\..\Public\assets\product-recommended/'.$_FILES['img']['name'];
+            move_uploaded_file($_FILES['img']['tmp_name'], $destino);
+
+            $produto->updateProdutoRecomendado();
         }
 
         public function deletarProduto() {
             $produto = Container::getModel('App\Models\Produto');
             $produto->__set('id', $_POST['id']);
             $produto->deleteProduto();
+        }
+
+        public function deletarRecomendadoProduto() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            $produto->__set('id', $_POST['id']);
+            $produto->deleteProdutoRecomendado();
         }
 
         // Carrinho methods
@@ -141,6 +214,11 @@
             $carrinho = Container::getModel('App\Models\Carrinho');
             $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
             $_SESSION['quantidade'] = $carrinho->getQuantidade();
+        }
+        public function listarPrecoTotal() {
+            $carrinho = Container::getModel('App\Models\Carrinho');
+            $carrinho->__set('id_usuario', $_SESSION['usuario']['id']);
+            return $carrinho->getPrecoTotal();
         }
         public function alterarCarrinhoMax() {
             $carrinho = Container::getModel('App\Models\Carrinho');
@@ -175,6 +253,76 @@
             $pedido->__set('id_usuario', $_SESSION['usuario']['id']);
             return $pedido->getPedido();
         }
+        public function getPedidosAdmin() {
+            $pedido = Container::getModel('App\Models\Pedido');
+            return $pedido->getPedidosAdmin();
+        }
 
-        
+        // Favoritos methods
+
+        public function adicionarFavorito() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            $favorito->__set('id_usuario', $_SESSION['usuario']['id']);
+            $favorito->__set('id_produto', $_POST['id_produto']);
+
+            $favorito->createFavorito();
+        }
+
+        public function listarFavoritos() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            $favorito->__set('id_usuario', $_SESSION['usuario']['id']);
+            return $favorito->getFavoritos();
+        }
+
+        public function listarFavoritosAdmin() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            return $favorito->getFavoritosAdmin();
+        }
+
+        public function listarMaisFavoritados() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            return $favorito->getMostFavoritos();
+        }
+
+        public function removerFavorito() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            $favorito->__set('id_usuario', $_POST['id_usuario']);
+            $favorito->__set('id_produto', $_POST['id_produto']);
+            $favorito->deleteFavorito();
+        }
+
+        public function deletarFavoritos() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            $favorito->__set('id_usuario', $_SESSION['usuario']['id']);
+            $favorito->deleteFavoritos();
+        }
+
+        // Export methods
+
+        public function exportarUsuariosCSV() {
+            $usuario = Container::getModel('App\Models\Usuario');
+            $usuario->exportarUsuariosCSV();
+        }
+
+        public function exportarProdutosCSV() {
+            $produto = Container::getModel('App\Models\Produto');
+            $produto->exportarProdutosCSV();
+        }
+
+        public function exportarFavoritoCSV() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            $favorito->exportarFavoritoCSV();
+        }
+
+        // Import methods
+
+        public function importarUsuariosCSV() {
+            $usuario = Container::getModel('App\Models\Usuario');
+            $usuario->importarUsuariosCSV();
+        }
+
+        public function importarProdutosCSV() {
+            $produto = Container::getModel('App\Models\Produto');
+            $produto->importarProdutosCSV();
+        }
     }

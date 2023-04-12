@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="./js/script.js"></script>
     <title>Shop</title>
 </head>
 
@@ -23,12 +24,10 @@
             </div>
             <div class="cart">
                 <?php if (isset($_SESSION['authenticated'])) { ?>
-                    <img onclick="openCart()" src="https://img.icons8.com/material-outlined/256/shopping-cart.png" alt="cart">
-                    <p class="badge-quantity" id="badge-quantity"><?= $_SESSION['quantidade']?></p>
+                    <img id="favorite" onclick="openFav()" src="https://img.icons8.com/material-outlined/256/like--v1.png" alt="favorite">
+                    <img id="cart" onclick="openCart()" src="https://img.icons8.com/material-outlined/256/shopping-cart.png" alt="cart">
+                    <p class="badge-quantity" id="badge-quantity"><?= $_SESSION['quantidade'] ?></p>
                 <?php } ?>
-                <style>
-                    
-                </style>
             </div>
             <div class="user">
                 <?php if (!isset($_SESSION['authenticated'])) { ?>
@@ -44,20 +43,27 @@
         </div>
     </header>
     <main>
-            <div class="product-incorret">
-                <p>Desculpe não encontramos o item procurado</p>
-            </div>
+        <div class="product-incorret">
+            <p>Desculpe não encontramos o item procurado</p>
+        </div>
         <div class="container-main">
             <?php foreach ($_SESSION['produtos'] as $produto) { ?>
                 <div style="height: 370px;" class="product">
+                <?php if (isset($_SESSION['authenticated'])) { ?>
+                    <?php if($produto['favorito'] == null) { ?>
+                        <img onclick="adicionarFavorito(<?= $produto['id'] ?>, <?= $_SESSION['usuario']['id'] ?>)" class="hearthFav" src="https://img.icons8.com/material-outlined/256/like--v1.png" alt="">
+                    <?php } else { ?>
+                        <img onclick="removerItemFavorito(<?= $produto['id'] ?>, <?= $_SESSION['usuario']['id'] ?>)" class="hearthFav" src="https://img.icons8.com/material-rounded/256/hearts.png" alt="">
+                    <?php } ?>
+                <?php } ?>
                     <div class="product-img">
-                        <img onclick="openProduct(<?= $produto['id']?>)" src="data:image/png;base64,<?=$produto['img']?>" alt="product">
+                        <img onclick="openProduct(<?= $produto['id'] ?>)" src="./assets/product/<?= $produto['img'] ?>" alt="product">
                     </div>
                     <div class="product-name">
-                        <h3 onclick="openProduct(<?= $produto['id']?>)"><?= $produto['nome'] ?></h3>
+                        <h3 onclick="openProduct(<?= $produto['id'] ?>)"><?= $produto['nome'] ?></h3>
                     </div>
                     <div class="product-description">
-                        <p onclick="openProduct(<?= $produto['id']?>)"><?= $produto['descricao'] ?></p>
+                        <p onclick="openProduct(<?= $produto['id'] ?>)"><?= $produto['descricao'] ?></p>
                     </div>
                     <div class="product-price">
                         <h3>R$ <?= (number_format($produto['preco'], 2, ',', '')) ?></h3>
@@ -66,10 +72,10 @@
                         <div class="product-quantity">
                             <div class="product-quantity change">
                                 <input type="hidden" name="id" value="<?= $produto['id'] ?>">
-                                <input type="hidden" name="idUsuario" value="<?= $usuario['id'] ?>">
-                                <button onclick="addMin(<?=$produto['id']?>)" class="min">-</button>
-                                <input id="quantidade-<?=$produto['id']?>" name="quantidade" type="number" value="1">
-                                <button onclick="addMax(<?=$produto['id']?>)" class="max">+</button>
+                                <input type="hidden" name="idUsuario" value="<?= $_SESSION['usuario']['id'] ?>">
+                                <button onclick="addMin(<?= $produto['id'] ?>)" class="min">-</button>
+                                <input id="quantidade-<?= $produto['id'] ?>" name="quantidade" type="number" value="1">
+                                <button onclick="addMax(<?= $produto['id'] ?>)" class="max">+</button>
                             </div>
                             <button class="addToCart">Adicionar</button>
                         </div>
@@ -103,7 +109,7 @@
                                 <?php foreach ($_SESSION['carrinho'] as $carrinho) { ?>
                                     <div class="product">
                                         <div class="product-img">
-                                            <img src="data:image/png;base64,<?=$carrinho['img']?>" alt="product">
+                                            <img src="./assets/product/<?= $carrinho['img'] ?>" alt="product">
                                         </div>
                                         <div class="product-name">
                                             <h3><?= $carrinho['nome'] ?></h3>
@@ -114,14 +120,14 @@
                                         <div class="product-price">
                                             <h3>R$ <?= (number_format($carrinho['preco'], 2, ',', '')) ?></h3>
                                         </div>
-                                            <div class="product-quantity">
-                                                <div class="product-quantity change">
-                                                    <button onclick="addMinCart(<?= $carrinho['id_produto'] ?>)" class="min">-</button>
-                                                    <input id="quantidade-cart-<?= $carrinho['id_produto'] ?>" type="number" value="<?= $carrinho['quantidade'] ?>">
-                                                    <button onclick="addMaxCart(<?= $carrinho['id_produto'] ?>)" class="max">+</button>
-                                                </div>
-                                                <button onclick="removeToCart(<?= $carrinho['id_produto'] ?>, <?=$carrinho['id_usuario']?>)">Remover</button>
+                                        <div class="product-quantity">
+                                            <div class="product-quantity change">
+                                                <button onclick="addMinCart(<?= $carrinho['id_produto'] ?>)" class="min">-</button>
+                                                <input id="quantidade-cart-<?= $carrinho['id_produto'] ?>" type="number" value="<?= $carrinho['quantidade'] ?>">
+                                                <button onclick="addMaxCart(<?= $carrinho['id_produto'] ?>)" class="max">+</button>
                                             </div>
+                                            <button onclick="removeToCart(<?= $carrinho['id_produto'] ?>, <?= $carrinho['id_usuario'] ?>)">Remover</button>
+                                        </div>
                                     </div>
                                 <?php } ?>
                             </div>
@@ -132,21 +138,70 @@
                             Total
                         </div>
                         <div class="cart-footer-price">
-                            R$
+                            R$ <?=(number_format($_SESSION['precoTotal'], 2, ',', ''))?>
                         </div>
                     </div>
                 </div>
 
                 <div class="cart-options">
-                    <button onclick="buyCart(<?=$_SESSION['usuario']['id']?>)" id="comprar">
+                    <button onclick="buyCart(<?= $_SESSION['usuario']['id'] ?>)" id="comprar">
                         Comprar
                     </button>
-                    <button onclick="deletarCarrinho(<?=$_SESSION['usuario']['id']?>)" id="limpar">
+                    <button onclick="deletarCarrinho(<?= $_SESSION['usuario']['id'] ?>)" id="limpar">
                         Limpar
                     </button>
                 </div>
-
             </div>
+        </aside>
+        <aside class="closeFav" id="openFav">
+            <div class="container-cart">
+                <div class="cart-button_toggle">
+                    <button onclick="closeFav()">
+                        <svg width="26" height="26" fill="#ffffff" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+                            <path d="m9 9 6 6"></path>
+                            <path d="m15 9-6 6"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="cart-header">
+                    <p>
+                        Favoritos
+                    </p>
+                </div>
+
+                <div class="cart-body">
+                    <div class="cart-body_content">
+                        <div class="cart-body_content-item">
+                            <div class="cart-body_content-item-info">
+                                <?php foreach ($_SESSION['favoritos'] as $favorito) { ?>
+                                    <div class="product">
+                                        <div class="product-img">
+                                            <img src="./assets/product/<?= $favorito['img'] ?>" alt="product">
+                                        </div>
+                                        <div class="product-name">
+                                            <h3><?= $favorito['nome'] ?></h3>
+                                        </div>
+                                        <div class="product-description">
+                                            <p><?= $favorito['descricao'] ?></p>
+                                        </div>
+                                        <div class="product-price">
+                                            <h3>R$ <?= (number_format($favorito['preco'], 2, ',', '')) ?></h3>
+                                        </div>
+                                        <div class="product-quantity">
+                                            <button style="position: relative; left: 15%;" onclick="removerItemFavorito(<?= $favorito['id_produto'] ?>, <?= $favorito['id_usuario'] ?>)">Remover</button>
+                                        </div>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-options">
+                    <button style="position: relative; left: 28%;" onclick="removerFavorito(<?= $_SESSION['usuario']['id'] ?>)" id="limpar">
+                        Limpar
+                    </button>
+                </div>
             </div>
         </aside>
     <?php } ?>
@@ -168,5 +223,3 @@
 </body>
 
 </html>
-
-<script src="./js/script.js"></script>

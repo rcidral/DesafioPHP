@@ -17,6 +17,7 @@
                 $_SESSION['authenticated'] = true;
                 $_SESSION['pageNumberUser'] = 15;
                 $_SESSION['pageNumberProduct'] = 15;
+                $_SESSION['produtos'] = null;
                 $_SESSION['usuario'] = $usuario->getUsuario();
             } else {
                 unset($_SESSION['authenticated']);

@@ -41,6 +41,14 @@
             return $this;
         }
 
+        public function getProdutosLogado() {
+            $query = "SELECT p.*, f.id as favorito FROM produtos AS p LEFT JOIN favorito AS f ON p.id = f.id_produto AND f.id_usuario = :id_usuario;";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_usuario', $_SESSION['usuario']['id']);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
         public function getProdutos() {
             $query = "SELECT * FROM produtos";
             $stmt = $this->db->prepare($query);
@@ -49,9 +57,10 @@
         }
 
         public function getProdutoById() {
-            $query = "SELECT * FROM produtos WHERE id = :id";
+            $query = "SELECT p.*, f.id as favorito FROM produtos AS p LEFT JOIN favorito AS f ON p.id = f.id_produto AND f.id_usuario = :id_usuario WHERE p.id = :id";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id', $this->__get('id'));
+            $stmt->bindValue(':id_usuario', $_SESSION['usuario']['id']);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
@@ -118,6 +127,54 @@
             $stmt->bindValue(':id', $this->__get('id'));
             $stmt->execute();
             return $this;
+        }
+
+        public function exportarProdutosCSV() {
+            ob_start();
+            $query = "SELECT * FROM produtos";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            $produtos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            if($produtos != null ) {
+                header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachment; filename=usuarios.csv');
+                header('Pragma: no-cache');
+
+                $output = fopen('produtos.csv', 'w');
+                fputcsv($output, array('id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'));
+                foreach($produtos as $produto) {
+                    fputcsv($output, $produto);
+                }
+                fclose($output);
+                ob_end_flush();
+            } else {
+                $output = fopen('produtos.csv', 'w');
+                fputcsv($output, array('id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'));
+                fclose($output);
+                ob_end_flush();
+            }
+        }
+
+        public function importarProdutosCSV() {
+            $csv = $_FILES['csv-produto'];
+            $data = fopen($csv['tmp_name'], 'r');
+            $row = 0;
+            while($line = fgetcsv($data)) {
+                if($row > 0) {
+                    $query = "INSERT INTO produtos (nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao) VALUES (:nome, :descricao, :preco, :img, :img1, :img2, :img3, NOW())";
+                    $stmt = $this->db->prepare($query);
+                    $stmt->bindValue(':nome', $line[1]);
+                    $stmt->bindValue(':descricao', $line[2]);
+                    $stmt->bindValue(':preco', $line[3]);
+                    $stmt->bindValue(':img', $line[4]);
+                    $stmt->bindValue(':img1', $line[5]);
+                    $stmt->bindValue(':img2', $line[6]);
+                    $stmt->bindValue(':img3', $line[7]);
+                    $stmt->execute();
+                }
+                $row++;
+            }
         }
     }
 

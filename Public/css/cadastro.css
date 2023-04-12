@@ -231,6 +231,14 @@ footer {
     font-size: 18px;
 }
 
+.btn {
+    display: flex;
+    justify-content: space-between;
+}
+.btn button {
+    width: 150px;
+}
+
 
 .container-footer {
     display: flex;

@@ -42,7 +42,10 @@
                     <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha">
                     <h1>Foto</h1>
                     <input type="file" name="foto" id="foto" placeholder="Foto" accept="image/png">
-                    <button id="salvar-usuario-btn">Salvar</button>
+                    <div class="btn">
+                        <button id="back-admin">Cancelar</button>
+                        <button id="salvar-usuario-btn">Salvar</button>
+                    </div>
                     <div class="campos">
                         <p>Preencha todos os campos</p>
                     </div>

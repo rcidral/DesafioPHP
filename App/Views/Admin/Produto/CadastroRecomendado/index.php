@@ -31,21 +31,16 @@
         <div class="container-main-produto">
             <div class="container-cadastro-produto">
                 <div class="container-cadastro-header-produto">
-                    <h1>Cadastro de Produto</h1>
+                    <h1>Cadastro de Produto Recomendado</h1>
                 </div>
                 <div class="container-cadastro-body-produto">
                     <input type="text" name="nome" id="nome" placeholder="Nome">
-                    <input type="text" name="descricao" id="descricao" placeholder="Descrição">
-                    <input type="number" name="preco" id="preco" placeholder="Preço" min="1">
+                    <input type="number" name="sequencia" id="sequencia" placeholder="Sequência" min="1" max="3">
                     <h1>Foto Principal</h1>
                     <input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
-                    <h1>Foto Opcional</h1>
-                    <input type="file" name="img1" id="img1" placeholder="Foto" accept="image/png">
-                    <input type="file" name="img2" id="img2" placeholder="Foto" accept="image/png">
-                    <input type="file" name="img3" id="img3" placeholder="Foto" accept="image/png">
                     <div class="btn">
                         <button id="back-admin">Cancelar</button>
-                        <button id="salvar-produto-btn">Salvar</button>
+                        <button id="salvar-produto-recomendado-btn">Salvar</button>
                     </div>
                     <div class="campos">
                         <p>Preencha todos os campos</p>

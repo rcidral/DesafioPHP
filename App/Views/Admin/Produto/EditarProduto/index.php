@@ -15,7 +15,6 @@
         <div class="container-header">
             <div class="logo">
                 <img id="img-logo" src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
-                <a href="/admin">Voltar</a>
             </div>
             <div class="user">
                 <?php if (isset($_SESSION['authenticated'])) { ?>
@@ -38,14 +37,17 @@
                     <input type="hidden" name="id" id="id" value="<?= $produto['id'] ?>">
                     <input type="text" name="nome" id="nome" placeholder="Nome" value="<?= $produto['nome'] ?>">
                     <input type="text" name="descricao" id="descricao" placeholder="Descrição" value="<?= $produto['descricao'] ?>">
-                    <input type="number" name="preco" id="preco" placeholder="Preço" value="<?= $produto['preco'] ?>">
+                    <input type="number" name="preco" id="preco" placeholder="Preço" value="<?= $produto['preco'] ?>" min="1">
                     <h1>Foto Principal</h1>
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img']?>" alt="product"><input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
+                    <img style="width: 60px;" src="./assets/product/<?=$produto['img']?>" alt="product"><input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
                     <h1>Foto Opcional</h1>
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img1']?>" alt="product"><input type="file" name="img1" id="img1" placeholder="Foto" accept="image/png">
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img2']?>" alt="product"><input type="file" name="img2" id="img2" placeholder="Foto" accept="image/png">
-                    <img style="width: 60px;" src="data:image/png;base64,<?=$produto['img3']?>" alt="product"><input type="file" name="img3" id="img3" placeholder="Foto" accept="image/png">
-                    <button id="editar-produto-btn">Salvar</button>
+                    <img style="width: 60px;" src="./assets/product/<?=$produto['img1']?>" alt="product"><input type="file" name="img1" id="img1" placeholder="Foto" accept="image/png">
+                    <img style="width: 60px;" src="./assets/product/<?=$produto['img2']?>" alt="product"><input type="file" name="img2" id="img2" placeholder="Foto" accept="image/png">
+                    <img style="width: 60px;" src="./assets/product/<?=$produto['img3']?>" alt="product"><input type="file" name="img3" id="img3" placeholder="Foto" accept="image/png">
+                    <div class="btn">
+                        <button id="back-admin">Cancelar</button>
+                        <button id="editar-produto-btn">Salvar</button>
+                    </div>
                 <?php } ?>
                 </div>
             </div>

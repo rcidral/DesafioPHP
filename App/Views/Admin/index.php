@@ -28,13 +28,14 @@
     </header>
     <main>
         <div class="container-main">
-            <div class="container-user">
+            <div style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); padding: 30px;" class="container-user">
+                <h2>Usuarios</h2>
                 <div class="options">
-                    <h2>Usuario</h2>
                     <div class="options-btn">
-                        <button onclick="change15User()">15</button>
-                        <button onclick="change50User()">50</button>
-                        <button onclick="change100User()">100</button>
+                        <button onclick="showModalExportUsuario()">Importar</button>
+                        <button id="export-user">Exportar</button>
+                    </div>
+                    <div class="options-btn">
                         <button id="cadastro-usuario-btn" class="cadastro-btn">Cadastrar</button>
                     </div>
                 </div>
@@ -46,19 +47,24 @@
                         <th>Data de Alteração</th>
                         <th class="last">Ações</th>
                     </tr>
-                    <?php foreach($_SESSION['usuarios'] as $usuario) { ?>
+                    <?php foreach ($_SESSION['usuarios'] as $usuario) { ?>
                         <tr>
                             <td><?= $usuario['nome'] ?></td>
                             <td><?= $usuario['email'] ?></td>
                             <td><?= $usuario['data_criacao'] ?></td>
                             <td><?= $usuario['data_alteracao'] ?></td>
                             <td>
-                                <button onclick="editarUsuario(<?=$usuario['id']?>)">Editar</button>
-                                <button onclick="showModalUsuario(<?=$usuario['id']?>)">Deletar</button>
+                                <button onclick="editarUsuario(<?= $usuario['id'] ?>)">Editar</button>
+                                <button onclick="showModalUsuario(<?= $usuario['id'] ?>)">Deletar</button>
                             </td>
                         </tr>
                     <?php } ?>
                 </table>
+                <div class="btn-page">
+                    <button onclick="change15User()">15</button>
+                    <button onclick="change50User()">50</button>
+                    <button onclick="change100User()">100</button>
+                </div>
             </div>
             <div class="modal-delete-usuario">
                 <div class="modal-delete-usuario-content">
@@ -70,15 +76,28 @@
                     </div>
                 </div>
             </div>
-            <div class="container-product">
-                <div class="options">
-                    <h2>Produtos</h2>
-                    <div class="options-btn">
-                        <button onclick="change15Product()">15</button>
-                        <button onclick="change50Product()">50</button>
-                        <button onclick="change100Product()">100</button>
-                        <button id="cadastro-produto-btn" class="cadastro-btn">Cadastrar</button>
+            <div class="modal-export-usuario">
+                <div class="modal-export-usuario-content">
+                    <h2>Importar Usuários</h2>
+                    <div class="text">
+                        <p>Baixar</p>
+                        <p id="template-user" class="p-template">template.csv</p>
                     </div>
+                    <input id="csv-user" type="file" accept=".csv">
+                    <div class="modal-export-usuario-btn">
+                        <button onclick="closeModalExportUsuario()">Cancelar</button>
+                        <button id="btn-import-user">Importar</button>
+                    </div>
+                </div>
+            </div>
+            <div style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); padding: 30px;" class="container-product">
+                <h2>Produtos</h2>
+                <div class="options">
+                    <div class="options-btn">
+                        <button onclick="showModalExportProduto()">Importar</button>
+                        <button id="export-produto">Exportar</button>
+                    </div>
+                    <button id="cadastro-produto-btn" class="cadastro-btn">Cadastrar</button>
                 </div>
                 <table>
                     <tr>
@@ -89,7 +108,7 @@
                         <th>Data de Alteração</th>
                         <th class="last">Ações</th>
                     </tr>
-                    <?php foreach($_SESSION['produtos'] as $produto) { ?>
+                    <?php foreach ($_SESSION['produtos'] as $produto) { ?>
                         <tr>
                             <td><?= $produto['id'] ?></td>
                             <td><?= $produto['nome'] ?></td>
@@ -97,12 +116,17 @@
                             <td><?= $produto['data_criacao'] ?></td>
                             <td><?= $produto['data_alteracao'] ?></td>
                             <td>
-                                <button onclick="editarProduto(<?=$produto['id']?>)">Editar</button>
-                                <button onclick="showModalProduto(<?=$produto['id']?>)">Deletar</button>
+                                <button onclick="editarProduto(<?= $produto['id'] ?>)">Editar</button>
+                                <button onclick="showModalProduto(<?= $produto['id'] ?>)">Deletar</button>
                             </td>
                         </tr>
                     <?php } ?>
                 </table>
+                <div class="btn-page">
+                    <button onclick="change15Product()">15</button>
+                    <button onclick="change50Product()">50</button>
+                    <button onclick="change100Product()">100</button>
+                </div>
                 <div class="modal-delete-produto">
                     <div class="modal-delete-produto-content">
                         <h2>Deletar Produto</h2>
@@ -112,6 +136,137 @@
                             <button onclick="closeModalProduto()">Não</button>
                         </div>
                     </div>
+                </div>
+                <div class="modal-export-produto">
+                    <div class="modal-export-produto-content">
+                        <h2>Importar Produtos</h2>
+                        <div class="text">
+                            <p>Baixar</p>
+                            <p id="template-produto" class="p-template">template.csv</p>
+                        </div>
+                        <input id="csv-produto" type="file" accept=".csv">
+                        <div class="modal-export-produto-btn">
+                            <button onclick="closeModalExportProduto()">Cancelar</button>
+                            <button id="btn-import-produto">Importar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-recommended-produto">
+                <h2>Produtos Recomendados</h2>
+                    <div class="options">
+                        <div class="options-btn"></div>
+                        <button id="cadastro-recommended-produto-btn" class="cadastro-btn">Cadastrar</button>
+                    </div>
+                <table>
+                    <tr>
+                        <th class="first">Nome</th>
+                        <th>Número de Sequencia</th>
+                        <th class="last">Ações</th>
+                    </tr>
+                        <?php foreach($_SESSION['produtos_recomendados'] as $produto_recomendado) { ?>
+                            <tr>
+                                <td><?= $produto_recomendado['nome'] ?></td>
+                                <td><?= $produto_recomendado['sequencia'] ?></td>
+                                <td>
+                                    <button onclick="editarProdutoRecomendado(<?= $produto_recomendado['id'] ?>)">Editar</button>
+                                    <button onclick="showModalRecomendado(<?= $produto_recomendado['id'] ?>)">Deletar</button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                </table>
+                <div class="modal-delete-recomendado">
+                    <div class="modal-delete-recomendado-content">
+                        <h2>Deletar Produto Recomendado</h2>
+                        <p>Tem certeza que deseja deletar o produto recomendado?</p>
+                        <div class="modal-delete-recomendado-btn">
+                            <button id="btn-sim-recomendado" onclick>Sim</button>
+                            <button onclick="closeModalRecomendado()">Não</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="most-favorites">
+                    <div class="text">
+                        <h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Produtos mais favoritados</h3>
+                    </div>
+                    <div class="most-favorites-content">
+                        <?php foreach($_SESSION['mostFavoritos'] as $mostFavoritos) { ?>
+                            <div class="most-favorites-content-item">
+                                <p><?=$mostFavoritos['nome']?></p>
+                            </div>
+                        <?php } ?>
+                    </div>
+                </div>
+            <div style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); padding: 30px;" class="container-favorites">
+                <h2>Favoritos</h2>
+                <div class="options">
+                    <div class="options-btn">
+                        <button id="export-favorites">Exportar</button>
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <th class="first">Id</th>
+                        <th>Nome</th>
+                        <th>Preço</th>
+                        <th>Data de Criação</th>
+                        <th class="last">Data de Alteração</th>
+                    </tr>
+                    <?php foreach ($_SESSION['favoritos'] as $favorito) { ?>
+                        <tr>
+                            <td><?= $favorito['id'] ?></td>
+                            <td><?= $favorito['nome'] ?></td>
+                            <td><?= (number_format($favorito['preco'], 2, ',', '')) ?></td>
+                            <td><?= $favorito['data_criacao'] ?></td>
+                            <td><?= $favorito['data_alteracao'] ?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <div class="btn-page">
+                    <button >15</button>
+                    <button >50</button>
+                    <button >100</button>
+                </div>
+            </div>
+            <div style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); padding: 30px;" class="container-pedidos">
+                <h2>Pedidos</h2>
+                <div class="options">
+                    <div class="options-btn">
+                        <button id="export-pedidos">Exportar</button>
+                    </div>
+                </div>
+                <table>
+                    <tr>
+                        <th class="first">Número</th>
+                        <th>Quantidade</th>
+                        <th>Valor total</th>
+                        <th>Comprador</th>
+                        <th class="last">Ações</th>
+                    </tr>
+                    <?php foreach ($_SESSION['pedidos'] as $pedido) { ?>
+                        <tr>
+                            <td><?= $pedido['id_pedido'] ?></td>
+                            <td><?= $pedido['quantidade'] ?></td>
+                            <td><?= (number_format(($pedido['preco'] * $pedido['quantidade']), 2, ',', '')) ?></td>
+                            <td><?= $pedido['email'] ?></td>
+                            <td>
+                                <div>
+                                    <button onclick="showModalProdutos(<?= $pedido['id_pedido'] ?>)">Produtos</button>
+                                </div>
+
+                                <div>
+
+                                </div>
+
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+                <div class="btn-page">
+                    <button >15</button>
+                    <button >50</button>
+                    <button >100</button>
                 </div>
             </div>
         </div>

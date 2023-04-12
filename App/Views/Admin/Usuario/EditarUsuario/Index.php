@@ -44,7 +44,10 @@
                     <input type="password" name="confirmarSenha" id="confirmarSenha" placeholder="Confirmar Senha" value="<?= $usuario['senha'] ?>">
                     <h1>Foto</h1>
                     <input type="file" name="foto" id="foto" placeholder="Foto" accept="image/png">
-                    <button id="editar-usuario-btn">Salvar</button>
+                    <div class="btn">
+                        <button id="back-admin">Cancelar</button>
+                        <button id="editar-usuario-btn">Salvar</button>
+                    </div>
                 <?php } ?>
                     <div class="confirmar">
                         <p>As senhas não coincidem</p>

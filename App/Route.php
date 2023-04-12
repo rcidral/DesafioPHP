@@ -11,14 +11,22 @@
     switch($urlPath) {
         // Auth routes
         case '/': {
-            if(!isset($_SESSION['produtos']) || $_SESSION['produtos'] == "") {
-                $_SESSION['produtos'] = $appController->listarProdutos();
-            }
+            if(!isset($_SESSION['usuario']['id']) || $_SESSION['usuario']['id'] == null) {
+                if(!isset($_SESSION['produtos']) || $_SESSION['produtos'] == null) {
+                    $_SESSION['produtos'] = $appController->listarProdutos();
+                }
+            } 
             if(isset($_SESSION['usuario']['id'])) {
+                if(!isset($_SESSION['produtos']) || $_SESSION['produtos'] == null) {
+                    $_SESSION['produtos'] = $appController->listarProdutosLogado();
+                }
                 $_SESSION['carrinho'] = $appController->listarCarrinho();
+                $_SESSION['favoritos'] = $appController->listarFavoritos();
                 $appController->listarQuantidade();
+                $_SESSION['precoTotal'] = $appController->listarPrecoTotal();
             }
             include '../App/Views/Home/index.php';
+            $_SESSION['produtos'] = null;
             break;
         }
         case '/login': {
@@ -31,12 +39,17 @@
         }
         case '/logout': {
             session_destroy();
+            $_SESSION['produtos'] = null;
             json_encode(['success' => true]);
             break;
         }
         case '/admin': {
             $_SESSION['usuarios'] = $appController->listarUsuariosAdmin($_SESSION['pageNumberUser']);
             $_SESSION['produtos'] = $appController->listarProdutosAdmin($_SESSION['pageNumberProduct']);
+            $_SESSION['produtos_recomendados'] = $appController->listarProdutosRecomendados();
+            $_SESSION['favoritos'] = $appController->listarFavoritosAdmin();
+            $_SESSION['pedidos'] = $appController->getPedidosAdmin();
+            $_SESSION['mostFavoritos'] = $appController->listarMaisFavoritados();
             include '../App/Views/Admin/index.php';
             break;
         }
@@ -60,6 +73,20 @@
             echo json_encode(['success' => true]);
             break;
         }
+        case '/editarProdutoRecomendadoRed': {
+            $_SESSION['produtoRecomendadoEditar'] = $appController->listarProdutoRecomendado();
+            echo json_encode(['success' => true]);
+            break;
+        }
+        case '/editarProdutoRecomendadoView': {
+            include '../App/Views/Admin/Produto/EditarRecomendado/index.php';
+            break;
+        }
+        case '/editarProdutoRecomendado': {
+            $appController->editarProdutoRecomendado();
+            echo json_encode(['success' => true]);
+            break;
+        }
         case '/editarUsuario': {
             $appController->editarUsuario();
             echo json_encode(['success' => true]);
@@ -70,6 +97,20 @@
             echo json_encode(['success' => true]);
             break;
         }
+        case '/deleteRecomendadoProduto': {
+            $appController->deletarRecomendadoProduto();
+            echo json_encode(['success' => true]);
+            break;
+        }
+        case '/exportarUsuariosCSV': {
+            $appController->exportarUsuariosCSV();
+            break;
+        }
+
+        case '/importarUsuariosCSV': {
+            $appController->importarUsuariosCSV();
+            break;
+        }
 
         // Product routes
         case '/cadastroProdutoView': {
@@ -78,6 +119,15 @@
         }
         case '/cadastroProduto': {
             $appController->cadastrarProduto();
+            echo json_encode(['success' => true]);
+            break;
+        }
+        case '/cadastroRecommendedProdutoView': {
+            include '../App/Views/Admin/Produto/CadastroRecomendado/index.php';
+            break;
+        }
+        case '/cadastroRecommendedProduto': {
+            $appController->cadastrarProdutoRecomendado();
             echo json_encode(['success' => true]);
             break;
         }
@@ -121,6 +171,16 @@
                 $appController->listarQuantidade();
             }
             include '../App/Views/Produto/index.php';
+            break;
+        }
+
+        case '/exportarProdutosCSV': {
+            $appController->exportarProdutosCSV();
+            break;
+        }
+
+        case '/importarProdutosCSV': {
+            $appController->importarProdutosCSV();
             break;
         }
 
@@ -173,6 +233,7 @@
             } else {
                 $_SESSION['pageNumberUser'] = $_POST['qtdUser'];
             }
+            break;
         }
         case '/refreshTableProduct': {
             if(!isset($_POST['qtdProduct']) || $_POST['qtdProduct'] == null) {
@@ -180,8 +241,33 @@
             } else {
                 $_SESSION['pageNumberProduct'] = $_POST['qtdProduct'];
             }
+            break;
         }
 
+        // Favoritos routes
+
+        case '/adicionarFavorito': {
+            $appController->adicionarFavorito();
+            echo json_encode(['success' => true]);
+            break;
+        }
+
+        case '/removerItemFavorito': {
+            $appController->removerFavorito();
+            echo json_encode(['success' => true]);
+            break;
+        }
+
+        case '/removerFavorito': {
+            $appController->deletarFavoritos();
+            echo json_encode(['success' => true]);
+            break;
+        }
+
+        case '/exportarFavoritoCSV': {
+            $appController->exportarFavoritoCSV();
+            break;
+        }
     }
 
 ?>

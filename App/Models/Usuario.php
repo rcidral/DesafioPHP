@@ -110,6 +110,58 @@
             $stmt->execute();
             return $this;
         }
+
+        // export
+
+        public function exportarUsuariosCSV() {
+            ob_start();
+            $query = "SELECT * FROM usuarios";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            $usuarios = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            if($usuarios != null) {
+                header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachment; filename=usuarios.csv');
+                header('Pragma: no-cache');
+
+                $output = fopen('usuarios.csv', 'w');
+                fputcsv($output, array('ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criação', 'Data de Alteração'));
+                foreach($usuarios as $usuario) {
+                    fputcsv($output, $usuario);
+                }
+                fclose($output);
+                ob_end_flush();
+            } else {
+                $output = fopen('usuarios.csv', 'w');
+                fputcsv($output, array('ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criação', 'Data de Alteração'));
+                fclose($output);
+                ob_end_flush();
+            }
+        }
+
+        // import 
+
+        public function importarUsuariosCSV() {
+
+            $csv = $_FILES['csv-user'];
+            $data = fopen($csv['tmp_name'], 'r');
+            $row = 0;
+            while($line = fgetcsv($data)) {
+                if($row > 0) {
+                    $query = "INSERT INTO usuarios (nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao) VALUES (:nome, :nascimento, :telefone, :email, :senha, :foto, NOW(), NULL)";
+                    $stmt = $this->db->prepare($query);
+                    $stmt->bindValue(':nome', $line[1]);
+                    $stmt->bindValue(':nascimento', $line[2]);
+                    $stmt->bindValue(':telefone', $line[3]);
+                    $stmt->bindValue(':email', $line[4]);
+                    $stmt->bindValue(':senha', $line[5]);
+                    $stmt->bindValue(':foto', $line[6]);
+                    $stmt->execute();
+                }
+                $row++;
+            }
+        }
     }
 
 ?>

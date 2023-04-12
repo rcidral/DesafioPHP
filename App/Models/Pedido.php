@@ -27,5 +27,14 @@
             $pedido = $stmt->fetchAll(\PDO::FETCH_ASSOC);
             return $pedido;
         }
+
+        public function getPedidosAdmin() {
+            $query = "SELECT * FROM pedido INNER JOIN usuarios ON pedido.id_usuario = usuarios.id INNER JOIN pedido_item ON pedido.id = pedido_item.id_pedido";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            $pedidos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $pedidos;
+        }
+
     }
 ?>

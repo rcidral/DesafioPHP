@@ -89,6 +89,7 @@ footer {
     height: auto;
 }
 
+
 .container-user {
     margin: 2em;
     width: 95%;
@@ -119,17 +120,10 @@ footer {
 .container-user h2 {
     font-size: 1.5em;
     font-weight: 600;
+    margin-left: 15px;
 }
 
-.container-user .options .options-btn .cadastro-btn {
-    background-color: #576CBC;
-    color: #fff;
-}
 
-.container-user .options .options-btn .cadastro-btn:hover {
-    background-color: #5c74d3;
-    color: #fff;
-}
 
 .container-user table {
     border: 1px solid #ddd;
@@ -203,16 +197,7 @@ footer {
 .container-product h2 {
     font-size: 1.5em;
     font-weight: 600;
-}
-
-.container-product .options .options-btn .cadastro-btn {
-    background-color: #576CBC;
-    color: #fff;
-}
-
-.container-product .options .options-btn .cadastro-btn:hover {
-    background-color: #5c74d3;
-    color: #fff;
+    margin-left: 15px;
 }
 
 .container-product table {
@@ -365,7 +350,607 @@ footer {
     color: #000;
 }
 
+.modal-delete-recomendado {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
 
+.modal-delete-recomendado-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-delete-recomendado-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-delete-recomendado-content p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-delete-recomendado-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-delete-recomendado-btn button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-delete-recomendado-btn button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.modal-export-produto {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-export-produto-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-export-produto-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-produto-content p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-produto-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-export-produto-btn button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-export-produto-btn button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.modal-export-usuario {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-export-usuario-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+
+
+.modal-export-usuario-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-usuario-content p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-usuario .modal-export-usuario-content button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.modal-export-usuario-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-export-usuario-btn button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-export-usuario-btn button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.modal-export-favorites {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal-export-favorites-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-export-favorites-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-favorites-content p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-favorites-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-export-favorites-btn button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-export-favorites-btn button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+
+.container-favorites{
+    margin: 2em;
+    width: 95%;
+    height: auto;
+}
+
+.container-favorites .options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+.container-favorites .options button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-favorites .options button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.container-favorites h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+.container-favorites table {
+    border: 1px solid #ddd;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.container-favorites .first {
+    border-radius: 10px 0 0 0;
+}
+
+.container-favorites .last {
+    border-radius: 0 10px 0 0;
+}
+
+.container-favorites table tr th {
+    padding: 1em;
+    text-align: center;
+    background-color: #0B2447;
+    color: #fff;
+}
+
+.container-favorites table tr td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.container-pedidos {
+    margin: 2em;
+    width: 95%;
+    height: auto;
+}
+
+.container-pedidos .options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+
+.container-pedidos .options button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-pedidos .options button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.container-pedidos h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+.container-pedidos table {
+    border: 1px solid #ddd;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.container-pedidos .first {
+    border-radius: 10px 0 0 0;
+}
+
+.container-pedidos .last {
+    border-radius: 0 10px 0 0;
+}
+
+.container-pedidos table tr th {
+    padding: 1em;
+    text-align: center;
+    background-color: #0B2447;
+    color: #fff;
+}
+
+
+.container-pedidos table tr td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.container-pedidos table tr td button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-pedidos table tr td button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.modal-export-pedidos {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.container-recommended-produto {
+    margin: 2em;
+    width: 95%;
+    height: auto;
+}
+
+.container-recommended-produto .options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1em;
+}
+
+.container-recommended-produto .options button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-recommended-produto .options button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+.container-recommended-produto h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-left: 15px;
+}
+
+.container-recommended-produto table {
+    border: 1px solid #ddd;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.container-recommended-produto .first {
+    border-radius: 10px 0 0 0;
+}
+
+.container-recommended-produto .last {
+    border-radius: 0 10px 0 0;
+}
+
+.container-recommended-produto table tr th {
+    padding: 1em;
+    text-align: center;
+    background-color: #0B2447;
+    color: #fff;
+}
+
+.container-recommended-produto table tr td {
+    padding: 1em;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+.container-recommended-produto table tr td button {
+    padding: 0.5em;
+    border: none;
+    border-radius: 5px;
+    background-color: #0B2447;
+    color: #fff;
+    cursor: pointer;
+}
+
+.container-recommended-produto table tr td button:hover {
+    background-color: #19376D;
+    color: #fff;
+}
+
+
+
+.text {
+    display: flex;
+    justify-content: center;
+}
+
+.text p {
+    margin-right: 4px;
+}
+
+.text .p-template {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.modal-export-usuario-content input {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+}
+
+.modal-export-produto-content input {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+}
+
+.modal-export-pedidos-content input {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+}
+
+.modal-export-favorites-content input {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+}
+.options-btn {
+    display: flex;
+    justify-content: center;
+}
+.options-btn button {
+    margin-right: 10px;
+}
+
+.modal-export-pedidos-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 200px;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.modal-export-pedidos-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-pedidos-content p {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.modal-export-pedidos-btn {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-export-pedidos-btn button {
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-export-pedidos-btn button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.most-favorites {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 95%;
+    border-radius: 25px;
+    align-items: center;
+    margin-top: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+}
+.most-favorites-content-item {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.most-favorites-content-item p {
+    margin-right: 5px;
+}
+.most-favorites-content-item p:first-child {
+    font-weight: bold;
+}
+.modal-produtos-pedido {
+    display: flex;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: auto;
+    overflow: auto;
+}
+
+.modal-produtos-pedido-content {
+    background-color: #fefefe;
+    margin: auto;
+    border: 1px solid #888;
+    width: 100%;
+}
+
+.btn-page {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-page button {
+    border: none;
+    background-color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin: 0 5px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-page button:hover {
+    background-color: #f2f2f2;
+}
 .container-footer {
     display: flex;
     justify-content: space-between;

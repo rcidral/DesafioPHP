@@ -47,7 +47,7 @@
         }
 
         public function comprarCarrinho() {
-            $query = "SELECT id_produto FROM carrinho WHERE id_usuario = :id_usuario";
+            $query = "SELECT * FROM carrinho INNER JOIN produtos where carrinho.id_produto = produtos.id AND carrinho.id_usuario = :id_usuario";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
             $stmt->execute();
@@ -66,10 +66,12 @@
         
     
             foreach($produto as $item) {
-                $query = "INSERT INTO pedido_item (id_pedido, id_produto) VALUES (:id_pedido, :id_produto)";
+                $query = "INSERT INTO pedido_item (id_pedido, id_produto, quantidade, preco) VALUES (:id_pedido, :id_produto, :quantidade, :preco)";
                 $stmt = $this->db->prepare($query);
                 $stmt->bindValue(':id_pedido', $id_pedido->id);
                 $stmt->bindValue(':id_produto', $item->id_produto);
+                $stmt->bindValue(':quantidade', $item->quantidade);
+                $stmt->bindValue(':preco', $item->preco);
                 $stmt->execute();
             }
     
@@ -93,6 +95,15 @@
             $stmt->execute();
             $quantidade = $stmt->fetch(\PDO::FETCH_OBJ);
             return $quantidade->quantidade;
+        }
+
+        public function getPrecoTotal() {
+            $query = "SELECT SUM(preco * quantidade) AS preco_total FROM carrinho INNER JOIN produtos ON carrinho.id_produto = produtos.id WHERE id_usuario = :id_usuario";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
+            $stmt->execute();
+            $preco_total = $stmt->fetch(\PDO::FETCH_OBJ);
+            return $preco_total->preco_total;
         }
         public function updateCarrinhoMax() {
             $query = "UPDATE carrinho SET quantidade = :quantidade WHERE id_usuario = :id_usuario AND id_produto = :id_produto";
