@@ -25,6 +25,9 @@
                 $appController->listarQuantidade();
                 $_SESSION['precoTotal'] = $appController->listarPrecoTotal();
             }
+            $_SESSION['produto_sequencia1'] = $appController->listarProdutoRecomendadoSequencia1();
+            $_SESSION['produto_sequencia2'] = $appController->listarProdutoRecomendadoSequencia2();
+            $_SESSION['produto_sequencia3'] = $appController->listarProdutoRecomendadoSequencia3();
             include '../App/Views/Home/index.php';
             $_SESSION['produtos'] = null;
             break;

@@ -131,12 +131,29 @@
             $produto = Container::getModel('App\Models\Produto');
             return $produto->listarProdutosAdmin($qtd);
         }
+
+        public function listarProdutoRecomendadoSequencia1() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            return $produto->getProdutoRecomendadoSequencia1();
+        }
+
+        public function listarProdutoRecomendadoSequencia2() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            return $produto->getProdutoRecomendadoSequencia2();
+        }
+
+        public function listarProdutoRecomendadoSequencia3() {
+            $produto = Container::getModel('App\Models\ProdutoRecomendado');
+            return $produto->getProdutoRecomendadoSequencia3();
+        }
+
         public function pesquisarProduto() {
             $produto = Container::getModel('App\Models\Produto');
             $produto->__set('nome', $_POST['textoPesquisa']);
             $produto->__set('descricao', $_POST['textoPesquisa']);
             return $produto->getProdutoByName();
         }
+
 
         public function editarProduto() {
             $produto = Container::getModel('App\Models\Produto');

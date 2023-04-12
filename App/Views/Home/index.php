@@ -46,6 +46,126 @@
         <div class="product-incorret">
             <p>Desculpe não encontramos o item procurado</p>
         </div>
+        <div class="container-carrousel-2">
+            <div class="carousel-wrapper">
+                <div class="carousel-container">
+                    <h1>Produtos Recomendados</h1>
+                    <div class="carousel">
+                        <?php foreach($_SESSION['produto_sequencia1'] as $produto ){ ?>
+                            <div class="image-one"><img style="width:350px; height: 240px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
+                        <?php } ?>
+                        <?php foreach($_SESSION['produto_sequencia2'] as $produto ){ ?>
+                            <div class="image-two"><img style="width:350px; height: 240px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
+                        <?php } ?>
+                        <?php foreach($_SESSION['produto_sequencia3'] as $produto ){ ?>
+                            <div class="image-three"><img style="width:350px; height: 240px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
+                        <?php } ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <style>
+            .container-carrousel-2 {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-top: 8em;
+                
+            }
+            .carousel-wrapper {
+                width: 520px;
+                height: 400px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
+                border-radius: 20px;
+            }
+            .carousel-container {
+                width: 400px;
+                height: 300px;
+                overflow: hidden;
+                margin: 0 auto;
+            }
+            .carousel-container h1 {
+                text-align: center;
+                font-size: 1.5em;
+                padding-bottom: 20px;
+            }
+            .carousel {
+                display: flex;
+                width: 1200px;
+                margin-left: 6%;
+                animation: sliding 12s infinite;
+            }
+            .carousel div {
+                width: 400px;
+                height: 250px;
+                background-size: cover;
+                background-position: center;
+            }
+            .carousel:hover {
+                animation-play-state: paused;
+            }
+            @keyframes sliding {
+                30% {
+                    transform: translateX(0);
+                }
+                35% {
+                    transform: translateX(-400px);
+                }
+                65% {
+                    transform: translateX(-400px);
+                }
+                70% {
+                    transform: translateX(-800px);
+                }
+                98% {
+                    transform: translateX(-800px);
+                }
+                100% {
+                    transform: translateX(0);
+                }
+            }
+            @media screen and (max-width: 768px) {
+                .carousel-wrapper {
+                    width: 312px;
+                    height: 210px;
+                }
+                .carousel-container {
+                    width: 240px;
+                    height: 150px;
+                }
+                .carousel {
+                    width: 720px;
+                }
+                .carousel > div {
+                    width: 240px;
+                    height: 150px;
+                }
+                @keyframes sliding {
+                    30% {
+                        transform: translateX(0);
+                    }
+                    35% {
+                        transform: translateX(-240px);
+                    }
+                    65% {
+                        transform: translateX(-240px);
+                    }
+                    70% {
+                        transform: translateX(-480px);
+                    }
+                    98% {
+                        transform: translateX(-480px);
+                    }
+                    100% {
+                        transform: translateX(0);
+                    }
+                }
+            }
+  
+        </style>
         <div class="container-main">
             <?php foreach ($_SESSION['produtos'] as $produto) { ?>
                 <div style="height: 370px;" class="product">

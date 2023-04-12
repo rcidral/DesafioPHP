@@ -9,5 +9,5 @@
 5. Para acessar a área administrativa, acesse a área de login e utilize as seguintes credenciais:
    - Email: admin@admin.com
    - Senha: admin
-
+6. Slack: [https://app.slack.com/client/T052SH5FRPF/C05384M62TT](https://app.slack.com/client/T052SH5FRPF/C05384M62TT)
 

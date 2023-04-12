@@ -46,6 +46,27 @@
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
+        public function getProdutoRecomendadoSequencia1() {
+            $query = "SELECT * from produtos_recomendados WHERE sequencia = 1";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        public function getProdutoRecomendadoSequencia2() {
+            $query = "SELECT * from produtos_recomendados WHERE sequencia = 2";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
+        public function getProdutoRecomendadoSequencia3() {
+            $query = "SELECT * from produtos_recomendados WHERE sequencia = 3";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
         public function updateProdutoRecomendado() {
             $img = "";
             if($this->__get('img') != "") {

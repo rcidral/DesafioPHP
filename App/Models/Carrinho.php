@@ -79,6 +79,54 @@
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
             $stmt->execute();
+
+            $query = "SELECT * FROM pedido_item INNER JOIN produtos ON pedido_item.id_produto = produtos.id WHERE id_pedido = :id_pedido";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_pedido', $id_pedido->id);
+            $stmt->execute();
+            $pedido = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+            $query = "SELECT * FROM pedido INNER JOIN usuarios ON pedido.id_usuario = usuarios.id WHERE pedido.id = :id_pedido";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id_pedido', $id_pedido->id);
+            $stmt->execute();
+            $usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            $slack_url = "https://hooks.slack.com/services/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";
+            $table = "* Detalhes do Pedido" .$pedido[0]['id_pedido']. "*\n\n";
+            $table .= "| Produto | Quantidade | Preço |\n";
+            $preco_total = 0;
+            foreach($pedido as $item) {
+                $table .= "| " .$item['nome']. " | " .$item['quantidade']. " | R$" .$item['preco']. " |\n";
+                $preco_total += $item['preco'] * $item['quantidade'];
+            }
+            $table .= "| Total | | R$" .$preco_total. " |\n";
+            $table .= "\n";
+            $table .= "Pedido realizado por: " .$usuario['nome']. " (" .$usuario['email']. ")";
+            
+            $message = "Um novo pedido foi realizado!";
+            $message .= $table;
+
+            $data = array(
+                "text" => $message
+            );
+
+            $payload = json_encode($data);
+            $ch = curl_init($slack_url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt(
+                $ch,
+                CURLOPT_HTTPHEADER,
+                array(
+                    "Content-Type: application/json",
+                    "Content-Length: " . strlen($payload)
+                )
+            );
+
+            $result = curl_exec($ch);
+            curl_close($ch);
         }
 
         public function getCarrinho() {
