@@ -65,6 +65,14 @@
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
+        public function getProdutoByIdImport($id) {
+            $query = "SELECT * FROM produtos WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id', $id);
+            $stmt->execute();
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        }
+
         public function getProdutoByName() {
             $query = "SELECT * FROM produtos WHERE nome LIKE :nome OR descricao LIKE :descricao";
             $stmt = $this->db->prepare($query);
@@ -171,50 +179,144 @@
                     }
                     continue;
                 }
-
-                for($i = 4; $i <= 7; $i++) {
-                    $curl = curl_init();
-
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => $line[$i],
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => "",
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 30,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => "GET",
-                        CURLOPT_HTTPHEADER => array(
-                            "Content-Type: application/json"
-                        ),
-                    ));
-
-                    $response = curl_exec($curl);
-                    curl_close($curl);
-                    $picname[$i] = 'picture'.$i.date('YmdHis').'.png';
-                    $filePath = './assets/product/'.$picname[$i];
-                    $fp = fopen($filePath, 'x');
-                    if (!$fp) {
-                        echo "Failed to open file $filePath";
-                    } else {
-                        fwrite($fp, $response);
-                        fclose($fp);
-                        echo "File saved to $filePath";
-                    }
+                if($line[0] == "") {
+                    continue;
                 }
-                
+                    $produto = Produto::getProdutoByIdImport($line[0]);
+                        if($produto != null) {
+                            for($i = 4; $i <= 7; $i++) {
+                                $curl = curl_init();
+            
+                                curl_setopt_array($curl, array(
+                                    CURLOPT_URL => $line[$i],
+                                    CURLOPT_RETURNTRANSFER => true,
+                                    CURLOPT_ENCODING => "",
+                                    CURLOPT_MAXREDIRS => 10,
+                                    CURLOPT_TIMEOUT => 30,
+                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                    CURLOPT_CUSTOMREQUEST => "GET",
+                                    CURLOPT_HTTPHEADER => array(
+                                        "Content-Type: application/json"
+                                    ),
+                                ));
+            
+                                $response = curl_exec($curl);
+                                curl_close($curl);
+                                $picname[$i] = 'picture'.$i.date('YmdHis').'.png';
+                                $filePath = './assets/product/'.$picname[$i];
+                                $fp = fopen($filePath, 'x');
+                                if (!$fp) {
+                                    echo "Failed to open file $filePath";
+                                } else {
+                                    fwrite($fp, $response);
+                                    fclose($fp);
+                                    echo "File saved to $filePath";
+                                }
+                            }
 
-                $query = "INSERT INTO produtos (id, nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao) VALUES (:id, :nome, :descricao, :preco, :img, :img1, :img2, :img3, NOW(), NULL) ON DUPLICATE KEY UPDATE nome = :nome, descricao = :descricao, preco = :preco, img = :img, img1 = :img1, img2 = :img2, img3 = :img3, data_alteracao = NOW()";
-                    $stmt = $this->db->prepare($query);
-                    $stmt->bindValue(':id', $line[0]);
-                    $stmt->bindValue(':nome', $line[1]);
-                    $stmt->bindValue(':descricao', $line[2]);
-                    $stmt->bindValue(':preco', $line[3]);
-                    $stmt->bindValue(':img', $picname[4]);
-                    $stmt->bindValue(':img1', $picname[5]);
-                    $stmt->bindValue(':img2', $picname[6]);
-                    $stmt->bindValue(':img3', $picname[7]);
-                    $stmt->execute();
-            }
+                            $nome = "";
+                            if($line[1] != null) {
+                                $nome = "nome = :nome,";
+                            }
+
+                            $descricao = "";
+                            if($line[2] != null) {
+                                $descricao = "descricao = :descricao,";
+                            }
+
+                            $preco = "";
+                            if($line[3] != null) {
+                                $preco = "preco = :preco,";
+                            }
+
+                            $img = "";
+                            if($line[4] != null) {
+                                $img = "img = :img,";
+                            }
+
+                            $img1 = "";
+                            if($line[5] != null) {
+                                $img1 = "img1 = :img1,";
+                            }
+
+                            $img2 = "";
+                            if($line[6] != null) {
+                                $img2 = "img2 = :img2,";
+                            }
+
+                            $img3 = "";
+                            if($line[7] != null) {
+                                $img3 = "img3 = :img3,";
+                            }
+
+                            $query = "UPDATE produtos SET $nome $descricao $preco $img $img1 $img2 $img3 data_alteracao = NOW() WHERE id = :id";
+                            $stmt = $this->db->prepare($query);
+                            $stmt->bindValue(':id', $line[0]);
+                            if($line[1] != null) {
+                                $stmt->bindValue(':nome', $line[1]);
+                            }
+                            if($line[2] != null) {
+                                $stmt->bindValue(':descricao', $line[2]);
+                            }
+                            if($line[3] != null) {
+                                $stmt->bindValue(':preco', $line[3]);
+                            }
+                            if($line[4] != null) {
+                                $stmt->bindValue(':img', $picname[4]);
+                            }
+                            if($line[5] != null) {
+                                $stmt->bindValue(':img1', $picname[5]);
+                            }
+                            if($line[6] != null) {
+                                $stmt->bindValue(':img2', $picname[6]);
+                            }
+                            if($line[7] != null) {
+                                $stmt->bindValue(':img3', $picname[7]);
+                            }
+                            $stmt->execute();
+                        } else {
+                            for($i = 4; $i <= 7; $i++) {
+                                $curl = curl_init();
+            
+                                curl_setopt_array($curl, array(
+                                    CURLOPT_URL => $line[$i],
+                                    CURLOPT_RETURNTRANSFER => true,
+                                    CURLOPT_ENCODING => "",
+                                    CURLOPT_MAXREDIRS => 10,
+                                    CURLOPT_TIMEOUT => 30,
+                                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                                    CURLOPT_CUSTOMREQUEST => "GET",
+                                    CURLOPT_HTTPHEADER => array(
+                                        "Content-Type: application/json"
+                                    ),
+                                ));
+            
+                                $response = curl_exec($curl);
+                                curl_close($curl);
+                                $picname[$i] = 'picture'.$i.date('YmdHis').'.png';
+                                $filePath = './assets/product/'.$picname[$i];
+                                $fp = fopen($filePath, 'x');
+                                if (!$fp) {
+                                    echo "Failed to open file $filePath";
+                                } else {
+                                    fwrite($fp, $response);
+                                    fclose($fp);
+                                    echo "File saved to $filePath";
+                                }
+                            }
+
+                            $query = "INSERT INTO produtos (nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao) VALUES (:nome, :descricao, :preco, :img, :img1, :img2, :img3, NOW(), NOW())";
+                            $stmt = $this->db->prepare($query);
+                            $stmt->bindValue(':nome', $line[1]);
+                            $stmt->bindValue(':descricao', $line[2]);
+                            $stmt->bindValue(':preco', $line[3]);
+                            $stmt->bindValue(':img', $picname[4]);
+                            $stmt->bindValue(':img1', $picname[5]);
+                            $stmt->bindValue(':img2', $picname[6]);
+                            $stmt->bindValue(':img3', $picname[7]);
+                            $stmt->execute();
+                        }
+                }
         }
         public function moverProdutoCSV() {
             $datetime = date('Y-m-d_H-i-s');
