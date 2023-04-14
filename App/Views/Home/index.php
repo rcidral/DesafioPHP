@@ -54,6 +54,7 @@
         <div class="product-incorret">
             <p>Desculpe não encontramos o item procurado</p>
         </div>
+        <?php if($_SESSION['produto_sequencia1'] == "" && $_SESSION['produto_sequencia2'] == "" && $_SESSION['produto_sequencia3'] == "" ) { ?>
         <div class="container-carrousel-2">
             <div class="carousel-wrapper">
                 <div class="carousel-container">
@@ -72,6 +73,7 @@
                 </div>
             </div>
         </div>
+        <?php } ?>
         <div class="container-main">
             <?php foreach ($_SESSION['produtos'] as $produto) { ?>
                 <div style="height: 370px;" class="product">

@@ -100,7 +100,7 @@
             $stmt->execute();
             $pedido = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            $slack_url = "https://hooks.slack.com/services/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";
+            $slack_url = "https://hooks.slack.com/services/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";
             $table = "* Detalhes do Pedido " .$pedido[0]['id_pedido']. "*\n\n";
             $table .= "*Nome do Cliente:* " .$pedido[0]['nome_usuario']. "\n";
             $table .= "*Email do Cliente:* " .$pedido[0]['email_usuario']. "\n\n";
