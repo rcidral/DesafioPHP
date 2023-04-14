@@ -107,7 +107,7 @@
                 ob_end_flush();
             } else {
                 $output = fopen("favoritos.csv", 'w');
-                fputcsv($output, array('id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'));
+                fputcsv($output, array('Não há produtos favoritados'));
                 fclose($output);
                 ob_end_flush();
             }

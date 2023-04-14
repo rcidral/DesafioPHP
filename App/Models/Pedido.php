@@ -66,7 +66,6 @@
                 ob_end_flush();
             } else {
                 $output = fopen('pedidos.csv', 'w');
-                fputcsv($output, ['ID', 'Nomes dos Produtos', 'Quantidades dos Produtos', 'Quantidade Total', 'Preco Total', 'Email'], ';');
                 fputcsv($output, ['Nenhum pedido encontrado'], ';');
                 fclose($output);
                 ob_end_flush();

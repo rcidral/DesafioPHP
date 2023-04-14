@@ -74,10 +74,10 @@
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
-        public function getUsuarioByIdImport($id) {
-            $query = "SELECT * FROM usuarios WHERE id = :id";
+        public function getUsuarioByNameImport($nome) {
+            $query = "SELECT * FROM usuarios WHERE nome = :nome";
             $stmt = $this->db->prepare($query);
-            $stmt->bindValue(':id', $id);
+            $stmt->bindValue(':nome', $nome);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
@@ -142,7 +142,6 @@
                 ob_end_flush();
             } else {
                 $output = fopen('usuarios.csv', 'w');
-                fputcsv($output, ['ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criacao', 'Data de Alteracao'], ';');
                 fputcsv($output, ['Nenhum usuario encontrado'], ';');
                 fclose($output);
                 ob_end_flush();
@@ -163,7 +162,7 @@
             $csv = $_FILES['csv-user'];
             $data = fopen($csv['tmp_name'], 'r');
             $row = 0;
-            $expected_header = ['ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criacao', 'Data de Alteracao'];
+            $expected_header = ['Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto'];
             while ($line = fgetcsv($data, 0, ";")){
                 if($row++ == 0){
                     if(count($line) !== count($expected_header)) {
@@ -177,13 +176,14 @@
                 if($line[0] == "") {
                     continue;
                 }
-
-                $usuario = Usuario::getUsuarioByIdImport($line[0]);
+                $usuario = Usuario::getUsuarioByNameImport($line[0]);
                 if($usuario != null) {
-                $curl = curl_init();
-
+                    if($line[5] == "") {
+                        continue;
+                    }
+                    $curl = curl_init();
                     curl_setopt_array($curl, array(
-                        CURLOPT_URL => $line[6],
+                        CURLOPT_URL => $line[5],
                         CURLOPT_RETURNTRANSFER => true,
                         CURLOPT_ENCODING => "",
                         CURLOPT_MAXREDIRS => 10,
@@ -207,58 +207,55 @@
                         echo "File saved to $filePath";
                     }
                 
-                    $nome = "";
-                    if($line[1] != null) {
-                        $nome = "nome = :nome,";
-                    }
                     $nascimento = "";
-                    if($line[2] != null) {
+                    if($line[1] != null) {
                         $nascimento = "nascimento = :nascimento,";
                     }
                     $telefone = "";
-                    if($line[3] != null) {
+                    if($line[2] != null) {
                         $telefone = "telefone = :telefone,";
                     }
                     $email = "";
-                    if($line[4] != null) {
+                    if($line[3] != null) {
                         $email = "email = :email,";
                     }
                     $senha = "";
-                    if($line[5] != null) {
+                    if($line[4] != null) {
                         $senha = "senha = :senha,";
                     }
                     $foto = "";
-                    if($line[6] != null) {
+                    if($line[5] != null) {
                         $foto = "foto = :foto,";
                     }
                 
-                    $query = "UPDATE usuarios SET $nome $nascimento $telefone $email $senha $foto data_alteracao = NOW() WHERE id = :id";
+                    $query = "UPDATE usuarios SET $nascimento $telefone $email $senha $foto data_alteracao = NOW() WHERE nome = :nome";
                     $stmt = $this->db->prepare($query);
-                    $stmt->bindValue(':id', $line[0]);
+                    $stmt->bindValue(':nome', $line[0]);
+                    
                     if($line[1] != null) {
-                        $stmt->bindValue(':nome', $line[1]);
+                        $stmt->bindValue(':nascimento', $line[1]);
                     }
                     if($line[2] != null) {
-                        $stmt->bindValue(':nascimento', $line[2]);
+                        $stmt->bindValue(':telefone', $line[2]);
                     }
                     if($line[3] != null) {
-                        $stmt->bindValue(':telefone', $line[3]);
+                        $stmt->bindValue(':email', $line[3]);
                     }
                     if($line[4] != null) {
-                        $stmt->bindValue(':email', $line[4]);
+                        $stmt->bindValue(':senha', $line[4]);
                     }
                     if($line[5] != null) {
-                        $stmt->bindValue(':senha', $line[5]);
-                    }
-                    if($line[6] != null) {
                         $stmt->bindValue(':foto', $filePath);
                     }
                     $stmt->execute();
             } else {
+                if($line[5] == "") {
+                    continue;
+                }
                 $curl = curl_init();
 
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL => $line[6],
+                    CURLOPT_URL => $line[5],
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_ENCODING => "",
                     CURLOPT_MAXREDIRS => 10,
@@ -284,11 +281,11 @@
             
                 $query = "INSERT INTO usuarios (nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao) VALUES (:nome, :nascimento, :telefone, :email, :senha, :foto, NOW(), NOW())";
                 $stmt = $this->db->prepare($query);
-                $stmt->bindValue(':nome', $line[1]);
-                $stmt->bindValue(':nascimento', $line[2]);
-                $stmt->bindValue(':telefone', $line[3]);
-                $stmt->bindValue(':email', $line[4]);
-                $stmt->bindValue(':senha', $line[5]);
+                $stmt->bindValue(':nome', $line[0]);
+                $stmt->bindValue(':nascimento', $line[1]);
+                $stmt->bindValue(':telefone', $line[2]);
+                $stmt->bindValue(':email', $line[3]);
+                $stmt->bindValue(':senha', $line[4]);
                 $stmt->bindValue(':foto', $filePath);
                 $stmt->execute();
             }
