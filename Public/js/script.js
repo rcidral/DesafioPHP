@@ -1,6 +1,6 @@
 $("document").ready(function () {
     $("#img-logo").click(function () {
-        window.location.href = "http://localhost:3000/";
+        window.location.href = "/";
     });
     
     $("#drop").click(function() {
@@ -9,7 +9,7 @@ $("document").ready(function () {
 
     $("#btn-entrar").click(function (e) {
         e.preventDefault();
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = "/login";
         }
     );
     
@@ -17,7 +17,7 @@ $("document").ready(function () {
     $("#btn-login").click(function (e) {
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:3000/auth",
+            url: "/auth",
             type: "POST",
             data: {
                 email: $("#email").val(),
@@ -25,9 +25,9 @@ $("document").ready(function () {
             },
             success: function () {
                 if($("#email").val() == "admin@admin.com" && $("#senha").val() == "admin") {
-                    window.location.href = "http://localhost:3000/admin";
+                    window.location.href = "/admin";
                 } else {
-                    window.location.href = "http://localhost:3000/";
+                    window.location.href = "/";
                 }
             },
             error: function (e) {
@@ -42,24 +42,24 @@ $("document").ready(function () {
     $("#sair").click(function (e) {
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:3000/logout",
+            url: "/logout",
             type: "POST",
             success: function () {
-                window.location.href = "http://localhost:3000/";
+                window.location.href = "/";
             }
         });
     });
 
     $("#back-admin").click(function (e) {
         e.preventDefault();
-        window.location.href = "http://localhost:3000/admin";
+        window.location.href = "/admin";
     });
     
     // Jquery User
     
     $("#cadastro-usuario-btn").click(function (e) {
         e.preventDefault();
-        window.location.href = "http://localhost:3000/cadastroUsuarioView";
+        window.location.href = "/cadastroUsuarioView";
     });
     
     $("#salvar-usuario-btn").click(function (e) {
@@ -69,6 +69,27 @@ $("document").ready(function () {
             $("#foto").val() == "") {
                 document.getElementsByClassName("confirmar")[0].style.display = "none";
                 document.getElementsByClassName("campos")[0].style.display = "flex";
+                if($("#nome").val() == "") {
+                    document.getElementById("nome").style.border = "1px solid red";
+                }
+                if($("#dataNascimento").val() == "") {
+                    document.getElementById("dataNascimento").style.border = "1px solid red";
+                }
+                if($("#telefone").val() == "") {
+                    document.getElementById("telefone").style.border = "1px solid red";
+                }
+                if($("#email").val() == "") {
+                    document.getElementById("email").style.border = "1px solid red";
+                }
+                if($("#senha").val() == "") {
+                    document.getElementById("senha").style.border = "1px solid red";
+                }
+                if($("#confirmarSenha").val() == "") {
+                    document.getElementById("confirmarSenha").style.border = "1px solid red";
+                }
+                if($("#foto").val() == "") {
+                    document.getElementById("foto").style.border = "1px solid red";
+                }
                 return;
         }
         if($("#senha").val() != $("#confirmarSenha").val()) {
@@ -78,7 +99,7 @@ $("document").ready(function () {
         }
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:3000/cadastroUsuario",
+            url: "/cadastroUsuario",
             type: "POST",
             data: {
                 nome: $("#nome").val(),
@@ -90,7 +111,7 @@ $("document").ready(function () {
                 foto: $("#foto").val(),
             },
             success: function () {
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             },
         });
     });
@@ -102,7 +123,7 @@ $("document").ready(function () {
         }
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:3000/editarUsuario",
+            url: "/editarUsuario",
             type: "POST",
             data: {
                 id: $("#id").val(),
@@ -115,7 +136,7 @@ $("document").ready(function () {
                 foto: $("#foto").val(),
             },
             success: function () {
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             },
         });
     });
@@ -125,7 +146,7 @@ $("document").ready(function () {
     
     $("#cadastro-produto-btn").click(function (e) {
         e.preventDefault();
-        window.location.href = "http://localhost:3000/cadastroProdutoView";
+        window.location.href = "/cadastroProdutoView";
     });
     
     $("#salvar-produto-btn").click(function (e) {
@@ -134,6 +155,27 @@ $("document").ready(function () {
             $("#img1").val() == "" || $("#img2").val() == "" ||
             $("#img3").val() == "" ) {
                 document.getElementsByClassName("campos")[0].style.display = "flex";
+                if($("#nome").val() == "") {
+                    document.getElementById("nome").style.border = "1px solid red";
+                }
+                if($("#descricao").val() == "") {
+                    document.getElementById("descricao").style.border = "1px solid red";
+                }
+                if($("#preco").val() == "") {
+                    document.getElementById("preco").style.border = "1px solid red";
+                }
+                if($("#img").val() == "") {
+                    document.getElementById("img").style.border = "1px solid red";
+                }
+                if($("#img1").val() == "") {
+                    document.getElementById("img1").style.border = "1px solid red";
+                }
+                if($("#img2").val() == "") {
+                    document.getElementById("img2").style.border = "1px solid red";
+                }
+                if($("#img3").val() == "") {
+                    document.getElementById("img3").style.border = "1px solid red";
+                }
                 return;
         }
     
@@ -155,13 +197,13 @@ $("document").ready(function () {
         console.log(formData);
         
         $.ajax({
-        url: "http://localhost:3000/cadastroProduto",
+        url: "/cadastroProduto",
         type: "POST",
         data: formData,
         processData: false,
         contentType: false,
         success: function () {
-            window.location.href = "http://localhost:3000/admin";
+            window.location.href = "/admin";
         },
     });
 });
@@ -190,20 +232,20 @@ $("document").ready(function () {
         console.log(formData);
         
         $.ajax({
-            url: "http://localhost:3000/editarProduto",
+            url: "/editarProduto",
             type: "POST",
             data: formData,
             processData: false,
             contentType: false,
             success: function () {
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             },
         });
     });
 
     $("#cadastro-recommended-produto-btn").click(function (e) {
         e.preventDefault();
-        window.location.href = "http://localhost:3000/cadastroRecommendedProdutoView";
+        window.location.href = "/cadastroRecommendedProdutoView";
     });
 
     $("#salvar-produto-recomendado-btn").click(function (e) {
@@ -222,13 +264,13 @@ $("document").ready(function () {
         formData.append('sequencia', sequencia);
 
         $.ajax({
-            url: "http://localhost:3000/cadastroRecommendedProduto",
+            url: "/cadastroRecommendedProduto",
             type: "POST",
             data: formData,
             processData: false,
             contentType: false,
             success: function () {
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             },
         });
     });
@@ -243,7 +285,7 @@ $("document").ready(function () {
         console.log($("#search").val());
         e.preventDefault();
         $.ajax({
-            url: "http://localhost:3000/pesquisar",
+            url: "/pesquisar",
             type: "POST",
             dataType: 'json',
             data: {
@@ -252,7 +294,7 @@ $("document").ready(function () {
             success: function (data) {
                 console.log(data, data.success);
                 if (data.success) {
-                    window.location.href = 'http://localhost:3000/';
+                    window.location.href = '/';
                   } else {
                     document.getElementsByClassName("product-incorret")[0].style.display = "flex";
                     document.getElementsByClassName("container-main")[0].style.display = "none";
@@ -268,7 +310,7 @@ $("document").ready(function () {
         var quantidade = $(this).parent().find("input[name='quantidade']").val();
     
         $.ajax({
-            url: "http://localhost:3000/adicionarCarrinho",
+            url: "/adicionarCarrinho",
             type: "POST",
             data: {
                 id_produto: id_produto,
@@ -276,14 +318,18 @@ $("document").ready(function () {
                 quantidade: quantidade
             },
             success: function () {
-                window.location.href = "http://localhost:3000/";
+                if (window.location.pathname === "/produtoView") {
+                    window.location.href = "/produtoView";
+                } else {
+                    window.location.href = "/";
+                }
             }
         });
     });
 
     $("#export-user").click(function (e) {
         $.ajax({
-            url: "http://localhost:3000/exportarUsuariosCSV",
+            url: "/exportarUsuariosCSV",
             type: "POST",
         });
         $.ajax({
@@ -303,14 +349,17 @@ $("document").ready(function () {
                     document.body.removeChild(a);
                     URL.revokeObjectURL(downloadUrl);
                 }, 100);
-                window.location.href = "http://localhost:3000/admin";
+                $.ajax({
+                    url: '/moverUsuarioCSV',
+                    type: "POST",
+                });
             }
         });
     });
 
     $("#export-produto").click(function (e) {
         $.ajax({
-            url: "http://localhost:3000/exportarProdutosCSV",
+            url: "/exportarProdutosCSV",
             type: "POST",
         });
         $.ajax({
@@ -330,14 +379,17 @@ $("document").ready(function () {
                     document.body.removeChild(a);
                     URL.revokeObjectURL(downloadUrl);
                 }, 100);
-                window.location.href = "http://localhost:3000/admin";
+                $.ajax({
+                    url: '/moverProdutoCSV',
+                    type: "POST",
+                });
             }
         });
     });  
 
     $("#export-favorites").click(function (e) {
         $.ajax({
-            url: "http://localhost:3000/exportarFavoritoCSV",
+            url: "/exportarFavoritoCSV",
             type: "POST",
         });
         $.ajax({
@@ -357,10 +409,44 @@ $("document").ready(function () {
                     document.body.removeChild(a);
                     URL.revokeObjectURL(downloadUrl);
                 }, 100);
-                window.location.href = "http://localhost:3000/admin";
+                $.ajax({
+                    url: '/moverFavoritoCSV',
+                    type: "POST",
+                });
             }
         });
     });
+
+    $("#export-pedidos").click(function (e) {
+        $.ajax({
+            url: "/exportarPedidosCSV",
+            type: "POST",
+        });
+        $.ajax({
+            url: '/pedidos.csv',
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(data) {
+                var downloadUrl = URL.createObjectURL(data);
+                var a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = 'pedidos.csv';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(function() {
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(downloadUrl);
+                }, 100);
+                $.ajax({
+                    url: '/moverPedidoCSV',
+                    type: "POST",
+                });
+            }
+        });
+    });
+
 
     $("#template-user").click(function (e) {
         $.ajax({
@@ -380,7 +466,7 @@ $("document").ready(function () {
                     document.body.removeChild(a);
                     URL.revokeObjectURL(downloadUrl);
                 }, 100);
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             }
         });
     });
@@ -403,7 +489,7 @@ $("document").ready(function () {
                     document.body.removeChild(a);
                     URL.revokeObjectURL(downloadUrl);
                 }, 100);
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             }
         });
     });
@@ -414,13 +500,13 @@ $("document").ready(function () {
         var formData = new FormData();
         formData.append("csv-user", file);
         $.ajax({
-            url: "http://localhost:3000/importarUsuariosCSV",
+            url: "/importarUsuariosCSV",
             type: "POST",
             data: formData,
             contentType: false,
             processData: false,
             success: function () {
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             }
         });
     });
@@ -431,13 +517,13 @@ $("document").ready(function () {
         var formData = new FormData();
         formData.append("csv-produto", file);
         $.ajax({
-            url: "http://localhost:3000/importarProdutosCSV",
+            url: "/importarProdutosCSV",
             type: "POST",
             data: formData,
             contentType: false,
             processData: false,
             success: function () {
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             }
         });
     });
@@ -456,13 +542,13 @@ $("document").ready(function () {
         formData.append("img", img);
 
         $.ajax({
-            url: "http://localhost:3000/editarProdutoRecomendado",
+            url: "/editarProdutoRecomendado",
             type: "POST",
             data: formData,
             contentType: false,
             processData: false,
             success: function () {
-                window.location.href = "http://localhost:3000/admin";
+                window.location.href = "/admin";
             }
         });
     });
@@ -484,7 +570,7 @@ function addMin(id) {
       input.value--;
     }
 }
-function addMinCart(id) {
+function addMinCart(id, preco) {
     var input = document.getElementById("quantidade-cart-" + id + "");
     if (input.value > 1) {
         input.value--;
@@ -494,16 +580,26 @@ function addMinCart(id) {
     var idProduto = id;
 
     $.ajax({
-        url: "http://localhost:3000/alterarCarrinhoMin",
+        url: "/alterarCarrinhoMin",
         type: "POST",
         data: {
             id_produto: idProduto,
             quantidade: value,
         },
     });
+
+    var inputValor = document.getElementById("valorTotal");
+    var input = document.getElementById("quantidade-cart-" + id + "");
+    var valor = input.value * preco;
+    inputValor.value = "R$ " + valor.toFixed(2).replace(".", ",");
+
+
+
+
+
 }
 
-function addMaxCart(id) {
+function addMaxCart(id, preco) {
     var input = document.getElementById("quantidade-cart-" + id + "");
     input.value++;
 
@@ -511,13 +607,18 @@ function addMaxCart(id) {
     var idProduto = id;
 
     $.ajax({
-        url: "http://localhost:3000/alterarCarrinhoMax",
+        url: "/alterarCarrinhoMax",
         type: "POST",
         data: {
             id_produto: idProduto,
             quantidade: value,
         },
     });
+
+    var inputValor = document.getElementById("valorTotal");
+    var input = document.getElementById("quantidade-cart-" + id + "");
+    var valor = input.value * preco;
+    inputValor.value = "R$ " + valor.toFixed(2).replace(".", ",");
 }
 
 function openCart() {
@@ -541,13 +642,13 @@ function closeFav() {
 
 function openProduct(id) {
     $.ajax({
-        url: "http://localhost:3000/produtoRed",
+        url: "/produtoRed",
         type: "POST",
         data: {
             id: id,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/produtoView";
+            window.location.href = "/produtoView";
         }
     });
 }
@@ -576,28 +677,61 @@ function closeModalExportUsuario() {
 
 function deleteUsuario(id) {
     $.ajax({
-        url: "http://localhost:3000/deleteUsuario",
+        url: "/deleteUsuario",
         type: "POST",
         data: {
             id: id,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/admin";
+            window.location.href = "/admin";
         }
     });
 }
 
 function editarUsuario(id) {
     $.ajax({
-        url: "http://localhost:3000/editarUsuarioRed",
+        url: "/editarUsuarioRed",
         type: "POST",
         data: {
             id: id,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/editarUsuarioView";
+            window.location.href = "/editarUsuarioView";
         }
     });
+}
+
+function showModalPedidoProduto(id) {
+    console.log(id);
+    $.ajax({
+        url: "/pedidoProdutoRed",
+        type: "POST",
+        data: {
+            id: id,
+        },
+        success: function (data) {
+            console.log(data);
+
+            let header = ("<tr><th>Nome</th><th>Quantidade</th><th>Preço</th></tr>");
+            let body = "";
+
+            for (const key in data) {
+                if (Object.hasOwnProperty.call(data, key)) {
+                    body += ("<tr><td>" + data[key]['nome'] + "</td><td>" + data[key]['quantidade'] + "</td><td>" + data[key]['preco'] + "</td></tr>");
+                }
+            }
+            document.getElementById("tableProdutos").innerHTML = header;
+            document.getElementById("tableProdutos").innerHTML += body;
+            document.getElementsByClassName("modal-produtos-pedido")[0].style.display = "flex";
+              
+        }
+    });
+
+}
+
+
+function closeModalPedidoProduto() {
+    document.getElementsByClassName("modal-produtos-pedido")[0].style.display = "none";
 }
 
 
@@ -630,52 +764,52 @@ function closeModalRecomendado() {
 
 function deleteRecomendadoProduto(id) {
     $.ajax({
-        url: "http://localhost:3000/deleteRecomendadoProduto",
+        url: "/deleteRecomendadoProduto",
         type: "POST",
         data: {
             id: id,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/admin";
+            window.location.href = "/admin";
         }
     });
 }
 
 function editarProdutoRecomendado(id) {
     $.ajax({
-        url: "http://localhost:3000/editarProdutoRecomendadoRed",
+        url: "/editarProdutoRecomendadoRed",
         type: "POST",
         data: {
             id: id,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/editarProdutoRecomendadoView";
+            window.location.href = "/editarProdutoRecomendadoView";
         }
     });
 }
 
 function deleteProduto(id) {
     $.ajax({
-        url: "http://localhost:3000/deleteProduto",
+        url: "/deleteProduto",
         type: "POST",
         data: {
             id: id,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/admin";
+            window.location.href = "/admin";
         }
     });
 }
 
 function editarProduto(id) {
     $.ajax({
-        url: "http://localhost:3000/editarProdutoRed",
+        url: "/editarProdutoRed",
         type: "POST",
         data: {
             id: id,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/editarProdutoView";
+            window.location.href = "/editarProdutoView";
         }
     });
 }
@@ -687,40 +821,48 @@ function editarProduto(id) {
 
 function removeToCart(id_produto, id_usuario) {
     $.ajax({
-        url: "http://localhost:3000/removerItemCarrinho",
+        url: "/removerItemCarrinho",
         type: "POST",
         data: {
             id_produto: id_produto,
             id_usuario: id_usuario,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/";
+            if (window.location.pathname === "/produtoView") {
+                window.location.href = "/produtoView";
+            } else {
+                window.location.href = "/";
+            }
         }
     });
 }
 
 function deletarCarrinho(id_usuario) {
     $.ajax({
-        url: "http://localhost:3000/deletarCarrinho",
+        url: "/deletarCarrinho",
         type: "POST",
         data: {
             id_usuario: id_usuario,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/";
+            if (window.location.pathname === "/produtoView") {
+                window.location.href = "/produtoView";
+            } else {
+                window.location.href = "/";
+            }
         }
     });
 }
 
 function buyCart(id_usuario) {
     $.ajax({
-        url: "http://localhost:3000/comprarCarrinho",
+        url: "/comprarCarrinho",
         type: "POST",
         data: {
             id_usuario: id_usuario,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/compraFinalizada";
+            window.location.href = "/compraFinalizada";
         }
     });
 }
@@ -731,13 +873,13 @@ function buyCart(id_usuario) {
 function change15User() {
     let qtd = 15;
     $.ajax({
-      url: 'http://localhost:3000/refreshTableUser',
+      url: '/refreshTableUser',
       type: 'POST',
       data: {
         qtdUser: qtd
       },
       success: function(response) {
-        window.location.href = "http://localhost:3000/admin"
+        window.location.href = "/admin"
       },
     })
   }
@@ -745,13 +887,13 @@ function change15User() {
   function change50User() {
     let qtd = 50;
     $.ajax({
-      url: 'http://localhost:3000/refreshTableUser',
+      url: '/refreshTableUser',
       type: 'POST',
       data: {
         qtdUser: qtd
       },
       success: function(response) {
-        window.location.href = "http://localhost:3000/admin"
+        window.location.href = "/admin"
       },
     })
   }
@@ -759,13 +901,13 @@ function change15User() {
   function change100User() {
     let qtd = 100;
     $.ajax({
-      url: 'http://localhost:3000/refreshTableUser',
+      url: '/refreshTableUser',
       type: 'POST',
       data: {
         qtdUser: qtd
       },
       success: function(response) {
-        window.location.href = "http://localhost:3000/admin"
+        window.location.href = "/admin"
       },
     })
   }
@@ -773,13 +915,13 @@ function change15User() {
   function change15Product() {
     let qtd = 15;
     $.ajax({
-      url: 'http://localhost:3000/refreshTableProduct',
+      url: '/refreshTableProduct',
       type: 'POST',
       data: {
         qtdProduct: qtd
       },
       success: function(response) {
-        window.location.href = "http://localhost:3000/admin"
+        window.location.href = "/admin"
       },
     })
   }
@@ -787,13 +929,13 @@ function change15User() {
   function change50Product() {
     let qtd = 50;
     $.ajax({
-      url: 'http://localhost:3000/refreshTableProduct',
+      url: '/refreshTableProduct',
       type: 'POST',
       data: {
         qtdProduct: qtd
       },
       success: function(response) {
-        window.location.href = "http://localhost:3000/admin"
+        window.location.href = "/admin"
       },
     })
   }
@@ -801,56 +943,170 @@ function change15User() {
   function change100Product() {
     let qtd = 100;
     $.ajax({
-      url: 'http://localhost:3000/refreshTableProduct',
+      url: '/refreshTableProduct',
       type: 'POST',
       data: {
         qtdProduct: qtd
       },
       success: function(response) {
-        window.location.href = "http://localhost:3000/admin"
+        window.location.href = "/admin"
       },
     })
   }
+
+  function change15Favorite() {
+    let qtd = 15;
+    $.ajax({
+      url: '/refreshTableFavorite',
+      type: 'POST',
+      data: {
+        qtdFavorite: qtd
+      },
+      success: function(response) {
+        window.location.href = "/admin"
+      },
+    })
+  }
+
+    function change50Favorite() {
+    let qtd = 50;
+    $.ajax({
+        url: '/refreshTableFavorite',
+        type: 'POST',
+        data: {
+            qtdFavorite: qtd
+        },
+        success: function (response) {
+            window.location.href = "/admin"
+        },
+    })
+}
+
+function change100Favorite() {
+    let qtd = 100;
+    $.ajax({
+        url: '/refreshTableFavorite',
+        type: 'POST',
+        data: {
+            qtdFavorite: qtd
+        },
+        success: function (response) {
+            window.location.href = "/admin"
+        },
+    })
+}
+
+function change15Pedido() {
+    let qtd = 15;
+    $.ajax({
+        url: '/refreshTablePedido',
+        type: 'POST',
+        data: {
+            qtdPedido: qtd
+        },
+        success: function (response) {
+            window.location.href = "/admin"
+        }
+    })
+}
+
+function change50Pedido() {
+    let qtd = 50;
+    $.ajax({
+        url: '/refreshTablePedido',
+        type: 'POST',
+        data: {
+            qtdPedido: qtd
+        },
+        success: function (response) {
+            window.location.href = "/admin"
+        }
+    })
+}
+
+function change100Pedido() {
+    let qtd = 100;
+    $.ajax({
+        url: '/refreshTablePedido',
+        type: 'POST',
+        data: {
+            qtdPedido: qtd
+        },
+        success: function (response) {
+            window.location.href = "/admin"
+        }
+    })
+}
 
 // Favoritos script
 
 function adicionarFavorito(id_produto, id_usuario) {
     $.ajax({
-        url: "http://localhost:3000/adicionarFavorito",
+        url: "/adicionarFavorito",
         type: "POST",
         data: {
             id_produto: id_produto,
             id_usuario: id_usuario,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/";
+            if (window.location.pathname === "/produtoView") {
+                $.ajax({
+                    url: "/produtoRed",
+                    type: "POST",
+                    data: {
+                        id: id_produto,
+                    },
+                    success: function (response) {
+                        window.location.href = "/produtoView";
+                    }
+                });
+            } else {
+                window.location.href = "/";
+            }
         }
     });
 }
 
 function removerItemFavorito(id_produto, id_usuario) {
     $.ajax({
-        url: "http://localhost:3000/removerItemFavorito",
+        url: "/removerItemFavorito",
         type: "POST",
         data: {
             id_produto: id_produto,
             id_usuario: id_usuario,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/";
+            if (window.location.pathname === "/produtoView") {
+                $.ajax({
+                    url: "/produtoRed",
+                    type: "POST",
+                    data: {
+                        id: id_produto,
+                    },
+                    success: function (response) {
+                        window.location.href = "/produtoView";
+                    }
+                });
+            } else {
+                window.location.href = "/";
+            }
         }
     });
 }
 
 function removerFavorito(id_usuario) {
     $.ajax({
-        url: "http://localhost:3000/removerFavorito",
+        url: "/removerFavorito",
         type: "POST",
         data: {
             id_usuario: id_usuario,
         },
         success: function () {
-            window.location.href = "http://localhost:3000/";
+            if (window.location.pathname === "/produtoView") {
+                window.location.href = "/produtoView";
+            } else {
+                window.location.href = "/";
+            }
         }
     });
 }

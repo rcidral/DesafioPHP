@@ -142,15 +142,15 @@
                 header('Pragma: no-cache');
 
                 $output = fopen('produtos.csv', 'w');
-                fputcsv($output, array('id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'));
+                fputcsv($output, ['id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'], ';');
                 foreach($produtos as $produto) {
-                    fputcsv($output, $produto);
+                    fputcsv($output, $produto, ';');
                 }
                 fclose($output);
                 ob_end_flush();
             } else {
                 $output = fopen('produtos.csv', 'w');
-                fputcsv($output, array('id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'));
+                fputcsv($output, ['id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'],';');
                 fclose($output);
                 ob_end_flush();
             }
@@ -160,21 +160,67 @@
             $csv = $_FILES['csv-produto'];
             $data = fopen($csv['tmp_name'], 'r');
             $row = 0;
-            while($line = fgetcsv($data)) {
-                if($row > 0) {
-                    $query = "INSERT INTO produtos (nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao) VALUES (:nome, :descricao, :preco, :img, :img1, :img2, :img3, NOW())";
+            $expected_header = ['id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'];
+            while($line = fgetcsv($data, 0, ";")) {
+                if($row++ == 0){
+                    if(count($line) !== count($expected_header)) {
+                        die();
+                    }
+                    if($line !== $expected_header) {
+                        die();
+                    }
+                    continue;
+                }
+
+                for($i = 4; $i <= 7; $i++) {
+                    $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $line[$i],
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 30,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "GET",
+                        CURLOPT_HTTPHEADER => array(
+                            "Content-Type: application/json"
+                        ),
+                    ));
+
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+                    $picname[$i] = 'picture'.$i.date('YmdHis').'.png';
+                    $filePath = './assets/product/'.$picname[$i];
+                    $fp = fopen($filePath, 'x');
+                    if (!$fp) {
+                        echo "Failed to open file $filePath";
+                    } else {
+                        fwrite($fp, $response);
+                        fclose($fp);
+                        echo "File saved to $filePath";
+                    }
+                }
+                
+
+                $query = "INSERT INTO produtos (id, nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao) VALUES (:id, :nome, :descricao, :preco, :img, :img1, :img2, :img3, NOW(), NULL) ON DUPLICATE KEY UPDATE nome = :nome, descricao = :descricao, preco = :preco, img = :img, img1 = :img1, img2 = :img2, img3 = :img3, data_alteracao = NOW()";
                     $stmt = $this->db->prepare($query);
+                    $stmt->bindValue(':id', $line[0]);
                     $stmt->bindValue(':nome', $line[1]);
                     $stmt->bindValue(':descricao', $line[2]);
                     $stmt->bindValue(':preco', $line[3]);
-                    $stmt->bindValue(':img', $line[4]);
-                    $stmt->bindValue(':img1', $line[5]);
-                    $stmt->bindValue(':img2', $line[6]);
-                    $stmt->bindValue(':img3', $line[7]);
+                    $stmt->bindValue(':img', $picname[4]);
+                    $stmt->bindValue(':img1', $picname[5]);
+                    $stmt->bindValue(':img2', $picname[6]);
+                    $stmt->bindValue(':img3', $picname[7]);
                     $stmt->execute();
-                }
-                $row++;
             }
+        }
+        public function moverProdutoCSV() {
+            $datetime = date('Y-m-d_H-i-s');
+            $logName = 'produtos_' . $datetime . '.csv';
+            $logPath = __DIR__ . '/../logs/produto/' . $logName;
+            rename('produtos.csv', $logPath);
         }
     }
 

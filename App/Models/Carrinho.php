@@ -66,13 +66,27 @@
         
     
             foreach($produto as $item) {
-                $query = "INSERT INTO pedido_item (id_pedido, id_produto, quantidade, preco) VALUES (:id_pedido, :id_produto, :quantidade, :preco)";
+                $query = "INSERT INTO pedido_item (id_produto, quantidade, preco) VALUES (:id_produto, :quantidade, :preco)";
                 $stmt = $this->db->prepare($query);
-                $stmt->bindValue(':id_pedido', $id_pedido->id);
                 $stmt->bindValue(':id_produto', $item->id_produto);
                 $stmt->bindValue(':quantidade', $item->quantidade);
                 $stmt->bindValue(':preco', $item->preco);
                 $stmt->execute();
+
+                $query = "SELECT id FROM pedido_item WHERE id_produto = :id_produto AND quantidade = :quantidade AND preco = :preco ORDER BY id DESC LIMIT 1";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':id_produto', $item->id_produto);
+                $stmt->bindValue(':quantidade', $item->quantidade);
+                $stmt->bindValue(':preco', $item->preco);
+                $stmt->execute();
+                $id_pedido_item = $stmt->fetch(\PDO::FETCH_OBJ);
+
+                $query = "INSERT INTO pedido_has_pedido_item (id_pedido, id_pedido_item) VALUES (:id_pedido, :id_pedido_item)";
+                $stmt = $this->db->prepare($query);
+                $stmt->bindValue(':id_pedido', $id_pedido->id);
+                $stmt->bindValue(':id_pedido_item', $id_pedido_item->id);
+                $stmt->execute();
+
             }
     
             $query = "DELETE FROM carrinho WHERE id_usuario = :id_usuario";
@@ -80,29 +94,23 @@
             $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
             $stmt->execute();
 
-            $query = "SELECT * FROM pedido_item INNER JOIN produtos ON pedido_item.id_produto = produtos.id WHERE id_pedido = :id_pedido";
+            $query = "SELECT p.id AS id_pedido, pr.nome AS nome_produto, pi.quantidade AS quantidade_produto, pi.preco AS preco_produto, (pi.quantidade * pi.preco) AS preco_total_produto, SUM(pi.quantidade * pi.preco) AS preco_total_pedido, u.nome AS nome_usuario, u.email AS email_usuario  FROM pedido p  INNER JOIN pedido_has_pedido_item ppi ON p.id = ppi.id_pedido  INNER JOIN pedido_item pi ON pi.id = ppi.id_pedido_item  INNER JOIN produtos pr ON pr.id = pi.id_produto  INNER JOIN usuarios u ON u.id = p.id_usuario  WHERE p.id = :id_pedido GROUP BY p.id, pr.id  ORDER BY p.id";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id_pedido', $id_pedido->id);
             $stmt->execute();
             $pedido = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            $query = "SELECT * FROM pedido INNER JOIN usuarios ON pedido.id_usuario = usuarios.id WHERE pedido.id = :id_pedido";
-            $stmt = $this->db->prepare($query);
-            $stmt->bindValue(':id_pedido', $id_pedido->id);
-            $stmt->execute();
-            $usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-            $slack_url = "https://hooks.slack.com/services/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";
-            $table = "* Detalhes do Pedido" .$pedido[0]['id_pedido']. "*\n\n";
-            $table .= "| Produto | Quantidade | Preço |\n";
-            $preco_total = 0;
+            $slack_url = "https://hooks.slack.com/services/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";
+            $table = "* Detalhes do Pedido " .$pedido[0]['id_pedido']. "*\n\n";
+            $table .= "*Nome do Cliente:* " .$pedido[0]['nome_usuario']. "\n";
+            $table .= "*Email do Cliente:* " .$pedido[0]['email_usuario']. "\n\n";
+            $table .= "*Produtos:* \n";
+            $preco_total_pedido = 0;
             foreach($pedido as $item) {
-                $table .= "| " .$item['nome']. " | " .$item['quantidade']. " | R$" .$item['preco']. " |\n";
-                $preco_total += $item['preco'] * $item['quantidade'];
+                $table .= "Nome: " .$item['nome_produto']. " | Quantidade: " .$item['quantidade_produto']. " | Preço: R$" .$item['preco_produto']. " | Preço Total: R$" .$item['preco_total_produto']. "\n";
+                $preco_total_pedido += $item['preco_total_produto'];
             }
-            $table .= "| Total | | R$" .$preco_total. " |\n";
-            $table .= "\n";
-            $table .= "Pedido realizado por: " .$usuario['nome']. " (" .$usuario['email']. ")";
+            $table .= "\n*Preço Total do Pedido:* R$" .$preco_total_pedido. "\n";
             
             $message = "Um novo pedido foi realizado!";
             $message .= $table;
@@ -126,7 +134,7 @@
             );
 
             $result = curl_exec($ch);
-            curl_close($ch);
+            curl_close($ch); 
         }
 
         public function getCarrinho() {

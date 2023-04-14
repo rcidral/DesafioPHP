@@ -49,8 +49,8 @@
             return $produtos;
         }
 
-        public function getFavoritosAdmin() {
-            $query = "SELECT * FROM favorito INNER JOIN produtos ON favorito.id_produto = produtos.id";
+        public function getFavoritosAdmin($qtd) {
+            $query = "SELECT * FROM favorito INNER JOIN produtos ON favorito.id_produto = produtos.id LIMIT $qtd";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             $produtos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -112,6 +112,14 @@
                 ob_end_flush();
             }
         }
+
+        public function moverFavoritoCSV() {
+            $datetime = date('Y-m-d_H-i-s');
+            $logName = 'favoritos_' . $datetime . '.csv';
+            $logPath = __DIR__ . '/../logs/favorito/' . $logName;
+            rename('favoritos.csv', $logPath);
+        }
+
     }
 
 ?>

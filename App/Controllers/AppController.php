@@ -270,9 +270,18 @@
             $pedido->__set('id_usuario', $_SESSION['usuario']['id']);
             return $pedido->getPedido();
         }
-        public function getPedidosAdmin() {
+        public function getPedidosAdmin($qtd) {
             $pedido = Container::getModel('App\Models\Pedido');
-            return $pedido->getPedidosAdmin();
+            return $pedido->getPedidosAdmin($qtd);
+        }
+        public function listarPedidoProduto() {
+            $pedido = Container::getModel('App\Models\Pedido');
+            $pedido->__set('id', $_POST['id']);
+            return $pedido->getPedidoProduto();
+        }
+        public function exportarPedidosCSV() {
+            $pedido = Container::getModel('App\Models\Pedido');
+            return $pedido->exportarPedidosCSV();
         }
 
         // Favoritos methods
@@ -291,9 +300,9 @@
             return $favorito->getFavoritos();
         }
 
-        public function listarFavoritosAdmin() {
+        public function listarFavoritosAdmin($qtd) {
             $favorito = Container::getModel('App\Models\Favorito');
-            return $favorito->getFavoritosAdmin();
+            return $favorito->getFavoritosAdmin($qtd);
         }
 
         public function listarMaisFavoritados() {
@@ -341,5 +350,25 @@
         public function importarProdutosCSV() {
             $produto = Container::getModel('App\Models\Produto');
             $produto->importarProdutosCSV();
+        }
+
+        public function moverUsuarioCSV() {
+            $usuario = Container::getModel('App\Models\Usuario');
+            $usuario->moverUsuarioCSV();
+        }
+
+        public function moverProdutoCSV() {
+            $produto = Container::getModel('App\Models\Produto');
+            $produto->moverProdutoCSV();
+        }
+
+        public function moverFavoritoCSV() {
+            $favorito = Container::getModel('App\Models\Favorito');
+            $favorito->moverFavoritoCSV();
+        }
+
+        public function moverPedidoCSV() {
+            $pedido = Container::getModel('App\Models\Pedido');
+            $pedido->moverPedidoCSV();
         }
     }

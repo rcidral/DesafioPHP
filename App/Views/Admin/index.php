@@ -27,7 +27,7 @@
         </div>
     </header>
     <main>
-        <div class="container-main">
+        <div id="container-main" class="container-main">
             <div style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); padding: 30px;" class="container-user">
                 <h2>Usuarios</h2>
                 <div class="options">
@@ -224,9 +224,9 @@
                     <?php } ?>
                 </table>
                 <div class="btn-page">
-                    <button >15</button>
-                    <button >50</button>
-                    <button >100</button>
+                    <button onclick="change15Favorite()">15</button>
+                    <button onclick="change50Favorite()">50</button>
+                    <button onclick="change100Favorite()">100</button>
                 </div>
             </div>
             <div style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); padding: 30px;" class="container-pedidos">
@@ -248,11 +248,11 @@
                         <tr>
                             <td><?= $pedido['id_pedido'] ?></td>
                             <td><?= $pedido['quantidade'] ?></td>
-                            <td><?= (number_format(($pedido['preco'] * $pedido['quantidade']), 2, ',', '')) ?></td>
+                            <td><?= number_format($pedido['preco'], 2, ',', '') ?></td>
                             <td><?= $pedido['email'] ?></td>
                             <td>
                                 <div>
-                                    <button onclick="showModalProdutos(<?= $pedido['id_pedido'] ?>)">Produtos</button>
+                                    <button onclick="showModalPedidoProduto(<?= $pedido['id_pedido'] ?>)">Produtos</button>
                                 </div>
 
                                 <div>
@@ -264,9 +264,21 @@
                     <?php } ?>
                 </table>
                 <div class="btn-page">
-                    <button >15</button>
-                    <button >50</button>
-                    <button >100</button>
+                    <button onclick="change15Pedido()">15</button>
+                    <button onclick="change50Pedido()">50</button>
+                    <button onclick="change100Pedido()">100</button>
+                </div>
+            </div>
+            <div id="modal-produtos-pedido" class="modal-produtos-pedido">
+                <div class="modal-produtos-pedido-content">
+                    <h2>Produtos do Pedido</h2>
+                    <div class="modal-produtos-pedido-content-table">
+                        <table id="tableProdutos">      
+                        </table>
+                    </div>
+                    <div class="modal-produtos-pedido-btn">
+                        <button onclick="closeModalPedidoProduto()">Fechar</button>
+                    </div>
                 </div>
             </div>
         </div>

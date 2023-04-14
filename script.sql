@@ -24,12 +24,6 @@ img3 varchar(255) not null,
 data_criacao DateTime not null,
 data_alteracao DateTime);
 
-create table produtos_recomendados(
-id int not null auto_increment primary key,
-nome varchar(140) not null,
-sequencia int not null,
-img varchar(255) not null);
-
 create table carrinho(
 id int not null auto_increment primary key,
 id_usuario int not null,
@@ -45,13 +39,23 @@ foreign key (id_usuario) references usuarios(id));
 
 create table pedido_item(
 id int not null auto_increment primary key,
-id_pedido int not null,
 id_produto int not null,
-foreign key (id_pedido) references pedido(id),
 foreign key (id_produto) references produtos(id),
 quantidade int not null,
 preco float not null);
 
+create table pedido_has_pedido_item(
+id int not null auto_increment primary key,
+id_pedido int not null,
+id_pedido_item int not null,
+foreign key (id_pedido) references pedido(id),
+foreign key (id_pedido_item) references pedido_item(id));
+
+create table produtos_recomendados(
+id int not null auto_increment primary key,
+nome varchar(140) not null,
+sequencia int not null,
+img varchar(255) not null);
 
 create table favorito(
 id int not null auto_increment primary key,

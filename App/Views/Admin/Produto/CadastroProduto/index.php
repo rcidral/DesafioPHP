@@ -39,7 +39,7 @@
                     <input type="number" name="preco" id="preco" placeholder="Preço" min="1">
                     <h1>Foto Principal</h1>
                     <input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
-                    <h1>Foto Opcional</h1>
+                    <h1>Foto Secundária</h1>
                     <input type="file" name="img1" id="img1" placeholder="Foto" accept="image/png">
                     <input type="file" name="img2" id="img2" placeholder="Foto" accept="image/png">
                     <input type="file" name="img3" id="img3" placeholder="Foto" accept="image/png">

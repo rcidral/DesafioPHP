@@ -49,11 +49,30 @@
         case '/admin': {
             $_SESSION['usuarios'] = $appController->listarUsuariosAdmin($_SESSION['pageNumberUser']);
             $_SESSION['produtos'] = $appController->listarProdutosAdmin($_SESSION['pageNumberProduct']);
+            $_SESSION['favoritos'] = $appController->listarFavoritosAdmin($_SESSION['pageNumberFavorite']);
+            $_SESSION['pedidos'] = $appController->getPedidosAdmin($_SESSION['pageNumberPedido']);
             $_SESSION['produtos_recomendados'] = $appController->listarProdutosRecomendados();
-            $_SESSION['favoritos'] = $appController->listarFavoritosAdmin();
-            $_SESSION['pedidos'] = $appController->getPedidosAdmin();
             $_SESSION['mostFavoritos'] = $appController->listarMaisFavoritados();
             include '../App/Views/Admin/index.php';
+            break;
+        }
+
+        case '/pedidoProdutoRed': {
+            $_SESSION['pedidoProduto'] = $appController->listarPedidoProduto();
+            $array = array();
+            foreach($_SESSION['pedidoProduto'] as $pedidoProduto => $value) {
+                $array[$pedidoProduto]['nome'] = $value['nome'];
+                $array[$pedidoProduto]['quantidade'] = $value['quantidade'];
+                $array[$pedidoProduto]['preco'] = $value['preco'];
+                
+            }
+            header('Content-Type: application/json');
+            echo json_encode($array);
+            break;
+        }
+
+        case '/exportarPedidosCSV': {
+            $appController->exportarPedidosCSV();
             break;
         }
 
@@ -172,6 +191,8 @@
             if(isset($_SESSION['usuario']['id']) && $_SESSION['usuario']['id'] != "") {
                 $_SESSION['carrinho'] = $appController->listarCarrinho();
                 $appController->listarQuantidade();
+                $_SESSION['favoritos'] = $appController->listarFavoritos();
+                $_SESSION['precoTotal'] = $appController->listarPrecoTotal();
             }
             include '../App/Views/Produto/index.php';
             break;
@@ -247,6 +268,24 @@
             break;
         }
 
+        case '/refreshTableFavorite': {
+            if(!isset($_POST['qtdFavorite']) || $_POST['qtdFavorite'] == null) {
+                $_SESSION['pageNumberFavorite'] = 15;
+            } else {
+                $_SESSION['pageNumberFavorite'] = $_POST['qtdFavorite'];
+            }
+            break;
+        }
+
+        case '/refreshTablePedido': {
+            if(!isset($_POST['qtdPedido']) || $_POST['qtdPedido'] == null) {
+                $_SESSION['pageNumberPedido'] = 15;
+            } else {
+                $_SESSION['pageNumberPedido'] = $_POST['qtdPedido'];
+            }
+            break;
+        }
+
         // Favoritos routes
 
         case '/adicionarFavorito': {
@@ -269,6 +308,28 @@
 
         case '/exportarFavoritoCSV': {
             $appController->exportarFavoritoCSV();
+            break;
+        }
+
+        // move csv
+
+        case '/moverUsuarioCSV': {
+            $appController->moverUsuarioCSV();
+            break;
+        }
+
+        case '/moverProdutoCSV': {
+            $appController->moverProdutoCSV();
+            break;
+        }
+
+        case '/moverFavoritoCSV': {
+            $appController->moverFavoritoCSV();
+            break;
+        }
+
+        case '/moverPedidoCSV': {
+            $appController->moverPedidoCSV();
             break;
         }
     }

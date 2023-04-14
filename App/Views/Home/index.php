@@ -6,6 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-67BNKP54GD"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-67BNKP54GD');
+</script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
     <script src="./js/script.js"></script>
     <title>Shop</title>
@@ -64,108 +72,6 @@
                 </div>
             </div>
         </div>
-        <style>
-            .container-carrousel-2 {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding-top: 8em;
-                
-            }
-            .carousel-wrapper {
-                width: 520px;
-                height: 400px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
-                border-radius: 20px;
-            }
-            .carousel-container {
-                width: 400px;
-                height: 300px;
-                overflow: hidden;
-                margin: 0 auto;
-            }
-            .carousel-container h1 {
-                text-align: center;
-                font-size: 1.5em;
-                padding-bottom: 20px;
-            }
-            .carousel {
-                display: flex;
-                width: 1200px;
-                margin-left: 6%;
-                animation: sliding 12s infinite;
-            }
-            .carousel div {
-                width: 400px;
-                height: 250px;
-                background-size: cover;
-                background-position: center;
-            }
-            .carousel:hover {
-                animation-play-state: paused;
-            }
-            @keyframes sliding {
-                30% {
-                    transform: translateX(0);
-                }
-                35% {
-                    transform: translateX(-400px);
-                }
-                65% {
-                    transform: translateX(-400px);
-                }
-                70% {
-                    transform: translateX(-800px);
-                }
-                98% {
-                    transform: translateX(-800px);
-                }
-                100% {
-                    transform: translateX(0);
-                }
-            }
-            @media screen and (max-width: 768px) {
-                .carousel-wrapper {
-                    width: 312px;
-                    height: 210px;
-                }
-                .carousel-container {
-                    width: 240px;
-                    height: 150px;
-                }
-                .carousel {
-                    width: 720px;
-                }
-                .carousel > div {
-                    width: 240px;
-                    height: 150px;
-                }
-                @keyframes sliding {
-                    30% {
-                        transform: translateX(0);
-                    }
-                    35% {
-                        transform: translateX(-240px);
-                    }
-                    65% {
-                        transform: translateX(-240px);
-                    }
-                    70% {
-                        transform: translateX(-480px);
-                    }
-                    98% {
-                        transform: translateX(-480px);
-                    }
-                    100% {
-                        transform: translateX(0);
-                    }
-                }
-            }
-  
-        </style>
         <div class="container-main">
             <?php foreach ($_SESSION['produtos'] as $produto) { ?>
                 <div style="height: 370px;" class="product">
@@ -222,7 +128,7 @@
                     </p>
                 </div>
 
-                <div class="cart-body">
+                <div id="carrinhoModalBody" class="cart-body">
                     <div class="cart-body_content">
                         <div class="cart-body_content-item">
                             <div class="cart-body_content-item-info">
@@ -242,9 +148,9 @@
                                         </div>
                                         <div class="product-quantity">
                                             <div class="product-quantity change">
-                                                <button onclick="addMinCart(<?= $carrinho['id_produto'] ?>)" class="min">-</button>
+                                                <button onclick="addMinCart(<?= $carrinho['id_produto'] ?>,<?=$carrinho['preco']?>)" class="min">-</button>
                                                 <input id="quantidade-cart-<?= $carrinho['id_produto'] ?>" type="number" value="<?= $carrinho['quantidade'] ?>">
-                                                <button onclick="addMaxCart(<?= $carrinho['id_produto'] ?>)" class="max">+</button>
+                                                <button onclick="addMaxCart(<?= $carrinho['id_produto'] ?>, <?=$carrinho['preco']?>)" class="max">+</button>
                                             </div>
                                             <button onclick="removeToCart(<?= $carrinho['id_produto'] ?>, <?= $carrinho['id_usuario'] ?>)">Remover</button>
                                         </div>
@@ -254,11 +160,11 @@
                         </div>
                     </div>
                     <div class="cart-body_footer">
-                        <div class="cart-footer-total">
-                            Total
+                        <div style="margin-left: 120px;" class="cart-footer-total">
+                            Total: 
                         </div>
                         <div class="cart-footer-price">
-                            R$ <?=(number_format($_SESSION['precoTotal'], 2, ',', ''))?>
+                            <input id="valorTotal" type="text" disabled value="R$ <?=(number_format($_SESSION['precoTotal'], 2, ',', ''))?>">
                         </div>
                     </div>
                 </div>

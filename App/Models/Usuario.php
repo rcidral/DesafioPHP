@@ -126,18 +126,26 @@
                 header('Pragma: no-cache');
 
                 $output = fopen('usuarios.csv', 'w');
-                fputcsv($output, array('ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criação', 'Data de Alteração'));
+                fputcsv($output, ['ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criacao', 'Data de Alteracao'], ';');
                 foreach($usuarios as $usuario) {
-                    fputcsv($output, $usuario);
+                    fputcsv($output, $usuario, ';');
                 }
                 fclose($output);
                 ob_end_flush();
             } else {
                 $output = fopen('usuarios.csv', 'w');
-                fputcsv($output, array('ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criação', 'Data de Alteração'));
+                fputcsv($output, ['ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criacao', 'Data de Alteracao'], ';');
+                fputcsv($output, ['Nenhum usuario encontrado'], ';');
                 fclose($output);
                 ob_end_flush();
             }
+        }
+
+        public function moverUsuarioCSV() {
+            $datetime = date('Y-m-d_H-i-s');
+            $logName = 'usuarios_' . $datetime . '.csv';
+            $logPath = __DIR__ . '/../logs/user/' . $logName;
+            rename('usuarios.csv', $logPath);
         }
 
         // import 
@@ -147,19 +155,56 @@
             $csv = $_FILES['csv-user'];
             $data = fopen($csv['tmp_name'], 'r');
             $row = 0;
-            while($line = fgetcsv($data)) {
-                if($row > 0) {
-                    $query = "INSERT INTO usuarios (nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao) VALUES (:nome, :nascimento, :telefone, :email, :senha, :foto, NOW(), NULL)";
+            $expected_header = ['ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criacao', 'Data de Alteracao'];
+            while ($line = fgetcsv($data, 0, ";")){
+                if($row++ == 0){
+                    if(count($line) !== count($expected_header)) {
+                        die();
+                    }
+                    if($line !== $expected_header) {
+                        die();
+                    }
+                    continue;
+                }
+
+                $curl = curl_init();
+
+                    curl_setopt_array($curl, array(
+                        CURLOPT_URL => $line[6],
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_ENCODING => "",
+                        CURLOPT_MAXREDIRS => 10,
+                        CURLOPT_TIMEOUT => 30,
+                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                        CURLOPT_CUSTOMREQUEST => "GET",
+                        CURLOPT_HTTPHEADER => array(
+                            "Content-Type: application/json"
+                        ),
+                    ));
+                    $response = curl_exec($curl);
+                    curl_close($curl);
+                    $picname = 'picture'.date('YmdHis').'.png';
+                    $filePath = './assets/user/'.$picname;
+                    $fp = fopen($filePath, 'x');
+                    if (!$fp) {
+                        echo "Failed to open file $filePath";
+                    } else {
+                        fwrite($fp, $response);
+                        fclose($fp);
+                        echo "File saved to $filePath";
+                    }
+
+                $query = "INSERT INTO usuarios (id, nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao) VALUES (:id, :nome, :nascimento, :telefone, :email, :senha, :foto, NOW(), NULL) ON DUPLICATE KEY UPDATE nome = :nome, nascimento = :nascimento, telefone = :telefone, email = :email, senha = :senha, foto = :foto, data_alteracao = NOW()";
                     $stmt = $this->db->prepare($query);
+                    $stmt->bindValue(':id', $line[0]);
                     $stmt->bindValue(':nome', $line[1]);
                     $stmt->bindValue(':nascimento', $line[2]);
                     $stmt->bindValue(':telefone', $line[3]);
                     $stmt->bindValue(':email', $line[4]);
                     $stmt->bindValue(':senha', $line[5]);
-                    $stmt->bindValue(':foto', $line[6]);
+                    $stmt->bindValue(':foto', $picname);
                     $stmt->execute();
-                }
-                $row++;
+                
             }
         }
     }
