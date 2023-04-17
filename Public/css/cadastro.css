@@ -110,6 +110,10 @@ footer {
 .container-cadastro-header-usuario h1 {
     font-size: 20px;
     font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 300px;
 }
 .container-cadastro-body-usuario h1 {
     font-size: 20px;
@@ -178,6 +182,10 @@ footer {
 .container-cadastro-header-produto h1 {
     font-size: 20px;
     font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 300px;
 }
 
 .container-cadastro-body-produto h1 {

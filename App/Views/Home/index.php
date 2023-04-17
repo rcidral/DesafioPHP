@@ -61,13 +61,13 @@
                     <h1>Produtos Recomendados</h1>
                     <div class="carousel">
                         <?php foreach($_SESSION['produto_sequencia1'] as $produto ){ ?>
-                            <div class="image-one"><img style="width:350px; height: 240px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
+                            <div class="image-one"><img style="width:320px; height: 250px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
                         <?php } ?>
                         <?php foreach($_SESSION['produto_sequencia2'] as $produto ){ ?>
-                            <div class="image-two"><img style="width:350px; height: 240px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
+                            <div class="image-two"><img style="width:320px; height: 250px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
                         <?php } ?>
                         <?php foreach($_SESSION['produto_sequencia3'] as $produto ){ ?>
-                            <div class="image-three"><img style="width:350px; height: 240px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
+                            <div class="image-three"><img style="width:320px; height: 250px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
                         <?php } ?>
                     </div>
                 </div>
