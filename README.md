@@ -10,4 +10,3 @@
    - Email: admin@admin.com
    - Senha: admin
 6. Slack: [https://app.slack.com/client/T052SH5FRPF/C05384M62TT](https://app.slack.com/client/T052SH5FRPF/C05384M62TT)
-

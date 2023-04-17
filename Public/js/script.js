@@ -252,9 +252,16 @@ $("document").ready(function () {
         if($("#nome").val() == "" || $("#sequencia").val() == "" || 
             $("#img").val() == "") {
                 document.getElementsByClassName("campos")[0].style.display = "flex";
+
+                if($("#nome").val() == "") {
+                    document.getElementById("nome").style.border = "1px solid red";
+                }
+                if($("#img").val() == "") {
+                    document.getElementById("img").style.border = "1px solid red";
+                }
                 return;
         }
-
+    
         let formData = new FormData();
         let img = $('#img')[0].files[0];
         let nome = $("#nome").val();
