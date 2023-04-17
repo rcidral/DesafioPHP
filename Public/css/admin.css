@@ -78,6 +78,7 @@ footer {
 
 .dropdown p {
     cursor: pointer;
+    
 }
 .container-main {
     display: flex;
@@ -151,6 +152,10 @@ footer {
     text-align: left;
     border-bottom: 1px solid #ddd;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 180px;
 }
 
 .container-user table tr td button {
@@ -226,6 +231,10 @@ footer {
     text-align: left;
     border-bottom: 1px solid #ddd;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 250px;
 }
 
 .container-product table tr td button {
@@ -636,6 +645,10 @@ footer {
     text-align: left;
     border-bottom: 1px solid #ddd;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 303px;
 }
 
 .container-pedidos {
@@ -699,6 +712,10 @@ footer {
     text-align: left;
     border-bottom: 1px solid #ddd;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 330px;
 }
 
 .container-pedidos table tr td button {
@@ -785,6 +802,10 @@ footer {
     text-align: left;
     border-bottom: 1px solid #ddd;
     text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 230px;
 }
 
 .container-recommended-produto table tr td button {
