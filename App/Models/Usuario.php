@@ -176,11 +176,8 @@
                 if($line[0] == "") {
                     continue;
                 }
-                $usuario = Usuario::getUsuarioByNameImport($line[0]);
+                $usuario = $this->getUsuarioByNameImport($line[0]);
                 if($usuario != null) {
-                    if($line[5] == "") {
-                        continue;
-                    }
                     $curl = curl_init();
                     curl_setopt_array($curl, array(
                         CURLOPT_URL => $line[5],
@@ -210,6 +207,8 @@
                     $nascimento = "";
                     if($line[1] != null) {
                         $nascimento = "nascimento = :nascimento,";
+                        $explode = explode('/', $line[1]);
+                        $line[1] = $explode[2] . '-' . $explode[1] . '-' . $explode[0];
                     }
                     $telefone = "";
                     if($line[2] != null) {

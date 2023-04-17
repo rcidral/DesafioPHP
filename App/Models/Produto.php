@@ -68,7 +68,7 @@
         public function getProdutoByNameImport($nome) {
             $query = "SELECT * FROM produtos WHERE nome LIKE :nome";
             $stmt = $this->db->prepare($query);
-            $stmt->bindValue(':nome', '%'.$nome.'%');
+            $stmt->bindValue(':nome', $nome);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
@@ -182,7 +182,7 @@
                 if($line[0] == "") {
                     continue;
                 }
-                $produto = Produto::getProdutoByNameImport($line[0]);
+                $produto = $this->getProdutoByNameImport($line[0]);
                     if($produto != null) {
                         for($i = 3; $i <= 6; $i++) {
                             if($line[$i] == "") {
