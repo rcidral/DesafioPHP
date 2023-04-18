@@ -1,14 +1,14 @@
-/App/logs/favorito/*
-!/App/logs/favorito
+./App/logs/favorito/*
+!./App/logs/favorito
 
-/App/logs/pedido/*
-!/App/logs/pedido
+./App/logs/pedido/*
+!./App/logs/pedido
 
-/App/logs/produto/*
-!/App/logs/produto
+./App/logs/produto/*
+!./App/logs/produto
 
-/App/logs/user/*
-!/App/logs/user
+./App/logs/user/*
+!./App/logs/user
 
 /Public/assets/product/*
 !/Public/assets/product
