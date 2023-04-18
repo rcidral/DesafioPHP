@@ -37,7 +37,9 @@
                     <label id="nomeLabel" for="nomeLabel">Nome:</label>
                     <select name="nome" id="nome">
                         <?php foreach($_SESSION['produtos'] as $produto) { ?>
-                            <option value="<?= $produto['nome'] ?>"><?= $produto['nome'] ?></option>
+                            <?php if($_SESSION['produtos_recomendados']['nome'] != $produto['nome']) { ?>
+                                <option value="<?= $produto['nome'] ?>"><?= $produto['nome'] ?></option>
+                            <?php } ?>
                         <?php } ?>
                     </select>
                     <label id="sequenciaLabel" for="sequencia">Sequencia:</label>
@@ -69,9 +71,18 @@
                         <?php if($_SESSION['sequencia_total'] == "1,3,") { ?>
                             <option value="2">2</option>
                         <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "2,1,") { ?>
+                            <option value="3">3</option>
+                        <?php } ?>
                         <?php if($_SESSION['sequencia_total'] == "2,3,") { ?>
                             <option value="1">1</option>
-                        <?php } ?>    
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "3,1,") { ?>
+                            <option value="2">2</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "3,2,") { ?>
+                            <option value="1">1</option>
+                        <?php } ?>
                     </select>
                     <h1>Foto Principal</h1>
                     <input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
@@ -82,6 +93,16 @@
                     <div class="campos">
                         <p>Preencha todos os campos</p>
                     </div>
+                    <div class="sequencia-div">
+                        <p>Não é possível adicionar mais produtos recomendados</p>
+                    </div>
+                    <style>
+                        .sequencia-div {
+                            display: none;
+                            color: red;
+                            margin-top: 10px;
+                        }
+                    </style>
                 </div>
             </div>
         </div>

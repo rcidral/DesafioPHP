@@ -37,7 +37,48 @@
                 <div class="container-cadastro-body-produto">
                     <input type="hidden" name="id" id="id" value="<?= $produtoRecomendado['id'] ?>">
                     <input type="text" name="nome" id="nome" placeholder="Nome" value="<?= $produtoRecomendado['nome'] ?>">
-                    <input type="number" name="sequencia" id="sequencia" placeholder="Sequência" min="1" max="3" value="<?= $produtoRecomendado['sequencia'] ?>">
+                    <label id="sequenciaLabel" for="sequencia">Sequencia:</label>
+                    <select name="sequencia" id="sequencia">
+                        <?php if($_SESSION['produtos_recomendados'] == null) { ?>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        <?php } ?>
+                        <?php $_SESSION['sequencia_total'] = ""; ?>
+                        <?php foreach($_SESSION['produtos_recomendados'] as $produto) { ?>
+                            <?php $_SESSION['sequencia_total'] = $_SESSION['sequencia_total'] . $produto['sequencia'] . ","; ?>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "1,") { ?>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "2,") { ?>
+                            <option value="1">1</option>
+                            <option value="3">3</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "3,") { ?>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "1,2,") { ?>
+                            <option value="3">3</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "1,3,") { ?>
+                            <option value="2">2</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "2,1,") { ?>
+                            <option value="3">3</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "2,3,") { ?>
+                            <option value="1">1</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "3,1,") { ?>
+                            <option value="2">2</option>
+                        <?php } ?>
+                        <?php if($_SESSION['sequencia_total'] == "3,2,") { ?>
+                            <option value="1">1</option>
+                        <?php } ?>
+                    </select>                
                     <h1>Foto Principal</h1>
                     <img style="width:160px;" src="./assets/product-recommended/<?=$produtoRecomendado['img']?>" alt="foto"><input type="file" name="img" id="img" placeholder="Foto" accept="image/png">
                     <div class="btn">

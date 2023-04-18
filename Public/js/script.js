@@ -249,8 +249,21 @@ $("document").ready(function () {
     });
 
     $("#salvar-produto-recomendado-btn").click(function (e) {
-        if($("#nome").val() == "" || $("#sequencia").val() == "" || 
+        console.log($("#sequencia").val());
+        console.log($("#img").val());
+        console.log($("#nome").val());
+        if($("#nome").val() != "" && $("#sequencia").val() == null && 
+        $("#img").val() == "") {
+            document.getElementsByClassName("sequencia-div")[0].style.display = "flex";
+            return;
+        } else if($("#nome").val() != "" && $("#sequencia").val() == null && 
+        $("#img").val() != ""){
+            document.getElementsByClassName("sequencia-div")[0].style.display = "flex";
+            return;
+        } else if($("#nome").val() == "" || $("#sequencia").val() == "" || 
             $("#img").val() == "") {
+                if($("#sequencia").val() == "") {
+                }
                 document.getElementsByClassName("campos")[0].style.display = "flex";
 
                 if($("#nome").val() == "") {
@@ -260,8 +273,8 @@ $("document").ready(function () {
                     document.getElementById("img").style.border = "1px solid red";
                 }
                 return;
-        }
-    
+        } 
+
         let formData = new FormData();
         let img = $('#img')[0].files[0];
         let nome = $("#nome").val();
