@@ -100,7 +100,12 @@
             $stmt->execute();
             $pedido = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            $slack_url = "https://hooks.slack.com/services/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";
+            $query = "SELECT * FROM info";
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            $info = $stmt->fetch(\PDO::FETCH_OBJ);
+
+            $slack_url = $info->slack_url;
             $table = "* Detalhes do Pedido " .$pedido[0]['id_pedido']. "*\n\n";
             $table .= "*Nome do Cliente:* " .$pedido[0]['nome_usuario']. "\n";
             $table .= "*Email do Cliente:* " .$pedido[0]['email_usuario']. "\n\n";
@@ -135,6 +140,30 @@
 
             $result = curl_exec($ch);
             curl_close($ch); 
+
+            $url = $info->wpp_url;
+
+            $data = array(
+                "number" => "5547991164337",
+                "text" => $message
+            );
+
+            $headers = array(
+                'Content-Type: application/json', 
+                'SecretKey: '.$info->secret_key, 
+                'PublicToken: '.$info->public_token,
+                'DeviceToken: '.$info->device_token,
+                'Authorization: '.$info->auth
+            );
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $server_output = curl_exec($ch);
+            curl_close($ch);
         }
 
         public function getCarrinho() {
