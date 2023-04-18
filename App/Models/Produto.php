@@ -134,6 +134,17 @@
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id', $this->__get('id'));
             $stmt->execute();
+
+            $query = "SELECT nome FROM produtos WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':id', $this->__get('id'));
+            $stmt->execute();
+            $nome = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            $query= "DELETE FROM produtos_recomendados WHERE nome = :nome";
+            $stmt = $this->db->prepare($query);
+            $stmt->bindValue(':nome', $nome['nome']);
+            $stmt->execute();
             return $this;
         }
 

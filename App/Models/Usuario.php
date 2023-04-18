@@ -248,9 +248,7 @@
                     }
                     $stmt->execute();
             } else {
-                if($line[5] == "") {
-                    continue;
-                }
+                if($line[5] != "") {
                 $curl = curl_init();
 
                 curl_setopt_array($curl, array(
@@ -277,7 +275,10 @@
                     fclose($fp);
                     echo "File saved to $filePath";
                 }
-            
+            }
+                $explode = explode('/', $line[1]);
+                $line[1] = $explode[2] . '-' . $explode[1] . '-' . $explode[0];
+                
                 $query = "INSERT INTO usuarios (nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao) VALUES (:nome, :nascimento, :telefone, :email, :senha, :foto, NOW(), NOW())";
                 $stmt = $this->db->prepare($query);
                 $stmt->bindValue(':nome', $line[0]);

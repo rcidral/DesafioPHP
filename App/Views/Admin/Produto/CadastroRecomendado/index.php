@@ -34,7 +34,12 @@
                     <h1>Cadastro de Produto Recomendado</h1>
                 </div>
                 <div class="container-cadastro-body-produto">
-                    <input type="text" name="nome" id="nome" placeholder="Nome">
+                    <label id="nomeLabel" for="nomeLabel">Nome:</label>
+                    <select name="nome" id="nome">
+                        <?php foreach($_SESSION['produtos'] as $produto) { ?>
+                            <option value="<?= $produto['nome'] ?>"><?= $produto['nome'] ?></option>
+                        <?php } ?>
+                    </select>
                     <label id="sequenciaLabel" for="sequencia">Sequencia:</label>
                     <select name="sequencia" id="sequencia">
                         <?php if($_SESSION['produtos_recomendados'] == null) { ?>
