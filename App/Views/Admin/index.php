@@ -52,7 +52,7 @@
                             <td><?= $usuario['nome'] ?></td>
                             <td><?= $usuario['email'] ?></td>
                             <td><?= date('d/m/Y',strtotime($usuario['data_criacao'])) ?></td>
-                            <td><?= date('d/m/Y',strtotime($usuario['data_alteracao'])) ?></td>
+                            <td><?php if($usuario['data_alteracao'] == null) { echo 'Não alterado'; } else { echo date('d/m/Y',strtotime($usuario['data_alteracao'])); } ?></td>
                             <td>
                                 <button onclick="editarUsuario(<?= $usuario['id'] ?>)">Editar</button>
                                 <button onclick="showModalUsuario(<?= $usuario['id'] ?>)">Deletar</button>
@@ -114,7 +114,7 @@
                             <td><?= $produto['nome'] ?></td>
                             <td><?= (number_format($produto['preco'], 2, ',', '')) ?></td>
                             <td><?= date('d/m/Y',strtotime($produto['data_criacao'])) ?></td>
-                            <td><?= date('d/m/Y',strtotime($produto['data_alteracao'])) ?></td>
+                            <td><?php if($produto['data_alteracao'] == null) { echo 'Não alterado'; } else { echo date('d/m/Y',strtotime($produto['data_alteracao'])); } ?></td>
                             <td>
                                 <button onclick="editarProduto(<?= $produto['id'] ?>)">Editar</button>
                                 <button onclick="showModalProduto(<?= $produto['id'] ?>)">Deletar</button>
@@ -219,7 +219,7 @@
                             <td><?= $favorito['nome'] ?></td>
                             <td><?= (number_format($favorito['preco'], 2, ',', '')) ?></td>
                             <td><?= date('d/m/Y',strtotime($favorito['data_criacao'])) ?></td>
-                            <td><?= date('d/m/Y',strtotime($favorito['data_alteracao'])) ?></td>
+                            <td><?php if($favorito['data_alteracao'] == null) { echo "Não alterado"; } else { echo date('d/m/Y',strtotime($favorito['data_alteracao'])); } ?></td>
                         </tr>
                     <?php } ?>
                 </table>

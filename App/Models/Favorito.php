@@ -40,7 +40,7 @@
         }
 
         public function getFavoritos() {
-            $query = "SELECT * FROM favorito INNER JOIN produtos ON favorito.id_produto = produtos.id WHERE id_usuario = :id_usuario";
+            $query = "SELECT * FROM favorito INNER JOIN produtos ON favorito.id_produto = produtos.id WHERE id_usuario = :id_usuario AND produtos.delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id_usuario', $this->__get('id_usuario'));
             $stmt->execute();
@@ -50,7 +50,7 @@
         }
 
         public function getFavoritosAdmin($qtd) {
-            $query = "SELECT * FROM favorito INNER JOIN produtos ON favorito.id_produto = produtos.id LIMIT $qtd";
+            $query = "SELECT * FROM favorito INNER JOIN produtos ON favorito.id_produto = produtos.id AND produtos.delected = false LIMIT $qtd";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             $produtos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -62,6 +62,7 @@
             $query = 'SELECT p.nome, id_produto, COUNT(*) AS total
             FROM favorito as f
             inner join produtos as p on (f.id_produto = p.id)
+            WHERE p.delected = false
             GROUP BY id_produto
             ORDER BY total DESC
             LIMIT 3;';

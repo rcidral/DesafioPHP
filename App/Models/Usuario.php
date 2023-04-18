@@ -28,7 +28,7 @@
         }
 
         public function validarLogin() {
-            $query = "SELECT id, nome, email, senha FROM usuarios WHERE email = :email AND senha = :senha";
+            $query = "SELECT id, nome, email, senha FROM usuarios WHERE email = :email AND senha = :senha AND delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':email', $this->__get('email'));
             $stmt->bindValue(':senha', $this->__get('senha'));
@@ -58,7 +58,7 @@
         }
 
         public function getUsuario() {
-            $query = "SELECT id, nome, email, senha FROM usuarios WHERE email = :email AND senha = :senha";
+            $query = "SELECT id, nome, email, senha FROM usuarios WHERE email = :email AND senha = :senha AND delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':email', $this->__get('email'));
             $stmt->bindValue(':senha', $this->__get('senha'));
@@ -67,7 +67,7 @@
         }
 
         public function getUsuarioById() {
-            $query = "SELECT * FROM usuarios WHERE id = :id";
+            $query = "SELECT * FROM usuarios WHERE id = :id AND delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id', $this->__get('id'));
             $stmt->execute();
@@ -75,7 +75,7 @@
         }
 
         public function getUsuarioByNameImport($nome) {
-            $query = "SELECT * FROM usuarios WHERE nome = :nome";
+            $query = "SELECT * FROM usuarios WHERE nome = :nome AND delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':nome', $nome);
             $stmt->execute();
@@ -83,14 +83,14 @@
         }
 
         public function getUsuarios() {
-            $query = "SELECT * FROM usuarios";
+            $query = "SELECT * FROM usuarios WHERE delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
         public function listarUsuariosAdmin($qtd) {
-            $query = "SELECT id, nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao FROM usuarios LIMIT $qtd";
+            $query = "SELECT id, nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao FROM usuarios WHERE delected = false LIMIT $qtd";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -112,7 +112,7 @@
         }
 
         public function deleteUsuario() {
-            $query = "DELETE FROM usuarios WHERE id = :id";
+            $query = "UPDATE usuarios SET delected = true WHERE id = :id";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id', $this->__get('id'));
             $stmt->execute();
@@ -134,7 +134,7 @@
                 header('Pragma: no-cache');
 
                 $output = fopen('usuarios.csv', 'w');
-                fputcsv($output, ['ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criacao', 'Data de Alteracao'], ';');
+                fputcsv($output, ['ID', 'Nome', 'Nascimento', 'Telefone', 'Email', 'Senha', 'Foto', 'Data de Criacao', 'Data de Alteracao', 'Cancelado'], ';');
                 foreach($usuarios as $usuario) {
                     fputcsv($output, $usuario, ';');
                 }

@@ -42,7 +42,7 @@
         }
 
         public function getProdutosLogado() {
-            $query = "SELECT p.*, f.id as favorito FROM produtos AS p LEFT JOIN favorito AS f ON p.id = f.id_produto AND f.id_usuario = :id_usuario;";
+            $query = "SELECT p.*, f.id as favorito FROM produtos AS p LEFT JOIN favorito AS f ON p.id = f.id_produto AND f.id_usuario = :id_usuario WHERE p.delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id_usuario', $_SESSION['usuario']['id']);
             $stmt->execute();
@@ -50,14 +50,14 @@
         }
 
         public function getProdutos() {
-            $query = "SELECT * FROM produtos";
+            $query = "SELECT * FROM produtos WHERE delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
         }
 
         public function getProdutoById() {
-            $query = "SELECT p.*, f.id as favorito FROM produtos AS p LEFT JOIN favorito AS f ON p.id = f.id_produto AND f.id_usuario = :id_usuario WHERE p.id = :id";
+            $query = "SELECT p.*, f.id as favorito FROM produtos AS p LEFT JOIN favorito AS f ON p.id = f.id_produto AND f.id_usuario = :id_usuario WHERE p.id = :id AND p.delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id', $this->__get('id'));
             $stmt->bindValue(':id_usuario', $_SESSION['usuario']['id']);
@@ -66,7 +66,7 @@
         }
 
         public function getProdutoByNameImport($nome) {
-            $query = "SELECT * FROM produtos WHERE nome LIKE :nome";
+            $query = "SELECT * FROM produtos WHERE nome LIKE :nome AND delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':nome', $nome);
             $stmt->execute();
@@ -74,7 +74,7 @@
         }
 
         public function getProdutoByName() {
-            $query = "SELECT * FROM produtos WHERE nome LIKE :nome OR descricao LIKE :descricao";
+            $query = "SELECT * FROM produtos WHERE nome LIKE :nome OR descricao LIKE :descricao AND delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':nome', '%'.$this->__get('nome').'%');
             $stmt->bindValue(':descricao', '%'.$this->__get('descricao').'%');
@@ -83,7 +83,7 @@
         }
 
         public function listarProdutosAdmin($qtd) {
-            $query = "SELECT id, nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao FROM produtos LIMIT $qtd";
+            $query = "SELECT id, nome, descricao, preco, img, img1, img2, img3, data_criacao, data_alteracao FROM produtos WHERE delected = false LIMIT $qtd ";
             $stmt = $this->db->prepare($query);
             
             $stmt->execute();
@@ -130,7 +130,7 @@
         }
 
         public function deleteProduto() {
-            $query = "DELETE FROM produtos WHERE id = :id";
+            $query = "UPDATE produtos set delected = true WHERE id = :id";
             $stmt = $this->db->prepare($query);
             $stmt->bindValue(':id', $this->__get('id'));
             $stmt->execute();
