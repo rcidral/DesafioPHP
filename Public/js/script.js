@@ -602,20 +602,16 @@ function addMinCart(id, preco) {
     $.ajax({
         url: "/alterarCarrinhoMin",
         type: "POST",
+        dataType: 'json',
         data: {
             id_produto: idProduto,
             quantidade: value,
         },
+        success: function (data) {
+            var inputValorTotal = document.getElementById("valorTotal");
+            inputValorTotal.value = "R$ " + data.valorTotal.toFixed(2).replace(".", ",");
+        }
     });
-
-    var inputValor = document.getElementById("valorTotal");
-    var input = document.getElementById("quantidade-cart-" + id + "");
-    var valor = input.value * preco;
-    inputValor.value = "R$ " + valor.toFixed(2).replace(".", ",");
-
-
-
-
 
 }
 
@@ -626,19 +622,21 @@ function addMaxCart(id, preco) {
     var value = input.value;
     var idProduto = id;
 
+    var inputValorTotal = document.getElementById("valorTotal");
     $.ajax({
         url: "/alterarCarrinhoMax",
         type: "POST",
+        
         data: {
             id_produto: idProduto,
             quantidade: value,
         },
-    });
+        success: function (data) {
+            inputValorTotal.value = "R$ " + data.valorTotal.toFixed(2).replace(".", ",");
+        }
 
-    var inputValor = document.getElementById("valorTotal");
-    var input = document.getElementById("quantidade-cart-" + id + "");
-    var valor = input.value * preco;
-    inputValor.value = "R$ " + valor.toFixed(2).replace(".", ",");
+    });
+    
 }
 
 function openCart() {
@@ -722,7 +720,6 @@ function editarUsuario(id) {
 }
 
 function showModalPedidoProduto(id) {
-    console.log(id);
     $.ajax({
         url: "/pedidoProdutoRed",
         type: "POST",

@@ -222,12 +222,14 @@
         }
         case '/alterarCarrinhoMax': {
             $appController->alterarCarrinhoMax();
-            echo json_encode(['success' => true]);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true, 'valorTotal' => $appController->listarPrecoTotal()]);
             break;
         }
         case '/alterarCarrinhoMin': {
             $appController->alterarCarrinhoMin();
-            echo json_encode(['success' => true]);
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true, 'valorTotal' => $appController->listarPrecoTotal()]);
             break;
         }
         case '/removerItemCarrinho': {

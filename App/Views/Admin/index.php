@@ -188,7 +188,7 @@
             </div>
             <div class="most-favorites">
                     <div class="text">
-                        <h3 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Produtos mais favoritados</h3>
+                        <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Produtos mais favoritados</h2>
                     </div>
                     <div class="most-favorites-content">
                         <?php foreach($_SESSION['mostFavoritos'] as $mostFavoritos) { ?>

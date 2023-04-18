@@ -747,6 +747,9 @@ footer {
     margin: 2em;
     width: 95%;
     height: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 1em;
+    border-radius: 25px;
 }
 
 .container-recommended-produto .options {

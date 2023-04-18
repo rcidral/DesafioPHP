@@ -57,26 +57,6 @@
         <div class="product-incorret">
             <p>Desculpe não encontramos o item procurado</p>
         </div>
-        <?php if($_SESSION['produto_sequencia1'] != "" || $_SESSION['produto_sequencia2'] != "" || $_SESSION['produto_sequencia3'] != "" ) { ?>
-        <div class="container-carrousel-2">
-            <div class="carousel-wrapper">
-                <div class="carousel-container">
-                    <h1>Produtos Recomendados</h1>
-                    <div class="carousel">
-                        <?php foreach ($_SESSION['produto_sequencia1'] as $produto) { ?>
-                            <div class="image-one"><img style="width:320px; height: 250px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
-                        <?php } ?>
-                        <?php foreach ($_SESSION['produto_sequencia2'] as $produto) { ?>
-                            <div class="image-two"><img style="width:320px; height: 250px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
-                        <?php } ?>
-                        <?php foreach ($_SESSION['produto_sequencia3'] as $produto) { ?>
-                            <div class="image-three"><img style="width:320px; height: 250px;" src="./assets/product-recommended/<?= $produto['img'] ?>" alt=""></div>
-                        <?php } ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php } ?>
         <div class="container-main">
             <?php foreach ($_SESSION['produto'] as $produto) { ?>
                 <div class="product-page">

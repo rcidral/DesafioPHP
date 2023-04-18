@@ -278,7 +278,7 @@
             }
                 $explode = explode('/', $line[1]);
                 $line[1] = $explode[2] . '-' . $explode[1] . '-' . $explode[0];
-                
+
                 $query = "INSERT INTO usuarios (nome, nascimento, telefone, email, senha, foto, data_criacao, data_alteracao) VALUES (:nome, :nascimento, :telefone, :email, :senha, :foto, NOW(), NOW())";
                 $stmt = $this->db->prepare($query);
                 $stmt->bindValue(':nome', $line[0]);
