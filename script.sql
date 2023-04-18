@@ -62,4 +62,13 @@ id int not null auto_increment primary key,
 id_usuario int not null,
 id_produto int not null);
 
+create table info(
+id int not null auto_increment primary key,
+slack_url varchar(255) null,
+wpp_url varchar(255) null,
+secret_key varchar(255) null,
+public_token varchar(255) null,
+device_token varchar(255) null,
+auth nvarchar(1000) null);
+
 insert into usuarios(nome, nascimento, telefone, email, senha, data_criacao, data_alteracao, foto) values("Administrador", now(), "xxxxxxxxxxx", "admin@admin.com", "admin", now(), null, null);
