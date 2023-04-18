@@ -10,12 +10,12 @@
 ./App/logs/user/*
 !./App/logs/user
 
-/Public/assets/product/*
-!/Public/assets/product
+./Public/assets/product/*
+!./Public/assets/product
 
-/Public/assets/product-recommended/*
-!/Public/assets/product-recommended
+./Public/assets/product-recommended/*
+!./Public/assets/product-recommended
 
-/Public/assets/user/*
-!/Public/assets/user
+./Public/assets/user/*
+!./Public/assets/user
 
