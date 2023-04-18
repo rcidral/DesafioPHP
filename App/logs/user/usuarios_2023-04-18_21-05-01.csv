@@ -1,6 +1,0 @@
-ID;Nome;Nascimento;Telefone;Email;Senha;Foto;"Data de Criacao";"Data de Alteracao";Cancelado
-1;Administrador;2023-04-18;xxxxxxxxxxx;admin@admin.com;admin;;"2023-04-18 14:36:15";;0
-2;Ricardo;2004-01-15;1616;ricidralmfo@gmail.com;123;;"2023-04-18 14:36:51";"2023-04-18 14:49:39";1
-3;Ricardo;2004-01-15;5,54799E+12;ricidralmfo@gmail.com;123;./assets/user/picture20230418195238.png;"2023-04-18 14:52:38";"2023-04-18 14:52:38";1
-4;Ricardo;2004-01-15;5,55E+12;ricidralmfo@gmail.com;123;./assets/user/picture20230418200203.png;"2023-04-18 15:02:03";"2023-04-18 15:02:03";1
-5;Maria;2004-01-15;5,55E+12;maria@gmail.com;123;./assets/user/picture20230418200204.png;"2023-04-18 15:02:04";"2023-04-18 15:02:04";0
