@@ -50,7 +50,7 @@
         }
 
         public function getFavoritosAdmin($qtd) {
-            $query = "SELECT * FROM favorito INNER JOIN produtos ON favorito.id_produto = produtos.id AND produtos.delected = false LIMIT $qtd";
+            $query = "SELECT f.id_usuario, f.id_produto, p.nome AS nome_produto, p.preco, u.nome AS nome_usuario FROM favorito AS f INNER JOIN produtos AS p ON f.id_produto = p.id INNER JOIN usuarios AS u ON f.id_usuario = u.id AND p.delected = false LIMIT $qtd";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             $produtos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -89,7 +89,7 @@
 
         public function exportarFavoritoCSV() {
             ob_start();
-            $query = "SELECT p.* FROM favorito f INNER JOIN produtos p ON f.id_produto = p.id";
+            $query = "SELECT f.id_usuario, u.nome AS nome_usuario, f.id_produto, p.nome AS nome_produto, p.preco FROM favorito AS f INNER JOIN produtos AS p ON f.id_produto = p.id INNER JOIN usuarios AS u ON f.id_usuario = u.id AND p.delected = false";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             $produtos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -100,9 +100,9 @@
                 header('Pragma: no-cache');
 
                 $output = fopen("favoritos.csv", 'w');
-                fputcsv($output, array('id', 'nome', 'descricao', 'preco', 'img', 'img1', 'img2', 'img3', 'data_criacao', 'data_alteracao'));
+                fputcsv($output, ['id_usuario', 'nome_usuario', 'id_produto', 'nome_produto', 'preco'], ';');
                 foreach($produtos as $produto) {
-                    fputcsv($output, $produto);
+                    fputcsv($output, $produto, ';');
                 }
                 fclose($output);
                 ob_end_flush();

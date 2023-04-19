@@ -71,24 +71,38 @@ $("document").ready(function () {
                 document.getElementsByClassName("campos")[0].style.display = "flex";
                 if($("#nome").val() == "") {
                     document.getElementById("nome").style.border = "1px solid red";
+                } else {
+                    document.getElementById("nome").style.border = "1px solid #ccc";
                 }
                 if($("#dataNascimento").val() == "") {
                     document.getElementById("dataNascimento").style.border = "1px solid red";
+                } else {
+                    document.getElementById("dataNascimento").style.border = "1px solid #ccc";
                 }
                 if($("#telefone").val() == "") {
                     document.getElementById("telefone").style.border = "1px solid red";
+                } else {
+                    document.getElementById("telefone").style.border = "1px solid #ccc";
                 }
                 if($("#email").val() == "") {
                     document.getElementById("email").style.border = "1px solid red";
+                } else {
+                    document.getElementById("email").style.border = "1px solid #ccc";
                 }
                 if($("#senha").val() == "") {
                     document.getElementById("senha").style.border = "1px solid red";
+                } else {
+                    document.getElementById("senha").style.border = "1px solid #ccc";
                 }
                 if($("#confirmarSenha").val() == "") {
                     document.getElementById("confirmarSenha").style.border = "1px solid red";
+                } else {
+                    document.getElementById("confirmarSenha").style.border = "1px solid #ccc";
                 }
                 if($("#foto").val() == "") {
                     document.getElementById("foto").style.border = "1px solid red";
+                } else {
+                    document.getElementById("foto").style.border = "1px solid #ccc";
                 }
                 return;
         }
@@ -157,24 +171,38 @@ $("document").ready(function () {
                 document.getElementsByClassName("campos")[0].style.display = "flex";
                 if($("#nome").val() == "") {
                     document.getElementById("nome").style.border = "1px solid red";
+                } else {
+                    document.getElementById("nome").style.border = "1px solid #ccc";
                 }
                 if($("#descricao").val() == "") {
                     document.getElementById("descricao").style.border = "1px solid red";
+                } else {
+                    document.getElementById("descricao").style.border = "1px solid #ccc";
                 }
                 if($("#preco").val() == "") {
                     document.getElementById("preco").style.border = "1px solid red";
+                } else {
+                    document.getElementById("preco").style.border = "1px solid #ccc";
                 }
                 if($("#img").val() == "") {
                     document.getElementById("img").style.border = "1px solid red";
+                } else {
+                    document.getElementById("img").style.border = "1px solid #ccc";
                 }
                 if($("#img1").val() == "") {
                     document.getElementById("img1").style.border = "1px solid red";
+                } else {
+                    document.getElementById("img1").style.border = "1px solid #ccc";
                 }
                 if($("#img2").val() == "") {
                     document.getElementById("img2").style.border = "1px solid red";
+                } else {
+                    document.getElementById("img2").style.border = "1px solid #ccc";
                 }
                 if($("#img3").val() == "") {
                     document.getElementById("img3").style.border = "1px solid red";
+                } else {
+                    document.getElementById("img3").style.border = "1px solid #ccc";
                 }
                 return;
         }
@@ -315,9 +343,9 @@ $("document").ready(function () {
                 console.log(data, data.success);
                 if (data.success) {
                     window.location.href = '/';
-                  } else {
-                    document.getElementsByClassName("product-incorret")[0].style.display = "flex";
-                    document.getElementsByClassName("container-main")[0].style.display = "none";
+                  } else if(!data.success) {
+                      document.getElementsByClassName("container-main")[0].style.display = "none";
+                      document.getElementsByClassName("product-incorret")[0].style.display = "flex";
                   }
                 }
         });

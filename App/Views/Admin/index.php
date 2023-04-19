@@ -29,7 +29,7 @@
     <main>
         <div id="container-main" class="container-main">
             <div style="border-radius: 15px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); padding: 30px;" class="container-user">
-                <h2>Usuarios</h2>
+                <h2>Usuários</h2>
                 <div class="options">
                     <div class="options-btn">
                         <button onclick="showModalExportUsuario()">Importar</button>
@@ -191,9 +191,10 @@
                         <h2 style="text-align: center; margin-top: 10px; margin-bottom: 10px;">Produtos mais favoritados</h2>
                     </div>
                     <div class="most-favorites-content">
+                        <?php $i = 1; ?>
                         <?php foreach($_SESSION['mostFavoritos'] as $mostFavoritos) { ?>
                             <div class="most-favorites-content-item">
-                                <p><?=$mostFavoritos['nome']?></p>
+                                <p><?=$i?></p><p><?=$mostFavoritos['nome']?></p><?php $i++; ?>
                             </div>
                         <?php } ?>
                     </div>
@@ -207,19 +208,15 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="first">Id</th>
-                        <th>Nome</th>
-                        <th>Preço</th>
-                        <th>Data de Criação</th>
-                        <th class="last">Data de Alteração</th>
+                        <th style="max-width: 20px;" class="first">Nome do Usuário</th>
+                        <th>Nome do Produto</th>
+                        <th class="last">Preço</th>
                     </tr>
                     <?php foreach ($_SESSION['favoritos'] as $favorito) { ?>
                         <tr>
-                            <td><?= $favorito['id'] ?></td>
-                            <td><?= $favorito['nome'] ?></td>
+                            <td><?= $favorito['nome_usuario'] ?></td>
+                            <td><?= $favorito['nome_produto'] ?></td>
                             <td><?= (number_format($favorito['preco'], 2, ',', '')) ?></td>
-                            <td><?= date('d/m/Y',strtotime($favorito['data_criacao'])) ?></td>
-                            <td><?php if($favorito['data_alteracao'] == null) { echo "Não alterado"; } else { echo date('d/m/Y',strtotime($favorito['data_alteracao'])); } ?></td>
                         </tr>
                     <?php } ?>
                 </table>

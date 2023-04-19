@@ -279,6 +279,7 @@ footer {
 
 .user p {
     margin-left: 10%;
+    cursor: pointer;
 }
 
 .badge-quantity {
@@ -335,7 +336,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.2);
+    box-shadow: 5px 5px 25px 0px rgba(46, 61, 73, 0.12);
     border-radius: 20px;
 }
 .carousel-container {
@@ -354,6 +355,8 @@ footer {
     width: 1200px;
     margin-left: 6%;
     animation: sliding 12s infinite;
+    position: relative;
+    left: 15px
 }
 .carousel div {
     width: 400px;
@@ -463,7 +466,7 @@ footer {
     display: none;
     justify-content: center;
     align-items: center;
-
+    padding-top: 8em;
   }
 
   .product-incorret p {

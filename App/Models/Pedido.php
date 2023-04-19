@@ -47,7 +47,7 @@
 
         public function exportarPedidosCSV() {
             ob_start();
-            $query = "SELECT p.id AS id_pedido, GROUP_CONCAT(pr.nome SEPARATOR ', ') AS nomes_produtos, GROUP_CONCAT(pi.quantidade SEPARATOR ', ') AS quantidades_produtos, SUM(pi.quantidade) AS quantidade_total, SUM(pi.quantidade * pi.preco) AS preco_total, u.email AS email FROM pedido p INNER JOIN pedido_has_pedido_item ppi ON p.id = ppi.id_pedido INNER JOIN pedido_item pi ON pi.id = ppi.id_pedido_item INNER JOIN produtos pr ON pr.id = pi.id_produto INNER JOIN usuarios u ON u.id = p.id_usuario GROUP BY p.id, u.email ORDER BY p.id";
+            $query = "SELECT p.id AS id_pedido, GROUP_CONCAT(pr.nome SEPARATOR ', ') AS nomes_produtos, GROUP_CONCAT(pi.quantidade SEPARATOR ', ') AS quantidades_produtos, SUM(pi.quantidade) AS quantidade_total, GROUP_CONCAT(pi.preco SEPARATOR ', ') AS preco, SUM(pi.quantidade * pi.preco) AS preco_total, u.email AS email FROM pedido p INNER JOIN pedido_has_pedido_item ppi ON p.id = ppi.id_pedido INNER JOIN pedido_item pi ON pi.id = ppi.id_pedido_item INNER JOIN produtos pr ON pr.id = pi.id_produto INNER JOIN usuarios u ON u.id = p.id_usuario GROUP BY p.id, u.email ORDER BY p.id";
             $stmt = $this->db->prepare($query);
             $stmt->execute();
             $pedidos = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -58,7 +58,7 @@
                 header('Pragma: no-cache');
 
                 $output = fopen('pedidos.csv', 'w');
-                fputcsv($output, ['ID', 'Nomes dos Produtos', 'Quantidades dos Produtos', 'Quantidade Total', 'Preco Total', 'Email'], ';');
+                fputcsv($output, ['ID', 'Nomes dos Produtos', 'Quantidades dos Produtos', 'Quantidade Total', 'Preço dos Produtos', 'Preco Total', 'Email'], ';');
                 foreach($pedidos as $pedido) {
                     fputcsv($output, $pedido, ';');
                 }
