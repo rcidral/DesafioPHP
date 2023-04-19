@@ -1,5 +1,9 @@
 $("document").ready(function () {
     $("#img-logo").click(function () {
+        if(window.location.href == "http://localhost:3000/admin") {
+            window.location.href = "/admin";
+            return
+        }
         window.location.href = "/";
     });
     
