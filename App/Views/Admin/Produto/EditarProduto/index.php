@@ -63,7 +63,7 @@
                 <img src="https://raw.githubusercontent.com/bystack/.github/main/bannerWB.png" alt="logo">
             </div>
             <div class="footer-a">
-                <a href="/">ByStack</a>
+                <a href="/">Rio Grande do Sul 385</a>
             </div>
         </div>
 
